@@ -1,0 +1,488 @@
+"AddAppAdminsScreen As screen.'phoneLayout_FluidGridWithHeaderPageLayout_ver3.0'":
+    Fill: =RGBA(237, 240, 245, 1)
+    Height: =Max(App.Height, App.DesignHeight)
+    OnVisible: |-
+        =Set(AdminUser,"");
+        Set(ShowConfirmationMessage,false);
+        Set(isAddAdminButtonEnabled,false);
+        Set(ConfirmationMessage,"")
+    Orientation: =If(AddAppAdminsScreen.Width < AddAppAdminsScreen.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= AddAppAdminsScreen.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    AddAppAdminBackground As rectangle:
+        DisabledFill: =AddAppAdminBackground.Fill
+        Fill: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =AddAppAdminBackground.BorderColor
+        Height: =593
+        HoverFill: =AddAppAdminBackground.Fill
+        PressedFill: =AddAppAdminBackground.Fill
+        Width: =913
+        X: =226
+        Y: =69
+        ZIndex: =1
+
+    ConfirmationText As label:
+        Color: =RGBA(155, 155, 155, 1)
+        FocusedBorderColor: =ConfirmationText.BorderColor
+        Height: =23
+        HoverBorderColor: =ConfirmationText.BorderColor
+        HoverColor: =ConfirmationText.Color
+        HoverFill: =ConfirmationText.Fill
+        PressedBorderColor: =ConfirmationText.BorderColor
+        PressedColor: =ConfirmationText.Color
+        PressedFill: =ConfirmationText.Fill
+        Size: |
+            =10.5
+        Text: =ConfirmationMessage
+        Visible: =ShowConfirmationMessage
+        Width: =282
+        X: =319
+        Y: =579
+        ZIndex: =17
+
+    CheckBoxIcon As image:
+        ApplyEXIFOrientation: =false
+        FocusedBorderColor: =CheckBoxIcon.BorderColor
+        Height: =20
+        HoverBorderColor: =ColorFade(CheckBoxIcon.BorderColor, 20%)
+        HoverFill: =ColorFade(CheckBoxIcon.Fill, 20%)
+        Image: ='mark-as-complete'
+        OnSelect: =
+        PressedBorderColor: =ColorFade(CheckBoxIcon.BorderColor, -20%)
+        PressedFill: =ColorFade(CheckBoxIcon.Fill, -20%)
+        Visible: =ShowConfirmationMessage
+        Width: =20
+        X: =298
+        Y: =580
+        ZIndex: =18
+
+    ErrorMessageLabel As label:
+        Color: =RGBA(255, 66, 0, 1)
+        FocusedBorderColor: =ErrorMessageLabel.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =17
+        HoverBorderColor: =ErrorMessageLabel.BorderColor
+        HoverColor: =ErrorMessageLabel.Color
+        HoverFill: =ErrorMessageLabel.Fill
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =ErrorMessageLabel.BorderColor
+        PressedColor: =ErrorMessageLabel.Color
+        PressedFill: =ErrorMessageLabel.Fill
+        Size: =10
+        Text: ="Please provide a valid contact"
+        Visible: =If(AdminUser = "",true,If(Not(AdminUserInput.Text = AdminUser),true,false))
+        Width: =400
+        X: =800
+        Y: =AddAppAdminBackground.Y + AddAppAdminBackground.Height - 175
+        ZIndex: =19
+
+    AddAppAdminHeaderContent As group:
+        Height: =5
+        Width: =5
+        X: =-187
+        Y: =-46
+        ZIndex: =22
+
+        Line3 As rectangle:
+            DisabledFill: =Line3.Fill
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(221, 224, 227, 1)
+            FocusedBorderColor: =Line3.BorderColor
+            FocusedBorderThickness: =0
+            Height: =2
+            HoverFill: =Line3.Fill
+            PressedFill: =Line3.Fill
+            Width: =771
+            X: =296
+            Y: =461
+            ZIndex: =2
+
+        CustomizeBodyText As label:
+            AutoHeight: =true
+            DisplayMode: =DisplayMode.View
+            FocusedBorderColor: =CustomizeBodyText.BorderColor
+            FontWeight: =FontWeight.Lighter
+            Height: =110
+            HoverBorderColor: =CustomizeBodyText.BorderColor
+            HoverColor: =CustomizeBodyText.Color
+            HoverFill: =CustomizeBodyText.Fill
+            PaddingLeft: =0
+            PaddingRight: =0
+            PressedBorderColor: =CustomizeBodyText.BorderColor
+            PressedColor: =CustomizeBodyText.Color
+            PressedFill: =CustomizeBodyText.Fill
+            Text: |-
+                ="Add onboarding tasks, resources, team links and company info. Content will be saved to an excel file and can be modified by admin users at any time.
+                
+                Adding an admin user will allow you to build your database direcly from the app. The admin options will only be exposed to users added to the admin list."
+            Width: =697
+            X: =296
+            Y: =328
+            ZIndex: =3
+
+        CustomizeHeaderText As label:
+            DisplayMode: =DisplayMode.View
+            FocusedBorderColor: =CustomizeHeaderText.BorderColor
+            FontWeight: =FontWeight.Semibold
+            HoverBorderColor: =CustomizeHeaderText.BorderColor
+            HoverColor: =CustomizeHeaderText.Color
+            HoverFill: =CustomizeHeaderText.Fill
+            PaddingLeft: =0
+            PaddingRight: =0
+            PressedBorderColor: =CustomizeHeaderText.BorderColor
+            PressedColor: =CustomizeHeaderText.Color
+            PressedFill: =CustomizeHeaderText.Fill
+            Size: =14
+            Text: ="Customize the app to meet the specific needs of your team. "
+            Width: =800
+            X: =296
+            Y: =278
+            ZIndex: =4
+
+        Line2 As rectangle:
+            DisabledFill: =Line2.Fill
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(221, 224, 227, 1)
+            FocusedBorderColor: =Line2.BorderColor
+            FocusedBorderThickness: =0
+            Height: =1
+            HoverFill: =Line2.Fill
+            PressedFill: =Line2.Fill
+            Width: =112
+            X: =296
+            Y: =257
+            ZIndex: =5
+
+        AppSetupText As label:
+            DisplayMode: =DisplayMode.View
+            FocusedBorderColor: =AppSetupText.BorderColor
+            FontWeight: =FontWeight.Lighter
+            Height: =33
+            HoverBorderColor: =AppSetupText.BorderColor
+            HoverColor: =AppSetupText.Color
+            HoverFill: =AppSetupText.Fill
+            PressedBorderColor: =AppSetupText.BorderColor
+            PressedColor: =AppSetupText.Color
+            PressedFill: =AppSetupText.Fill
+            Size: =18
+            Text: ="App Setup"
+            Width: =600
+            X: =296
+            Y: =214
+            ZIndex: =6
+
+        Line1 As rectangle:
+            DisabledFill: =Line1.Fill
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(221, 224, 227, 1)
+            FocusedBorderColor: =Line1.BorderColor
+            FocusedBorderThickness: =0
+            Height: =1
+            HoverFill: =Line1.Fill
+            PressedFill: =Line1.Fill
+            Width: =112
+            X: =296
+            Y: =205
+            ZIndex: =7
+
+        AppLogo As image:
+            ApplyEXIFOrientation: =false
+            DisplayMode: =DisplayMode.View
+            FocusedBorderColor: =AppLogo.BorderColor
+            Height: =29
+            HoverBorderColor: =ColorFade(AppLogo.BorderColor, 20%)
+            HoverFill: =ColorFade(AppLogo.Fill, 20%)
+            Image: ='get-onboard-logo-large'
+            PressedBorderColor: =ColorFade(AppLogo.BorderColor, -20%)
+            PressedFill: =ColorFade(AppLogo.Fill, -20%)
+            Width: =220
+            X: =296
+            Y: =136
+            ZIndex: =8
+
+    UserPickerControl As group:
+        Height: =5
+        Width: =5
+        X: =-187
+        Y: =-46
+        ZIndex: =23
+
+        "SuggestedUsers As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+            '#CopilotOverlayLabel': ="Filtered"
+            BorderColor: =RGBA(204, 204, 204, 1)
+            BorderThickness: =1
+            DisabledBorderColor: =SuggestedUsers.BorderColor
+            DisabledFill: =SuggestedUsers.Fill
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =176
+            HoverBorderColor: =SuggestedUsers.BorderColor
+            HoverFill: =SuggestedUsers.Fill
+            Items: |-
+                =If(Not(IsBlank(AdminUserInput.Text)),(If(Not(AdminUser = AdminUserInput.Text), Office365Users.SearchUser({searchTerm:AdminUserInput.Text}))))
+            Layout: =Layout.Vertical
+            LoadingSpinnerColor: =SuggestedUsers.BorderColor
+            OnSelect: |-
+                =Set(AdminUser,ThisItem.DisplayName);
+                Set(AdminUserEmail,ThisItem.Mail);
+                Set(AdminUserO365Id,ThisItem.Id);
+                Set(isAddAdminButtonEnabled,true)
+            PressedBorderColor: =SuggestedUsers.BorderColor
+            PressedFill: =SuggestedUsers.Fill
+            TemplatePadding: =2
+            TemplateSize: =50
+            Visible: =And(Not(IsBlank(AdminUserInput.Text)),Not(AdminUser = AdminUserInput.Text))
+            Width: =592
+            X: =297
+            Y: =575
+            ZIndex: =9
+
+            SuggestedUserJobTitle As label:
+                Color: =RGBA(100, 100, 100, 1)
+                FocusedBorderColor: =SuggestedUserJobTitle.BorderColor
+                Height: =17
+                HoverBorderColor: =SuggestedUserJobTitle.BorderColor
+                HoverColor: =SuggestedUserJobTitle.Color
+                HoverFill: =SuggestedUserJobTitle.Fill
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                PressedBorderColor: =SuggestedUserJobTitle.BorderColor
+                PressedColor: =SuggestedUserJobTitle.Color
+                PressedFill: =SuggestedUserJobTitle.Fill
+                Size: =9
+                Text: =ThisItem.JobTitle
+                Width: =490
+                X: =77
+                Y: =30
+                ZIndex: =1
+
+            SuggestedUserName As label:
+                Color: =RGBA(0, 123, 182, 1)
+                FocusedBorderColor: =SuggestedUserName.BorderColor
+                FontWeight: =FontWeight.Semibold
+                Height: =20
+                HoverBorderColor: =SuggestedUserName.BorderColor
+                HoverColor: =SuggestedUserName.Color
+                HoverFill: =SuggestedUserName.Fill
+                OnSelect: =Select(Parent)
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                PressedBorderColor: =SuggestedUserName.BorderColor
+                PressedColor: =SuggestedUserName.Color
+                PressedFill: =SuggestedUserName.Fill
+                Size: =10
+                Text: =ThisItem.DisplayName
+                VerticalAlign: =VerticalAlign.Top
+                Width: =490
+                X: =77
+                Y: =8
+                ZIndex: =2
+
+            SuggestedUserSeperator As rectangle:
+                DisabledFill: =SuggestedUserSeperator.Fill
+                FocusedBorderColor: =SuggestedUserSeperator.BorderColor
+                Height: =0
+                HoverFill: =SuggestedUserSeperator.Fill
+                OnSelect: =Select(Parent)
+                PressedFill: =SuggestedUserSeperator.Fill
+                Width: =Parent.TemplateWidth
+                Y: =Parent.TemplateHeight - 1
+                ZIndex: =3
+
+            SuggestedUserPicture As image:
+                ApplyEXIFOrientation: =false
+                FocusedBorderColor: =SuggestedUserPicture.BorderColor
+                FocusedBorderThickness: =0
+                Height: =50
+                HoverBorderColor: =ColorFade(SuggestedUserPicture.BorderColor, 20%)
+                HoverFill: =ColorFade(SuggestedUserPicture.Fill, 20%)
+                Image: |-
+                    =If(!IsBlank(ThisItem.UserPrincipalName),
+                        If(!Office365Users.UserPhotoMetadata(ThisItem.UserPrincipalName).HasPhoto,
+                            'default-profile-icon',
+                            Office365Users.UserPhoto(ThisItem.UserPrincipalName)
+                           ) 
+                    )
+                OnSelect: =Select(Parent)
+                PressedBorderColor: =ColorFade(SuggestedUserPicture.BorderColor, -20%)
+                PressedFill: =ColorFade(SuggestedUserPicture.Fill, -20%)
+                RadiusBottomLeft: =45
+                RadiusBottomRight: =45
+                RadiusTopLeft: =45
+                RadiusTopRight: =45
+                Width: =50
+                X: =14
+                ZIndex: =4
+
+        AdminUserInput As text:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Color: =RGBA(26, 26, 84, 1)
+            Default: =AdminUser
+            FocusedBorderColor: =AdminUserInput.BorderColor
+            FocusedBorderThickness: =0
+            FontWeight: =FontWeight.Semibold
+            Height: =44
+            HintText: ="Search people"
+            OnChange: =
+            OnSelect: =Set(ShowConfirmationMessage,false)
+            PaddingLeft: =56
+            PressedBorderColor: =AdminUserInput.HoverBorderColor
+            PressedColor: =AdminUserInput.Color
+            PressedFill: =AdminUserInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Width: =402
+            X: =296
+            Y: =527
+            ZIndex: =10
+
+        AdminUserSearchIcon As icon.Search:
+            Color: =RGBA(42, 42, 96, 1)
+            DisabledFill: =AdminUserSearchIcon.Fill
+            FocusedBorderColor: =AdminUserSearchIcon.BorderColor
+            Height: =20
+            HoverBorderColor: =ColorFade(AdminUserSearchIcon.BorderColor, 20%)
+            HoverColor: =ColorFade(AdminUserSearchIcon.Color, 20%)
+            HoverFill: =AdminUserSearchIcon.Fill
+            Icon: =Icon.Search
+            PressedBorderColor: =ColorFade(AdminUserSearchIcon.BorderColor, -20%)
+            PressedColor: =ColorFade(AdminUserSearchIcon.Color, -20%)
+            PressedFill: =AdminUserSearchIcon.Fill
+            Width: =20
+            X: =314
+            Y: =539
+            ZIndex: =11
+
+    AddAppAdminControls As group:
+        Height: =5
+        Width: =5
+        X: =-187
+        Y: =-46
+        ZIndex: =25
+
+        Line4 As rectangle:
+            DisabledFill: =Line4.Fill
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(221, 224, 227, 1)
+            FocusedBorderColor: =Line4.BorderColor
+            FocusedBorderThickness: =0
+            Height: =2
+            HoverFill: =Line4.Fill
+            PressedFill: =Line4.Fill
+            Visible: =Not(SuggestedUsers.Visible)
+            Width: =771
+            X: =296
+            Y: =611
+            ZIndex: =12
+
+        OpenWelcomeScreenButton As button:
+            BorderColor: =ColorFade(OpenWelcomeScreenButton.Fill, -15%)
+            BorderThickness: =0
+            DisabledBorderColor: =ColorFade(OpenWelcomeScreenButton.BorderColor, 70%)
+            Fill: =RGBA(26, 26, 84, 1)
+            FocusedBorderColor: =OpenWelcomeScreenButton.BorderColor
+            FocusedBorderThickness: =0
+            Height: =44
+            HoverBorderColor: =ColorFade(OpenWelcomeScreenButton.BorderColor, 20%)
+            HoverColor: =OpenWelcomeScreenButton.Color
+            HoverFill: =ColorFade(OpenWelcomeScreenButton.Fill, 20%)
+            OnSelect: =Navigate(WelcomeScreen,BorderStyle.None)
+            PressedBorderColor: =OpenWelcomeScreenButton.Fill
+            PressedColor: =OpenWelcomeScreenButton.Fill
+            PressedFill: =OpenWelcomeScreenButton.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =12
+            Text: ="Get started"
+            Width: =169
+            X: =900
+            Y: =526
+            ZIndex: =13
+
+        AddAdminButton As button:
+            Align: =TextPosition.Right
+            BorderColor: =RGBA(26, 26, 84, 1)
+            BorderThickness: =1
+            Color: =RGBA(26, 26, 84, 1)
+            DisabledBorderColor: =ColorFade(AddAdminButton.BorderColor, 70%)
+            DisplayMode: =If(isAddAdminButtonEnabled && (AdminUserInput.Text = AdminUser),DisplayMode.Edit,DisplayMode.Disabled)
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =AddAdminButton.BorderColor
+            FocusedBorderThickness: =0
+            Height: =44
+            HoverBorderColor: =ColorFade(AddAdminButton.BorderColor, 20%)
+            HoverColor: =AddAdminButton.Color
+            HoverFill: =ColorFade(AddAdminButton.Fill, 20%)
+            OnSelect: |-
+                =Patch(Administrators, Defaults(Administrators),{Name:AdminUser,Email:AdminUserEmail});
+                Set(ShowConfirmationMessage,true);
+                Set(isAddAdminButtonEnabled,false);
+                Set(ConfirmationMessage,AdminUser & " has been added");
+                Set(AdminUser,"")
+            PaddingRight: =14
+            PressedBorderColor: =AddAdminButton.Fill
+            PressedColor: =AddAdminButton.Fill
+            PressedFill: =AddAdminButton.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =12
+            Text: ="Add admin user"
+            Width: =182
+            X: =708
+            Y: =527
+            ZIndex: =14
+
+        AddAdminIcon As icon.Add:
+            Color: =RGBA(42, 42, 96, 1)
+            DisabledFill: =AddAdminIcon.Fill
+            DisplayMode: =If(isAddAdminButtonEnabled && (AdminUserInput.Text = AdminUser),DisplayMode.Edit,DisplayMode.Disabled)
+            FocusedBorderColor: =AddAdminIcon.BorderColor
+            FocusedBorderThickness: =0
+            Height: =20
+            HoverBorderColor: =ColorFade(AddAdminIcon.BorderColor, 20%)
+            HoverColor: =ColorFade(AddAdminIcon.Color, 20%)
+            HoverFill: =AddAdminIcon.Fill
+            Icon: =Icon.Add
+            PressedBorderColor: =ColorFade(AddAdminIcon.BorderColor, -20%)
+            PressedColor: =ColorFade(AddAdminIcon.Color, -20%)
+            PressedFill: =AddAdminIcon.Fill
+            Width: =20
+            X: =721
+            Y: =539
+            ZIndex: =15
+
+        AdminHeaderText As label:
+            DisplayMode: =DisplayMode.View
+            FocusedBorderColor: =AdminHeaderText.BorderColor
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            HoverBorderColor: =AdminHeaderText.BorderColor
+            HoverColor: =AdminHeaderText.Color
+            HoverFill: =AdminHeaderText.Fill
+            PaddingLeft: =0
+            PaddingRight: =0
+            PressedBorderColor: =AdminHeaderText.BorderColor
+            PressedColor: =AdminHeaderText.Color
+            PressedFill: =AdminHeaderText.Fill
+            Size: =14
+            Text: ="To add an admin user, play the app from this screen."
+            Width: =800
+            X: =296
+            Y: =483
+            ZIndex: =16
+

@@ -1,0 +1,145 @@
+"'Collections and Variables' As screen":
+    Height: =Max(App.Height, App.DesignHeight)
+    Orientation: =If('Collections and Variables'.Width < 'Collections and Variables'.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= 'Collections and Variables'.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    HtmlText3 As htmlViewer:
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =337
+        HoverBorderColor: =HtmlText3.BorderColor
+        HtmlText: |-
+            ="<p><strong>MyGroup</strong> - Display name of the Outlook My Tasks folder.</p>
+            <p><strong>MyProfile</strong> - Current user Office 365 user profile metadata.</p>
+            <p><strong>ManagerProfile</strong> - Current user manager's Office 365 user profile metadata.</p>
+            <p><strong>ProfileTaskFolder</strong> - Custom folder in Outlook used to store user profile status tracking tasks.</p>
+            <p><strong>ToDoTaskFolder</strong> - Custom folder in Outlook used to store tasks.</p>
+            <p><strong>TipsTaskFolder</strong> - Custom folder in Outlook used to track if the user viewed the tip on the profile page.</p>
+            <p><strong>MyOutlookFolderId</strong> - Id of the ProfileTaskFolder.</p>
+            <p><strong>MyOutlookTaskFolderId</strong> - Id of the ToDoTaskFolder.</p>
+            <p><strong>MyOutlookTipsFolderId</strong> - Id of the TipsTaskFolder.</p>
+            <p><strong>ShowProfilePageTip</strong> - Determines if the tip on the profile page is shown.</p>
+            <p><strong>isAdmin</strong> - Determines if the current user is in the Administrators DataTable in Excel.</p>
+            <p><strong>MyOutlookGroupId</strong> - Id of the Outlook My Tasks folder.</p>
+            <p><strong>MyUserId</strong> - Current user's Office 365 Id.</p>
+            <p><strong>MyUserDisplayName</strong> - Current user's Office display name.</p>
+            <p><strong>MyUserEmail</strong> - Current user's Office 365 email address.</p>
+            <p><strong>SelectedUser</strong> - Tracks users selected int he application in various galleries.</p>
+            <p><strong>SelectedUserProfile</strong> - Office 365 user profile for the SelectedUser.</p>
+            <p><strong>NumberofCompletedTasks</strong> - Number of completed tasks in the MyOutlookTasks collection.</p>
+            <p><strong>NumberOfTasks</strong> - Number of tasks in the MyOutlookTasks collection.</p>
+            <p><strong>NumberOfCompletedProfileTasks</strong> - Number of tasks in the MyProfileOutlookTasks collection.</p>
+            <p><strong>UpdateTaskName</strong> - Name of currently selected task.</p>
+            <p><strong>UpdateTaskId</strong> - Id of currently selected task.</p>
+            <p><strong>ShowMarkAsInComplete</strong> - Controls visibility of incomplete image for a task.</p>
+            <p><strong>ShowMarkAsComplete</strong> - Controls visibility of complete image for a task.</p>
+            <p><strong>UpdateTaskDescription</strong> - Description of currently selected task.</p>
+            <p><strong>ShowMarkAsComplete2</strong> - Controls visibility of complete image on my profile screen.</p>
+            <p><strong>ShowAboutMeEmail</strong> - Controls visibility of about me email image on my profile screen.</p>
+            <p><strong>DeleteImage</strong> - Controls visibility of delete image on the my profile screen and about me email screen.</p>
+            <p><strong>AdminUser</strong> - User selected on the add admin screen.</p>
+            <p><strong>ShowConfirmationMessage</strong> - Controls visibility of confirmation message on the add admin screen.</p>
+            <p><strong>isAddAdminButtonEnabled</strong> - Controls enabled/disabled button state on the add admin screen.</p>
+            <p><strong>AdminUserEmail</strong> - Selected Admin user's Office 365 email address.</p>
+            <p><strong>AdminUserO365Id</strong> - Selected Admin user's Office 365 Id.</p>
+            <p><strong>TestProfile</strong> - Current User's Office 365 profile, used for dev and testing.</p>
+            <p><strong>KickOffTimer</strong> - Used ont he team screen to wait for APIcalls to complete before resizing the controls on the screen dynamically.</p>
+            <p><strong>ShowLess</strong> - Used to control the Show More/Show Less functionality on the team screen.</p>
+            <p><strong>SelectedUserId</strong> - Currently selected user on the team screen.</p>
+            <p><strong>MyPhoto</strong> - Current user's Office 365 profile photo.</p>
+            <p><strong>PhotoToUpload</strong> - Photo to upload to the current user's Office 365 profile.</p>
+            <p><strong>PhotoTaskId</strong> - Id for the Outlook task that tracks if a user has uploaded their use rprofile photo.</p>
+            <p><strong>MyBirthday</strong> - Used to update the current user's birthday.</p>
+            <p><strong>AboutMeText</strong> - Office 365 about me information for the current user.</p>
+            <p><strong>EditMode</strong> - Used throughout the application to track if pages are in edit mode.</p>
+            <p><strong>FaqGalleryHeight</strong> - Used to dynamically resize the FAW gallery.</p>
+            "
+        PaddingLeft: =10
+        PaddingRight: =10
+        PressedBorderColor: =HtmlText3.BorderColor
+        Width: =1366
+        Y: =425
+        ZIndex: =1
+
+    Label4_1 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(0, 0, 0, 1)
+        FocusedBorderColor: =Label4_1.BorderColor
+        FontWeight: =FontWeight.Bold
+        HoverBorderColor: =Label4_1.BorderColor
+        HoverColor: =Label4_1.Color
+        HoverFill: =Label4_1.Fill
+        PressedBorderColor: =Label4_1.BorderColor
+        PressedColor: =Label4_1.Color
+        PressedFill: =Label4_1.Fill
+        Text: ="Variables"
+        Width: =1366
+        Y: =385
+        ZIndex: =2
+
+    HtmlText1 As htmlViewer:
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =265
+        HoverBorderColor: =HtmlText1.BorderColor
+        HtmlText: |-
+            ="<p><strong>FrequentContactList - </strong>The current user's most frequently contact users. Returned from the MS Graph API." & 
+            "<p><strong>TeamMemberImages - </strong>The profile images of the current user's manager, peers, and direct reports.</p>" & 
+            "<p><strong>MyManagerList - </strong>User profile information about the current user's manager.</p>" &
+            "<p><strong>MyPeersList - </strong>User profile information about the current user's peers.</p>" &
+            "<p><strong>MyReportList - </strong>User profile information about the current user's direct reports.</p>" &
+            "<p><strong>DataToTeamLink - </strong>The team links shown in the team page.</p>" &
+            "<p><strong>DataToFAQ - </strong>The FAQs shown in the company page.</p>" &
+            "<p><strong>DataToCompanyLink - </strong>The company links shown in the company page.</p>" &
+            "<p><strong>DataToContacts - </strong>The contacts shown in the company page.</p>" &
+            "<p><strong>UserProfileCache - </strong>User profile pictures.</p>" &
+            "<p><strong>MyFolders - </strong>Metadata about the Outlook task folders used to track tasks and completeness.</p>" &
+            "<p><strong>MyProfileTasksFull - </strong>Tasks from Excel that are synched to Outlook to track profile completeness for each user.</p>" &
+            "<p><strong>MyProfileOutlookTasks - </strong>Outlook tasks used to track profile completeness.</p>" &
+            "<p><strong>MyTasksFull - </strong>Tasks from Excel that are synched to Outlook to track the tasks for each user.</p>" &
+            "<p><strong>MyOutlookTasks - </strong>Outlook tasks for each user.</p>" &
+            "<p><strong>EmailAttachments - </strong>Email attachments send to the manager when submitting an about me profile email.</p>" &
+            "<p><strong>Temp2 - </strong>Stores the list of skills entered in the skills, interests, and schools textboxes on the build your employee profile screen.</p>" &
+            "<p><strong>TempCollection - </strong>Stores the distinct values in the Temp2 collection.</p>" &
+            "<p><strong>InterestsSubmit - </strong>Collection used to submit the interests in the TempCollection to the connector.</p>" &
+            "<p><strong>SkillsSubmit - </strong>Collection used to submit the skills in the TempCollection to the connector.</p>" &
+            "<p><strong>SchoolsSubmit - </strong>Collection used to submit the schools in the TempCollection to the connector.</p>" &
+            "<p><strong>Indexes - </strong>Used in the add a department page to add departments in bulk.</p>"
+        PaddingLeft: =10
+        PaddingRight: =10
+        PressedBorderColor: =HtmlText1.BorderColor
+        Width: =1366
+        Y: =120
+        ZIndex: =3
+
+    Label4 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(0, 0, 0, 1)
+        FocusedBorderColor: =Label4.BorderColor
+        FontWeight: =FontWeight.Bold
+        HoverBorderColor: =Label4.BorderColor
+        HoverColor: =Label4.Color
+        HoverFill: =Label4.Fill
+        PressedBorderColor: =Label4.BorderColor
+        PressedColor: =Label4.Color
+        PressedFill: =Label4.Fill
+        Text: ="Collections"
+        Width: =1366
+        Y: =80
+        ZIndex: =4
+
+    Label2 As label:
+        Align: =LayoutAlignItems.Center
+        Fill: =RGBA(236, 236, 236, 1)
+        FocusedBorderColor: =Label2.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =80
+        HoverBorderColor: =Label2.BorderColor
+        HoverColor: =Label2.Color
+        HoverFill: =Label2.Fill
+        PressedBorderColor: =Label2.BorderColor
+        PressedColor: =Label2.Color
+        PressedFill: =Label2.Fill
+        Text: ="Collections and Variables"
+        Width: =1366
+        ZIndex: =5
+

@@ -16,6 +16,7 @@ Customer Lookup
 Help Desk
 Leave Request
 My Expenses
+Onboarding Tasks
 Shoutouts
 Training for Office
 
@@ -25,8 +26,7 @@ Training for Office
 
 
 
-Remastered - 
- - Original
+Remastered -  - Original
 
 
 

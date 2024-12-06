@@ -1,0 +1,135 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  LandingScreen:
+    Properties:
+      Fill: =RGBA(255, 255, 255, 1)
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |-
+        =Set(AvailableRoomsCounter, 1);
+        Set(DateSelected, Today())
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - Image1:
+          Control: Image@2.2.3
+          Properties:
+            FocusedBorderColor: =Image1.BorderColor
+            Height: =768
+            HoverBorderColor: =ColorFade(Image1.BorderColor, 20%)
+            HoverFill: =ColorFade(Image1.Fill, 20%)
+            Image: ='intro-bg@3x'
+            ImagePosition: =ImagePosition.Fill
+            PressedBorderColor: =ColorFade(Image1.BorderColor, -20%)
+            PressedFill: =ColorFade(Image1.Fill, -20%)
+            Width: =820
+      - Label1:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =Label1.BorderColor
+            Height: =204
+            HoverBorderColor: =Label1.BorderColor
+            HoverColor: =Label1.Color
+            HoverFill: =Label1.Fill
+            PaddingLeft: =35
+            PressedBorderColor: =Label1.BorderColor
+            PressedColor: =Label1.Color
+            PressedFill: =Label1.Fill
+            Size: =60
+            Text: |-
+              ="Book a 
+              room"
+            Width: =560
+            Y: =31
+      - ButtonMeeting:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(ButtonMeeting.Fill, -15%)
+            DisabledBorderColor: =ColorFade(ButtonMeeting.BorderColor, 70%)
+            Fill: =RGBA(42,67,90,1)
+            FocusedBorderColor: =ButtonMeeting.BorderColor
+            Height: =60
+            HoverBorderColor: =ColorFade(ButtonMeeting.BorderColor, 20%)
+            HoverColor: =ButtonMeeting.Color
+            HoverFill: =ColorFade(ButtonMeeting.Fill, 20%)
+            OnSelect: |-
+              =Set(BookForMeeting, true);
+              Set(DateTimeRoomChange, true);
+              Navigate(MeetingSelectScreen, ScreenTransition.Cover)
+            PressedBorderColor: =ButtonMeeting.Fill
+            PressedColor: =ButtonMeeting.Fill
+            PressedFill: =ButtonMeeting.Color
+            Size: =16
+            Text: ="Book for an existing meeting"
+            Width: =378
+            X: =Image1.Width + (Parent.Width - Image1.Width) / 2 - ButtonMeeting.Width/2
+            Y: =265
+      - ButtonNoMeeting:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(ButtonNoMeeting.Fill, -15%)
+            DisabledBorderColor: =ColorFade(ButtonNoMeeting.BorderColor, 70%)
+            Fill: =RGBA(18,107,240,1)
+            FocusedBorderColor: =ButtonNoMeeting.BorderColor
+            Height: =60
+            HoverBorderColor: =ColorFade(ButtonNoMeeting.BorderColor, 20%)
+            HoverColor: =ButtonNoMeeting.Color
+            HoverFill: =ColorFade(ButtonNoMeeting.Fill, 20%)
+            OnSelect: "=Set(DateSelected, Today());\r\nSet(DateTimeRoomChange, true);\r\nIf(Mod(Minute(Now()), 30) <= 14, \r\n    Set(StartDateTime, DateAdd(Now(), -Mod(Minute(Now()), 30), TimeUnit.Minutes));\r\n    Set(EndDateTime, DateAdd(StartDateTime, 30, TimeUnit.Minutes)),\r\n   Mod(Minute(Now()), 30) >= 15,\r\n    Set(StartDateTime, DateAdd(Now(), -Mod(Minute(Now()), 30) + 30, TimeUnit.Minutes));\r\n    Set(EndDateTime, DateAdd(StartDateTime, 30, TimeUnit.Minutes)),\r\n   Set(StartDateTime, Now());\r\n   Set(EndDateTime, DateAdd(Now(), -Mod(Minute(Now()), 30) + 60, TimeUnit.Minutes))\r\n);\r\n\r\nSet(StartDateTimeUTC, Text(DateAdd(StartDateTime, TimeZoneOffset(), TimeUnit.Minutes), \"[$-en-US]yyyy-mm-ddThh:mm\") & \":00.000Z\");\r\nSet(EndDateTimeUTC, Text(DateAdd(EndDateTime, TimeZoneOffset(), TimeUnit.Minutes), \"[$-en-US]yyyy-mm-ddThh:mm\") & \":00.000Z\");\r\n\r\nSet(BookForMeeting, false);\r\n\r\nIf(NoRoomsList,\r\n\r\n    Navigate(RoomSelectScreen, ScreenTransition.Cover),\r\n    \r\n    Navigate(RoomListSelectScreen, ScreenTransition.Cover)\r\n    \r\n)"
+            PressedBorderColor: =ButtonNoMeeting.Fill
+            PressedColor: =ButtonNoMeeting.Fill
+            PressedFill: =ButtonNoMeeting.Color
+            Size: =16
+            Text: ="Book without a meeting"
+            Width: =324
+            X: =Image1.Width + (Parent.Width - Image1.Width) / 2 - ButtonNoMeeting.Width/2
+            Y: =480
+      - Label2:
+          Control: Label@2.5.1
+          Properties:
+            Align: =LayoutAlignItems.Center
+            Color: =RGBA(120, 120, 120, 1)
+            FocusedBorderColor: =Label2.BorderColor
+            Height: =74
+            HoverBorderColor: =Label2.BorderColor
+            HoverColor: =Label2.Color
+            HoverFill: =Label2.Fill
+            PressedBorderColor: =Label2.BorderColor
+            PressedColor: =Label2.Color
+            PressedFill: =Label2.Fill
+            Size: =21
+            Text: ="OR"
+            Width: =98
+            X: =Image1.Width + (Parent.Width - Image1.Width) / 2 - Label2.Width/2
+            Y: =376
+      - Rectangle1:
+          Control: Rectangle@2.3.0
+          Properties:
+            DisabledFill: =Rectangle1.Fill
+            Fill: =RGBA(151, 151, 151, 1)
+            FocusedBorderColor: =Rectangle1.BorderColor
+            Height: =1
+            HoverFill: =Rectangle1.Fill
+            PressedFill: =Rectangle1.Fill
+            Width: =194
+            X: =1143
+            Y: =413
+      - Rectangle1_1:
+          Control: Rectangle@2.3.0
+          Properties:
+            DisabledFill: =Rectangle1_1.Fill
+            Fill: =RGBA(151, 151, 151, 1)
+            FocusedBorderColor: =Rectangle1_1.BorderColor
+            Height: =1
+            HoverFill: =Rectangle1_1.Fill
+            PressedFill: =Rectangle1_1.Fill
+            Width: =194
+            X: =851
+            Y: =413

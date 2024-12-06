@@ -1,0 +1,304 @@
+EditLeadership As screen:
+    Height: =Max(App.Height, App.DesignHeight)
+    OnVisible: =
+    Orientation: =If(EditLeadership.Width < EditLeadership.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= EditLeadership.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    EditLeadershipCloseIcon As icon.Cancel:
+        Color: =RGBA(41, 40, 55, 1)
+        DisabledFill: =EditLeadershipCloseIcon.Fill
+        FocusedBorderColor: =EditLeadershipCloseIcon.BorderColor
+        FocusedBorderThickness: =0
+        Height: =34
+        HoverBorderColor: =ColorFade(EditLeadershipCloseIcon.BorderColor, 20%)
+        HoverColor: =ColorFade(EditLeadershipCloseIcon.Color, 20%)
+        HoverFill: =EditLeadershipCloseIcon.Fill
+        Icon: =Icon.Cancel
+        OnSelect: =Navigate(CompanyScreen,BorderStyle.None)
+        PressedBorderColor: =ColorFade(EditLeadershipCloseIcon.BorderColor, -20%)
+        PressedColor: =ColorFade(EditLeadershipCloseIcon.Color, -20%)
+        PressedFill: =EditLeadershipCloseIcon.Fill
+        Width: =34
+        X: =1291
+        Y: =37
+        ZIndex: =1
+
+    EditLeadershipSaveItem As button:
+        Align: =LayoutAlignItems.Center
+        BorderColor: =ColorFade(EditLeadershipSaveItem.Fill, -15%)
+        BorderThickness: =1
+        DisabledBorderColor: =ColorFade(EditLeadershipSaveItem.BorderColor, 70%)
+        DisplayMode: =If(Or(IsBlank(EditLeadershipLinkNameInput.Text),IsBlank(EditLeadershipDescriptionTextInput.Text),IsBlank(EditLeadershipLinkUrlInput.Text),EditLeadershipUrlErrorMessage.Visible),DisplayMode.Disabled,DisplayMode.Edit)
+        Fill: =RGBA(26, 26, 84, 1)
+        FocusedBorderColor: =EditLeadershipSaveItem.BorderColor
+        FocusedBorderThickness: =1
+        Height: =44
+        HoverBorderColor: =ColorFade(EditLeadershipSaveItem.BorderColor, 20%)
+        HoverColor: =EditLeadershipSaveItem.Color
+        HoverFill: =ColorFade(EditLeadershipSaveItem.Fill, 20%)
+        OnSelect: |-
+            =Patch(Leadership,First(Leadership),{Description:EditLeadershipDescriptionTextInput.Text});
+            Patch(LeadershipLinks,First(LeadershipLinks),{Name:EditLeadershipLinkNameInput.Text,URL:EditLeadershipLinkUrlInput.Text});
+            Navigate(CompanyScreen,BorderStyle.None)
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =EditLeadershipSaveItem.Fill
+        PressedColor: =EditLeadershipSaveItem.Fill
+        PressedFill: =EditLeadershipSaveItem.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =12
+        Text: ="Save"
+        Width: =131
+        X: =236
+        Y: =589
+        ZIndex: =11
+
+    EditLeadershipSeparator As rectangle:
+        DisabledFill: =EditLeadershipSeparator.Fill
+        Fill: =RGBA(221, 224, 227, 1)
+        FocusedBorderColor: =EditLeadershipSeparator.BorderColor
+        FocusedBorderThickness: =0
+        Height: =3
+        HoverFill: =EditLeadershipSeparator.Fill
+        PressedFill: =EditLeadershipSeparator.Fill
+        Width: =1059
+        X: =130
+        Y: =437
+        ZIndex: =12
+
+    EditLeadershipUrlErrorMessage As label:
+        Color: =RGBA(208, 2, 27, 0.95)
+        FocusedBorderColor: =EditLeadershipUrlErrorMessage.BorderColor
+        Height: =18
+        HoverBorderColor: =EditLeadershipUrlErrorMessage.BorderColor
+        HoverColor: =EditLeadershipUrlErrorMessage.Color
+        HoverFill: =EditLeadershipUrlErrorMessage.Fill
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =EditLeadershipUrlErrorMessage.BorderColor
+        PressedColor: =EditLeadershipUrlErrorMessage.Color
+        PressedFill: =EditLeadershipUrlErrorMessage.Fill
+        Size: |+
+            =10.5
+            
+        Text: |-
+            ="(Leadership url must be a valid URL with the http:// or https:// prefix.)"
+        Visible: |-
+            =Not(IsBlank(EditLeadershipLinkUrlInput.Text) || IsMatch(EditLeadershipLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))
+        Width: =600
+        X: =726
+        Y: =462
+        ZIndex: =13
+
+    EditLeadershipDataGroup As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =13
+
+        EditLeadershipLinkNameText As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditLeadershipLinkNameText.BorderColor
+            Height: =19
+            HoverBorderColor: =EditLeadershipLinkNameText.BorderColor
+            HoverColor: =EditLeadershipLinkNameText.Color
+            HoverFill: =EditLeadershipLinkNameText.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipLinkNameText.BorderColor
+            PressedColor: =EditLeadershipLinkNameText.Color
+            PressedFill: =EditLeadershipLinkNameText.Fill
+            Size: |+
+                =10.5
+                
+            Text: ="Link name"
+            Width: =351
+            X: =236
+            Y: =462
+            ZIndex: =5
+
+        EditLeadershipLinkNameInput As text:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =First(LeadershipLinks).Name
+            FocusedBorderColor: =EditLeadershipLinkNameInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            PaddingBottom: =0
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipLinkNameInput.HoverBorderColor
+            PressedColor: =EditLeadershipLinkNameInput.Color
+            PressedFill: =EditLeadershipLinkNameInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =2
+            Width: =415
+            X: =236
+            Y: =490
+            ZIndex: =6
+
+        EditLeadershipDescriptionText As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditLeadershipDescriptionText.BorderColor
+            Height: =19
+            HoverBorderColor: =EditLeadershipDescriptionText.BorderColor
+            HoverColor: =EditLeadershipDescriptionText.Color
+            HoverFill: =EditLeadershipDescriptionText.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipDescriptionText.BorderColor
+            PressedColor: =EditLeadershipDescriptionText.Color
+            PressedFill: =EditLeadershipDescriptionText.Fill
+            Size: |+
+                =10.5
+                
+            Text: ="Description"
+            Width: =351
+            X: =236
+            Y: =286
+            ZIndex: =7
+
+        EditLeadershipDescriptionTextInput As text:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =First(Leadership).Description
+            FocusedBorderColor: =EditLeadershipDescriptionTextInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =100
+            LineHeight: =1.5
+            Mode: =TextMode.MultiLine
+            PaddingBottom: =12
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =12
+            PressedBorderColor: =EditLeadershipDescriptionTextInput.HoverBorderColor
+            PressedColor: =EditLeadershipDescriptionTextInput.Color
+            PressedFill: =EditLeadershipDescriptionTextInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =1
+            Width: =895
+            X: =236
+            Y: =314
+            ZIndex: =8
+
+        EditLeadershipLinkURLText As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditLeadershipLinkURLText.BorderColor
+            Height: =19
+            HoverBorderColor: =EditLeadershipLinkURLText.BorderColor
+            HoverColor: =EditLeadershipLinkURLText.Color
+            HoverFill: =EditLeadershipLinkURLText.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipLinkURLText.BorderColor
+            PressedColor: =EditLeadershipLinkURLText.Color
+            PressedFill: =EditLeadershipLinkURLText.Fill
+            Size: |+
+                =10.5
+                
+            Text: ="Link url"
+            Width: =351
+            X: =673
+            Y: =462
+            ZIndex: =9
+
+        EditLeadershipLinkUrlInput As text:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =First(LeadershipLinks).URL
+            FocusedBorderColor: =EditLeadershipLinkUrlInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            PaddingBottom: =0
+            PaddingLeft: =15
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipLinkUrlInput.HoverBorderColor
+            PressedColor: =EditLeadershipLinkUrlInput.Color
+            PressedFill: =EditLeadershipLinkUrlInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =3
+            Width: =415
+            X: =671
+            Y: =490
+            ZIndex: =10
+
+    EditLeadershipTitleBar As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =17
+
+        EditLeadershipTitle As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditLeadershipTitle.BorderColor
+            HoverBorderColor: =EditLeadershipTitle.BorderColor
+            HoverColor: =EditLeadershipTitle.Color
+            HoverFill: =EditLeadershipTitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipTitle.BorderColor
+            PressedColor: =EditLeadershipTitle.Color
+            PressedFill: =EditLeadershipTitle.Fill
+            Size: |
+                =27
+            Text: ="Edit Leadership"
+            Width: =900
+            X: =236
+            Y: =135
+            ZIndex: =3
+
+        EditLeadershipSubTitleText As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditLeadershipSubTitleText.BorderColor
+            FontWeight: =FontWeight.Semibold
+            Height: =60
+            HoverBorderColor: =EditLeadershipSubTitleText.BorderColor
+            HoverColor: =EditLeadershipSubTitleText.Color
+            HoverFill: =EditLeadershipSubTitleText.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditLeadershipSubTitleText.BorderColor
+            PressedColor: =EditLeadershipSubTitleText.Color
+            PressedFill: =EditLeadershipSubTitleText.Fill
+            Size: =13.5
+            Text: ="Add a link to your company's leadeship page where they can learn more."
+            VerticalAlign: =VerticalAlign.Top
+            Width: =900
+            X: =236
+            Y: =190
+            ZIndex: =4
+

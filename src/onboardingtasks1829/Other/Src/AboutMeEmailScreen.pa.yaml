@@ -1,0 +1,400 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  AboutMeEmailScreen:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - AboutMeEmailLayer:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =768
+            Width: =1366
+          Children:
+            - AboutMeEmailSection:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =AboutMeEmailSubmit.Y + AboutMeEmailSubmit.Height + 80
+                  Width: =1366
+                Children:
+                  - AboutMeEmailPhotoLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =AboutMeEmailPhotoLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =24
+                        HoverBorderColor: =AboutMeEmailPhotoLabel.BorderColor
+                        HoverColor: =AboutMeEmailPhotoLabel.Color
+                        HoverFill: =AboutMeEmailPhotoLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =AboutMeEmailPhotoLabel.BorderColor
+                        PressedColor: =AboutMeEmailPhotoLabel.Color
+                        PressedFill: =AboutMeEmailPhotoLabel.Fill
+                        Size: =13.5
+                        Text: ="Attach a photo of yourself"
+                        Width: =600
+                        X: =312
+                        Y: =609
+                  - AboutMeEmailHeaderBackground:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =AboutMeEmailHeaderBackground.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =AboutMeEmailHeaderBackground.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =574
+                        HoverFill: =AboutMeEmailHeaderBackground.Fill
+                        PressedFill: =AboutMeEmailHeaderBackground.Fill
+                        Width: =Parent.Width
+                  - AboutMeEmailClose:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =AboutMeEmailClose.Fill
+                        FocusedBorderColor: =AboutMeEmailClose.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(AboutMeEmailClose.BorderColor, 20%)
+                        HoverColor: =ColorFade(AboutMeEmailClose.Color, 20%)
+                        HoverFill: =AboutMeEmailClose.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Back()
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(AboutMeEmailClose.BorderColor, -20%)
+                        PressedColor: =ColorFade(AboutMeEmailClose.Color, -20%)
+                        PressedFill: =AboutMeEmailClose.Fill
+                        X: =1282
+                  - AboutMeEmailTitle:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =AboutMeEmailTitle.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =50
+                        HoverBorderColor: =AboutMeEmailTitle.BorderColor
+                        HoverColor: =AboutMeEmailTitle.Color
+                        HoverFill: =AboutMeEmailTitle.Fill
+                        PressedBorderColor: =AboutMeEmailTitle.BorderColor
+                        PressedColor: =AboutMeEmailTitle.Color
+                        PressedFill: =AboutMeEmailTitle.Fill
+                        Size: =18
+                        Text: ="Write your “About Me” email"
+                        Width: =Parent.Width
+                        Y: =169
+                  - AboutMeEmailSubtitle:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =AboutMeEmailSubtitle.BorderColor
+                        Height: =30
+                        HoverBorderColor: =AboutMeEmailSubtitle.BorderColor
+                        HoverColor: =AboutMeEmailSubtitle.Color
+                        HoverFill: =AboutMeEmailSubtitle.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =AboutMeEmailSubtitle.BorderColor
+                        PressedColor: =AboutMeEmailSubtitle.Color
+                        PressedFill: =AboutMeEmailSubtitle.Fill
+                        Size: =12
+                        Text: ="Write a brief introduction for your manager to share with the team."
+                        Width: =Parent.Width
+                        Y: =234
+                  - AboutMeEmailAboutMeInput:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =AboutMeEmailAboutMeInput.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =218
+                        Mode: =TextMode.MultiLine
+                        PaddingBottom: =20
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                        PaddingTop: =20
+                        PressedBorderColor: =AboutMeEmailAboutMeInput.HoverBorderColor
+                        PressedColor: =AboutMeEmailAboutMeInput.Color
+                        PressedFill: =AboutMeEmailAboutMeInput.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Width: =503
+                        X: =318
+                        Y: =321
+                  - AboutMeEmailExample:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        AutoHeight: =true
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =219
+                        HoverBorderColor: =AboutMeEmailExample.BorderColor
+                        HtmlText: |-
+                          ="<div style=""font-size:14px;padding:3px 5px;font-weight:600;"">Example</div>
+                          <div style=""font-size:12px;padding:5px;line-height:17px;"">My name is Cindy Sharp and I’m the newest addition to the team as your Procurement Buyer. I received a B.A. from Contoso College, interned with Fabrikam, and most recently held the position of Assistant Buyer at Acme.</div>
+                          <div style=""font-size:12px;padding:5px;line-height:17px;"">In my free time, I love to bike, cook, and spend time with my family of four. </div>
+                          <div style=""font-size:12px;padding:7px 5px;line-height:17px;"">I look forward to getting to know each of you! </div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =300
+                        X: =832
+                        Y: =317
+                  - AboutMeEmailAboutMeLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =AboutMeEmailAboutMeLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =24
+                        HoverBorderColor: =AboutMeEmailAboutMeLabel.BorderColor
+                        HoverColor: =AboutMeEmailAboutMeLabel.Color
+                        HoverFill: =AboutMeEmailAboutMeLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =AboutMeEmailAboutMeLabel.BorderColor
+                        PressedColor: =AboutMeEmailAboutMeLabel.Color
+                        PressedFill: =AboutMeEmailAboutMeLabel.Fill
+                        Size: =13.5
+                        Text: ="About Me"
+                        Width: =600
+                        X: =312
+                        Y: =287
+                  - AboutMeEmailLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =AboutMeEmailLogo.BorderColor
+                        Height: =54
+                        HoverBorderColor: =ColorFade(AboutMeEmailLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(AboutMeEmailLogo.Fill, 20%)
+                        Image: ='about-me-green'
+                        PressedBorderColor: =ColorFade(AboutMeEmailLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(AboutMeEmailLogo.Fill, -20%)
+                        Width: =67
+                        X: =650
+                        Y: =98
+                  - AboutMeEmailPhotoLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =AboutMeEmailPhotoLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =25
+                        HoverBorderColor: =ColorFade(AboutMeEmailPhotoLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(AboutMeEmailPhotoLogo.Fill, 20%)
+                        Image: =gallery
+                        PressedBorderColor: =ColorFade(AboutMeEmailPhotoLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(AboutMeEmailPhotoLogo.Fill, -20%)
+                        Width: =25
+                        X: =AboutMeEmailSelectPhoto.X + 23
+                        Y: =AboutMeEmailSelectPhoto.Y + 10
+                  - AboutMeEmailSelectPhoto:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =AboutMeEmailSelectPhoto.BorderColor
+                        DisabledBorderColor: =ColorFade(AboutMeEmailSelectPhoto.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =AboutMeEmailSelectPhoto.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =45
+                        HoverBorderColor: =AboutMeEmailSelectPhoto.BorderColor
+                        HoverColor: =AboutMeEmailSelectPhoto.Color
+                        HoverFill: =AboutMeEmailSelectPhoto.Fill
+                        PaddingLeft: =36
+                        PaddingRight: =0
+                        PressedBorderColor: =AboutMeEmailSelectPhoto.BorderColor
+                        PressedColor: =AboutMeEmailSelectPhoto.Color
+                        PressedFill: =AboutMeEmailSelectPhoto.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Select from gallery"
+                        Width: =227
+                        X: =319
+                        Y: =652
+                  - AboutMeEmailAddPhotoControl:
+                      Control: AddMedia@2.2.1
+                      Group: AboutMeEmailAddPhoto
+                      Properties:
+                        BorderColor: =ColorFade(AboutMeEmailAddPhotoControl.Fill, -15%)
+                        ChangePictureText: =""
+                        FocusedBorderColor: =AboutMeEmailAddPhotoControl.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =AboutMeEmailSelectPhoto.Height
+                        HoverBorderColor: =ColorFade(AboutMeEmailAddPhotoControl.BorderColor, 20%)
+                        HoverColor: =AboutMeEmailAddPhotoControl.Color
+                        HoverFill: =ColorFade(AboutMeEmailAddPhotoControl.Fill, 20%)
+                        OnChange: |-
+                          =Set(DeleteImage,false);
+                          Set(AboutMePhoto,AboutMeEmailAddPhotoControl.Media)
+                        PressedBorderColor: =ColorFade(AboutMeEmailAddPhotoControl.BorderColor, -20%)
+                        PressedColor: =AboutMeEmailAddPhotoControl.Color
+                        PressedFill: =ColorFade(AboutMeEmailAddPhotoControl.Fill, -20%)
+                        Size: =25
+                        Text: =""
+                        Width: =AboutMeEmailSelectPhoto.Width
+                        X: =AboutMeEmailSelectPhoto.X
+                        Y: =AboutMeEmailSelectPhoto.Y
+                  - AboutMeEmailDeleteImageLogo:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =AboutMeEmailDeleteImage.BorderColor
+                        DisabledFill: =AboutMeEmailDeleteImageLogo.Fill
+                        FocusedBorderColor: =AboutMeEmailDeleteImageLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =23
+                        HoverBorderColor: =ColorFade(AboutMeEmailDeleteImageLogo.BorderColor, 20%)
+                        HoverColor: =ColorFade(AboutMeEmailDeleteImageLogo.Color, 20%)
+                        HoverFill: =AboutMeEmailDeleteImageLogo.Fill
+                        Icon: =Icon.Cancel
+                        PaddingLeft: =5
+                        PaddingRight: =5
+                        PressedBorderColor: =ColorFade(AboutMeEmailDeleteImageLogo.BorderColor, -20%)
+                        PressedColor: =ColorFade(AboutMeEmailDeleteImageLogo.Color, -20%)
+                        PressedFill: =AboutMeEmailDeleteImageLogo.Fill
+                        Visible: =AboutMeEmailDeleteImage.Visible
+                        Width: =23
+                        X: =AboutMeEmailDeleteImage.X
+                        Y: =AboutMeEmailDeleteImage.Y
+                  - AboutMeEmailDeleteImage:
+                      Control: Circle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =2
+                        DisabledFill: =AboutMeEmailDeleteImage.Fill
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =AboutMeEmailDeleteImage.BorderColor
+                        Height: =23
+                        HoverFill: =AboutMeEmailDeleteImage.Fill
+                        OnSelect: =Set(DeleteImage,true)
+                        PressedFill: =AboutMeEmailDeleteImage.Fill
+                        Visible: =Not(IsBlank(AboutMeEmailPhoto.Image))
+                        Width: =23
+                        X: =1024
+                        Y: =610
+                  - AboutMeEmailSeperator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =AboutMeEmailSeperator.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =AboutMeEmailSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =2
+                        HoverFill: =AboutMeEmailSeperator.Fill
+                        PressedFill: =AboutMeEmailSeperator.Fill
+                        Width: =730
+                        X: =318
+                        Y: =Max(AboutMeEmailPhoto.Y + AboutMeEmailPhoto.Height,AboutMeEmailSelectPhoto.Y + AboutMeEmailSelectPhoto.Height) + 35
+                  - AboutMeEmailSubmitLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =AboutMeEmailSubmitLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =26
+                        HoverBorderColor: =ColorFade(AboutMeEmailSubmitLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(AboutMeEmailSubmitLogo.Fill, 20%)
+                        Image: =mail
+                        PressedBorderColor: =ColorFade(AboutMeEmailSubmitLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(AboutMeEmailSubmitLogo.Fill, -20%)
+                        Width: =26
+                        X: =AboutMeEmailSubmit.X + 23
+                        Y: =AboutMeEmailSubmit.Y + 10
+                  - AboutMeEmailSubmit:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =AboutMeEmailSubmit.BorderColor
+                        DisabledBorderColor: =ColorFade(AboutMeEmailSubmit.BorderColor, 70%)
+                        DisabledColor: =RGBA(255,255,255,1)
+                        DisabledFill: =RGBA(0,0,0,0.5)
+                        DisplayMode: =If(IsBlank(AboutMeEmailAboutMeInput.Text),DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =AboutMeEmailSubmit.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =45
+                        HoverBorderColor: =AboutMeEmailSubmit.BorderColor
+                        HoverColor: =AboutMeEmailSubmit.Color
+                        HoverFill: =AboutMeEmailSubmit.Fill
+                        OnSelect: |-
+                          =If(IsBlank(emailHtml), UpdateContext({emailHtml:
+                          "<html>
+
+                          <head>
+                              <meta http-equiv=""Content-Type"" content=""text/html; charset=us-ascii"">
+                          </head>
+
+                          <body>
+                          <p>"
+                          & AboutMeEmailAboutMeInput.Text &
+                          "</p>
+                          </body>
+                          </html>"
+                          }));
+                          If(IsBlank(AboutMeEmailAddPhotoControl.Media),Clear(EmailAttachments),ClearCollect(EmailAttachments,{Name:"Photo.jpg",ContentBytes:AboutMeEmailAddPhotoControl.Media}));
+                          Office365.SendEmail(First(MyManagerList).Mail, "Profile Of " & MyProfile.DisplayName, emailHtml,{IsHtml:true, Importance:"normal",Attachments:EmailAttachments});
+                          UpdateContext({emailHtml:""});
+                          OutlookTasks.CompleteTask(First(Filter(MyProfileOutlookTasks,Subject = "AboutMeEmailComplete")).Id);
+                          Navigate(MyProfileScreen,BorderStyle.None)
+                        PaddingLeft: =36
+                        PaddingRight: =0
+                        PressedBorderColor: =AboutMeEmailSubmit.BorderColor
+                        PressedColor: =AboutMeEmailSubmit.Color
+                        PressedFill: =AboutMeEmailSubmit.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Submit to " & First(MyManagerList).DisplayName
+                        Width: =295
+                        X: =544
+                        Y: =AboutMeEmailSeperator.Y + AboutMeEmailSeperator.Height + 35
+                  - AboutMeEmailPhoto:
+                      Control: Image@2.2.3
+                      Group: AboutMeEmailAddPhoto
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =AboutMeEmailPhoto.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =316
+                        HoverBorderColor: =ColorFade(AboutMeEmailPhoto.BorderColor, 20%)
+                        HoverFill: =ColorFade(AboutMeEmailPhoto.Fill, 20%)
+                        Image: =If(And(Not(IsBlank(AboutMeEmailAddPhotoControl.Media)),Not(DeleteImage)), AboutMeEmailAddPhotoControl.Media)
+                        PressedBorderColor: =ColorFade(AboutMeEmailPhoto.BorderColor, -20%)
+                        PressedFill: =ColorFade(AboutMeEmailPhoto.Fill, -20%)
+                        Width: =316
+                        X: =688
+                        Y: =609

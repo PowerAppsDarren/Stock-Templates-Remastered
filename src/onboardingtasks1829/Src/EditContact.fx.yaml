@@ -1,0 +1,450 @@
+EditContact As screen:
+    Height: =Max(App.Height, App.DesignHeight)
+    OnVisible: |-
+        =Clear(Indexes);
+        Clear(DataToContacts);
+        ForAll(Contacts,
+            Collect(Indexes, { Value: If(And(CountRows(Indexes) > 0, Not(IsBlank(Indexes))), Last(Indexes).Value + 1, 1) });
+            Collect(DataToContacts, { Index: Last(Indexes).Value, Name:DepartmentName,Phone:DepartmentPhone,Email:Email,Valid:And(Not(Or(IsBlank(DepartmentName),IsBlank(DepartmentPhone),IsBlank(Email))),IsMatch(Email,Match.Email))})
+        )
+    Orientation: =If(EditContact.Width < EditContact.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= EditContact.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    EditContactLayer As fluidGrid.fluidGridWithBlankCard:
+        BorderThickness: =0
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =Parent.Height
+        Width: =Parent.Width
+        ZIndex: =17
+
+        EditContactSection As dataCard:
+            BorderColor: =RGBA(0, 0, 0, 1)
+            BorderStyle: =BorderStyle.Solid
+            BorderThickness: =0
+            DisplayMode: =DisplayMode.Edit
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =EditContactAddDepartmentButton.Y + EditContactAddDepartmentButton.Height + 70
+            Width: =Parent.Width
+            X: =0
+            Y: =0
+            ZIndex: =1
+
+            EditContactClose As icon.Cancel:
+                Color: =RGBA(41, 40, 55, 1)
+                DisabledFill: =EditContactClose.Fill
+                FocusedBorderColor: =EditContactClose.BorderColor
+                FocusedBorderThickness: =0
+                Height: =34
+                HoverBorderColor: =ColorFade(EditContactClose.BorderColor, 20%)
+                HoverColor: =ColorFade(EditContactClose.Color, 20%)
+                HoverFill: =EditContactClose.Fill
+                Icon: =Icon.Cancel
+                OnSelect: =Back(BorderStyle.None)
+                PressedBorderColor: =ColorFade(EditContactClose.BorderColor, -20%)
+                PressedColor: =ColorFade(EditContactClose.Color, -20%)
+                PressedFill: =EditContactClose.Fill
+                Width: =34
+                X: =1302
+                Y: =30
+                ZIndex: =7
+
+            EditContactHeader As group:
+                Height: =5
+                Width: =5
+                X: =-197
+                Y: =-123
+                ZIndex: =7
+
+                EditCompanyHeaderTitle_1 As label:
+                    Color: =RGBA(41, 40, 55, 1)
+                    FocusedBorderColor: =EditCompanyHeaderTitle_1.BorderColor
+                    Height: =50
+                    HoverBorderColor: =EditCompanyHeaderTitle_1.BorderColor
+                    HoverColor: =EditCompanyHeaderTitle_1.Color
+                    HoverFill: =EditCompanyHeaderTitle_1.Fill
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditCompanyHeaderTitle_1.BorderColor
+                    PressedColor: =EditCompanyHeaderTitle_1.Color
+                    PressedFill: =EditCompanyHeaderTitle_1.Fill
+                    Size: |
+                        =27
+                    Text: ="Edit Contacts"
+                    Width: =900
+                    X: =236
+                    Y: =115
+                    ZIndex: =5
+
+                EditContactSubtitle As label:
+                    Color: =RGBA(41, 40, 55, 1)
+                    FocusedBorderColor: =EditContactSubtitle.BorderColor
+                    FontWeight: =FontWeight.Semibold
+                    Height: =30
+                    HoverBorderColor: =EditContactSubtitle.BorderColor
+                    HoverColor: =EditContactSubtitle.Color
+                    HoverFill: =EditContactSubtitle.Fill
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactSubtitle.BorderColor
+                    PressedColor: =EditContactSubtitle.Color
+                    PressedFill: =EditContactSubtitle.Fill
+                    Size: =13.5
+                    Text: ="Add important company contacts for quick reference."
+                    Width: =900
+                    X: =236
+                    Y: =165
+                    ZIndex: =6
+
+            "EditContactGallery As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                DisabledBorderColor: =EditContactGallery.BorderColor
+                DisabledFill: =EditContactGallery.Fill
+                Height: =CountRows(DataToContacts) * EditContactGallery.TemplateHeight
+                HoverBorderColor: =EditContactGallery.BorderColor
+                HoverFill: =EditContactGallery.Fill
+                Items: =Indexes
+                Layout: =Layout.Vertical
+                LoadingSpinnerColor: =EditContactGallery.BorderColor
+                PressedBorderColor: =EditContactGallery.BorderColor
+                PressedFill: =EditContactGallery.Fill
+                TemplatePadding: =0
+                TemplateSize: =208
+                Width: =1060
+                X: =153
+                Y: =209
+                ZIndex: =10
+
+                EditContactSeperator As rectangle:
+                    DisabledFill: =EditContactSeperator.Fill
+                    Fill: =RGBA(221, 224, 227, 1)
+                    FocusedBorderColor: =EditContactSeperator.BorderColor
+                    FocusedBorderThickness: =0
+                    Height: =3
+                    HoverFill: =EditContactSeperator.Fill
+                    OnSelect: =Select(Parent)
+                    PressedFill: =EditContactSeperator.Fill
+                    Width: =Parent.TemplateWidth - 4
+                    X: =2
+                    Y: =Parent.TemplateHeight - EditContactSeperator.Height
+                    ZIndex: =1
+
+                EditContactNameLabel As label:
+                    Color: =RGBA(41, 40, 55, 1)
+                    FocusedBorderColor: =EditContactNameLabel.BorderColor
+                    FontWeight: =FontWeight.Semibold
+                    Height: =30
+                    HoverBorderColor: =EditContactNameLabel.BorderColor
+                    HoverColor: =EditContactNameLabel.Color
+                    HoverFill: =EditContactNameLabel.Fill
+                    PaddingBottom: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactNameLabel.BorderColor
+                    PressedColor: =EditContactNameLabel.Color
+                    PressedFill: =EditContactNameLabel.Fill
+                    Size: =12
+                    Text: ="Department name"
+                    Width: =900
+                    X: =78
+                    Y: =15
+                    ZIndex: =2
+
+                EditContactPhoneLabel As label:
+                    Color: =RGBA(41, 40, 55, 1)
+                    FocusedBorderColor: =EditContactPhoneLabel.BorderColor
+                    Height: =19
+                    HoverBorderColor: =EditContactPhoneLabel.BorderColor
+                    HoverColor: =EditContactPhoneLabel.Color
+                    HoverFill: =EditContactPhoneLabel.Fill
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactPhoneLabel.BorderColor
+                    PressedColor: =EditContactPhoneLabel.Color
+                    PressedFill: =EditContactPhoneLabel.Fill
+                    Size: |+
+                        =10.5
+                        
+                    Text: ="Department phone"
+                    Width: =400
+                    X: =83
+                    Y: =113
+                    ZIndex: =3
+
+                EditContactNameInput As text:
+                    BorderColor: =If(IsBlank(EditContactNameInput.Text),RGBA(255,0,0,1),RGBA(202,202,202,1))
+                    BorderThickness: =1
+                    Default: =LookUp(DataToContacts, Index = ThisItem.Value).Name
+                    FocusedBorderColor: =EditContactNameInput.BorderColor
+                    FocusedBorderThickness: =1
+                    Height: =44
+                    OnChange: |-
+                        =Patch(DataToContacts,LookUp(DataToContacts, Index = ThisItem.Value),{Name:EditContactNameInput.Text,Valid:And(Not(Or(IsBlank(EditContactNameInput.Text),IsBlank(EditContactPhoneInput.Text),IsBlank(EditContactEmailInput.Text))),IsMatch(EditContactEmailInput.Text,Match.Email))})
+                    PaddingBottom: =0
+                    PaddingLeft: =15
+                    PaddingRight: =15
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactNameInput.HoverBorderColor
+                    PressedColor: =EditContactNameInput.Color
+                    PressedFill: =EditContactNameInput.Fill
+                    RadiusBottomLeft: =4
+                    RadiusBottomRight: =4
+                    RadiusTopLeft: =4
+                    RadiusTopRight: =4
+                    Size: =13.5
+                    TabIndex: =ThisItem.Value * 3 - 2
+                    Width: =850
+                    X: =83
+                    Y: =49
+                    ZIndex: =4
+
+                EditContactPhoneInput As text:
+                    BorderColor: =If(IsBlank(EditContactPhoneInput.Text),RGBA(255,0,0,1),RGBA(202,202,202,1))
+                    BorderThickness: =1
+                    Default: =LookUp(DataToContacts, Index = ThisItem.Value).Phone
+                    FocusedBorderColor: =EditContactPhoneInput.BorderColor
+                    FocusedBorderThickness: =1
+                    Height: =44
+                    OnChange: |-
+                        =Patch(DataToContacts,LookUp(DataToContacts, Index = ThisItem.Value),{Phone:EditContactPhoneInput.Text,Valid:And(Not(Or(IsBlank(EditContactNameInput.Text),IsBlank(EditContactPhoneInput.Text),IsBlank(EditContactEmailInput.Text))),IsMatch(EditContactEmailInput.Text,Match.Email))})
+                    PaddingBottom: =0
+                    PaddingLeft: =15
+                    PaddingRight: =15
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactPhoneInput.HoverBorderColor
+                    PressedColor: =EditContactPhoneInput.Color
+                    PressedFill: =EditContactPhoneInput.Fill
+                    RadiusBottomLeft: =4
+                    RadiusBottomRight: =4
+                    RadiusTopLeft: =4
+                    RadiusTopRight: =4
+                    Size: =13.5
+                    TabIndex: =ThisItem.Value * 3 - 1
+                    Width: =415
+                    X: =83
+                    Y: =141
+                    ZIndex: =5
+
+                EditContactDelete As circle:
+                    BorderColor: =RGBA(26, 26, 84, 1)
+                    BorderThickness: =2
+                    DisabledFill: =EditContactDelete.Fill
+                    Fill: =RGBA(0, 0, 0, 0)
+                    FocusedBorderColor: =EditContactDelete.BorderColor
+                    Height: =24
+                    HoverFill: =EditContactDelete.Fill
+                    PressedFill: =EditContactDelete.Fill
+                    Width: =24
+                    X: =954
+                    Y: =91
+                    ZIndex: =6
+
+                EditContactEmailLabel As label:
+                    Color: =RGBA(41, 40, 55, 1)
+                    FocusedBorderColor: =EditContactEmailLabel.BorderColor
+                    Height: =19
+                    HoverBorderColor: =EditContactEmailLabel.BorderColor
+                    HoverColor: =EditContactEmailLabel.Color
+                    HoverFill: =EditContactEmailLabel.Fill
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactEmailLabel.BorderColor
+                    PressedColor: =EditContactEmailLabel.Color
+                    PressedFill: =EditContactEmailLabel.Fill
+                    Size: |+
+                        =10.5
+                        
+                    Text: ="Email"
+                    Width: =400
+                    X: =518
+                    Y: =113
+                    ZIndex: =7
+
+                EditContactEmailInput As text:
+                    BorderColor: =If(IsBlank(EditContactEmailInput.Text),RGBA(255,0,0,1),RGBA(202,202,202,1))
+                    BorderThickness: =1
+                    Default: =LookUp(DataToContacts, Index = ThisItem.Value).Email
+                    FocusedBorderColor: =EditContactEmailInput.BorderColor
+                    FocusedBorderThickness: =1
+                    Height: =44
+                    OnChange: |-
+                        =Patch(DataToContacts,LookUp(DataToContacts, Index = ThisItem.Value),{Email:EditContactEmailInput.Text,Valid:And(Not(Or(IsBlank(EditContactNameInput.Text),IsBlank(EditContactPhoneInput.Text),IsBlank(EditContactEmailInput.Text))),IsMatch(EditContactEmailInput.Text,Match.Email))})
+                    PaddingBottom: =0
+                    PaddingLeft: =15
+                    PaddingRight: =15
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactEmailInput.HoverBorderColor
+                    PressedColor: =EditContactEmailInput.Color
+                    PressedFill: =EditContactEmailInput.Fill
+                    RadiusBottomLeft: =4
+                    RadiusBottomRight: =4
+                    RadiusTopLeft: =4
+                    RadiusTopRight: =4
+                    Size: =13.5
+                    TabIndex: =ThisItem.Value * 3
+                    Width: =415
+                    X: =518
+                    Y: =141
+                    ZIndex: =8
+
+                EditContactDeleteLogo As icon.Cancel:
+                    AutoDisableOnSelect: =false
+                    Color: =RGBA(41, 40, 55, 1)
+                    DisabledFill: =EditContactDeleteLogo.Fill
+                    FocusedBorderColor: =EditContactDeleteLogo.BorderColor
+                    FocusedBorderThickness: =0
+                    Height: =48
+                    HoverBorderColor: =ColorFade(EditContactDeleteLogo.BorderColor, 20%)
+                    HoverColor: =ColorFade(EditContactDeleteLogo.Color, 20%)
+                    HoverFill: =EditContactDeleteLogo.Fill
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =RemoveIf(DataToContacts, Index = ThisItem.Value);
+                        Remove(Indexes,ThisItem)
+                    PaddingLeft: =16
+                    PaddingRight: =16
+                    PressedBorderColor: =ColorFade(EditContactDeleteLogo.BorderColor, -20%)
+                    PressedColor: =ColorFade(EditContactDeleteLogo.Color, -20%)
+                    PressedFill: =EditContactDeleteLogo.Fill
+                    Width: =48
+                    X: =EditContactDelete.X - 12
+                    Y: =EditContactDelete.Y - 12
+                    ZIndex: =9
+
+                EditContactEmailErrorMessage As label:
+                    Color: =RGBA(255, 0, 0, 1)
+                    FocusedBorderColor: =EditContactEmailErrorMessage.BorderColor
+                    Height: =39
+                    HoverBorderColor: =EditContactEmailErrorMessage.BorderColor
+                    HoverColor: =EditContactEmailErrorMessage.Color
+                    HoverFill: =EditContactEmailErrorMessage.Fill
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactEmailErrorMessage.BorderColor
+                    PressedColor: =EditContactEmailErrorMessage.Color
+                    PressedFill: =EditContactEmailErrorMessage.Fill
+                    Size: |+
+                        =10.5
+                        
+                    Text: ="(Department Email must be a valid Email address.)"
+                    Visible: =Not(IsBlank(EditContactEmailInput.Text) || IsMatch(EditContactEmailInput.Text,Match.Email))
+                    Width: =350
+                    X: =557
+                    Y: =EditContactEmailLabel.Y - 10
+                    ZIndex: =10
+
+            EditContactMask As rectangle:
+                DisabledFill: =EditContactMask.Fill
+                DisplayMode: =DisplayMode.View
+                Fill: =RGBA(255, 255, 255, 1)
+                FocusedBorderColor: =EditContactMask.BorderColor
+                FocusedBorderThickness: =0
+                Height: =10
+                HoverFill: =EditContactMask.Fill
+                PressedFill: =EditContactMask.Fill
+                Width: =Parent.Width
+                Y: =EditContactGallery.Y + EditContactGallery.Height - 5
+                ZIndex: =13
+
+            EditContactAddDepartment As group:
+                Height: =5
+                Width: =5
+                X: =-198
+                Y: =-446
+                ZIndex: =13
+
+                EditContactAddDepartmentButton As button:
+                    Align: =LayoutAlignItems.Center
+                    BorderColor: =RGBA(26, 26, 84, 1)
+                    BorderThickness: =1
+                    Color: =RGBA(26, 26, 84, 1)
+                    DisabledBorderColor: =ColorFade(EditContactAddDepartmentButton.BorderColor, 70%)
+                    DisplayMode: =If(false in DataToContacts.Valid,DisplayMode.Disabled,DisplayMode.Edit)
+                    Fill: =RGBA(255, 255, 255, 1)
+                    FocusedBorderColor: =EditContactAddDepartmentButton.BorderColor
+                    FocusedBorderThickness: =1
+                    Height: =44
+                    HoverBorderColor: =ColorFade(EditContactAddDepartmentButton.BorderColor, 20%)
+                    HoverColor: =EditContactAddDepartmentButton.Color
+                    HoverFill: =ColorFade(EditContactAddDepartmentButton.Fill, 20%)
+                    OnSelect: |-
+                        =Collect(Indexes, { Value: Max(Indexes, Value) + 1 });
+                        Collect(DataToContacts,{ Index: Last(Indexes).Value,Name:Blank(),Phone:Blank(),Email:Blank(),Valid:false})
+                    PaddingBottom: =0
+                    PaddingLeft: =35
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    PressedBorderColor: =EditContactAddDepartmentButton.Fill
+                    PressedColor: =EditContactAddDepartmentButton.Fill
+                    PressedFill: =EditContactAddDepartmentButton.Color
+                    RadiusBottomLeft: =5
+                    RadiusBottomRight: =5
+                    RadiusTopLeft: =5
+                    RadiusTopRight: =5
+                    Size: =12
+                    Text: ="Add Department"
+                    Width: =195
+                    X: =236
+                    Y: =EditContactGallery.Y + EditContactGallery.Height + 8
+                    ZIndex: =11
+
+                EditContactAddDepartmentLogo As icon.Add:
+                    Color: =RGBA(26, 26, 84, 1)
+                    DisabledFill: =EditContactAddDepartmentLogo.Fill
+                    DisplayMode: =EditContactAddDepartmentButton.DisplayMode
+                    FocusedBorderColor: =EditContactAddDepartmentLogo.BorderColor
+                    FocusedBorderThickness: =0
+                    Height: =24
+                    HoverBorderColor: =ColorFade(EditContactAddDepartmentLogo.BorderColor, 20%)
+                    HoverColor: =ColorFade(EditContactAddDepartmentLogo.Color, 20%)
+                    HoverFill: =EditContactAddDepartmentLogo.Fill
+                    Icon: =Icon.Add
+                    OnSelect: =Select(EditContactAddDepartmentButton)
+                    PressedBorderColor: =ColorFade(EditContactAddDepartmentLogo.BorderColor, -20%)
+                    PressedColor: =ColorFade(EditContactAddDepartmentLogo.Color, -20%)
+                    PressedFill: =EditContactAddDepartmentLogo.Fill
+                    Width: =24
+                    X: =249
+                    Y: =EditContactAddDepartmentButton.Y + 10
+                    ZIndex: =12
+
+            EditContactSave As button:
+                BorderColor: =ColorFade(EditContactSave.Fill, -15%)
+                BorderThickness: =1
+                DisabledBorderColor: =ColorFade(EditContactSave.BorderColor, 70%)
+                DisplayMode: =If(false in DataToContacts.Valid, DisplayMode.Disabled, DisplayMode.Edit)
+                Fill: =RGBA(26, 26, 84, 1)
+                FocusedBorderColor: =EditContactSave.BorderColor
+                FocusedBorderThickness: =1
+                Height: =44
+                HoverBorderColor: =ColorFade(EditContactSave.BorderColor, 20%)
+                HoverColor: =EditContactSave.Color
+                HoverFill: =ColorFade(EditContactSave.Fill, 20%)
+                OnSelect: |-
+                    =RemoveIf(Contacts,true);
+                    ForAll(DataToContacts, Patch(Contacts, Defaults(Contacts), {DepartmentName:Name, DepartmentPhone: Phone, Email: Email}));
+                    Navigate(CompanyScreen,BorderStyle.None)
+                PressedBorderColor: =EditContactSave.Fill
+                PressedColor: =EditContactSave.Fill
+                PressedFill: =EditContactSave.Color
+                RadiusBottomLeft: =4
+                RadiusBottomRight: =4
+                RadiusTopLeft: =4
+                RadiusTopRight: =4
+                Size: =12
+                Text: ="Save"
+                Width: =85
+                X: =EditContactAddDepartmentButton.X + EditContactAddDepartmentButton.Width + 20
+                Y: =EditContactAddDepartmentButton.Y
+                ZIndex: =14
+

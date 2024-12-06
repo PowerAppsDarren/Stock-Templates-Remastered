@@ -1,0 +1,210 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+App:
+  Properties:
+    OnStart: |+
+      =
+      Set(MyGroup,LookUp(OutlookTasks.GetTaskGroups(),Name = "My Tasks"));
+      Set(MyOutlookGroupId, MyGroup.Id);
+      Set(MyProfile,Office365Users.MyProfile());
+      Set(MyUserId,MyProfile.Id);
+      Set(MyUserDisplayName,MyProfile.DisplayName);
+      Set(MyUserEmail,MyProfile.Mail);
+      Set(SelectedUser,MyUserId);
+
+      //mock tabular data
+      Concurrent(
+          ClearCollect(Administrators, {Name: MyUserDisplayName, Email: MyUserEmail}),
+          ClearCollect(Tasks, 
+          {Description: "Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL: "https://www.microsoft.com", Name: "Get key card"}, 
+          {Description:"Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL:"https://www.microsoft.com", Name: "Complete W-4 form"}, 
+          {Description:"Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL:"https://www.microsoft.com", Name: "Complete I-9 form"}, 
+          {Description:"Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL:"https://www.microsoft.com", Name: "Complete compliance training"}, 
+          {Description:"Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL:"https://www.microsoft.com", Name: "Configure desk phone"}, 
+          {Description:"Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL:"https://www.microsoft.com", Name: "Complete direct deposit form"}, 
+          {Description:"Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id.", URL:"https://www.microsoft.com", Name: "Fill out parking permit form"}),
+          ClearCollect(Resources, 
+          {Name: "Company Resource 1", URL: "https://www.microsoft.com"},
+          {Name: "Company Resource 2", URL: "https://www.microsoft.com"},
+          {Name: "Company Resource 3", URL: "https://www.microsoft.com"},
+          {Name: "Company Resource 4", URL: "https://www.microsoft.com"},
+          {Name: "Company Resource 5", URL: "https://www.microsoft.com"},
+          {Name: "Company Resource 6", URL: "https://www.microsoft.com"} ),
+          ClearCollect(Team, {Name: "Marketing Team"}),
+
+          ClearCollect(TeamLinks, 
+          {Text: "Team Blog", URL: "https://www.microsoft.com"},
+          {Text: "Team Drive", URL: "https://www.microsoft.com"},
+          {Text: "Team Hub", URL: "https://www.microsoft.com"});
+          ClearCollect(Company, {Name: "Fabrikam Inc.", About: "Lorem ipsum dolor sit amet, ne falli appareat similique vis. Graece intellegebat vim ut, falli efficiendi honestatis mea id."});
+          ClearCollect(CompanyLinks,
+          {Name: "Company Blog", URL: "https://www.microsoft.com"},
+          {Name: "Company Hub", URL: "https://www.microsoft.com"},
+          {Name: "Company Benefits", URL: "https://www.microsoft.com"});
+          ClearCollect(LeadershipLinks, {Name: "Learn more", URL: "https://www.microsoft.com"}),
+          ClearCollect(Leadership, {Description: "Learn more about Fabrikam Inc.s leadership team and their experience"}),
+          ClearCollect(FAQs, 
+          {Question: "Lorem ipsum dolor sit amet consectetur adipiscing elit, sed do?", Answer: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"},
+          {Question: "Tempor incididunt ut labore et dolore magna aliqua?", Answer: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip"},
+          {Question: "Ex ea commodo consequat duis aute irure dolor in reprehenderit in?", Answer: "Voluptate velit esse cillum dolore eu fugiat nulla pariatur"},
+          {Question: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum?", Answer: "Voluptate velit esse cillum dolore eu fugiat nulla pariatur"}),
+          ClearCollect(Contacts,
+          {DepartmentName: "Human Resources", DepartmentPhone: "555-555-5555", Email: "rachelle.guibord@fabrikam.com"},
+          {DepartmentName: "Finance", DepartmentPhone: "555-555-5555", Email: "sophie.decrom@fabrikam.com"},
+          {DepartmentName: "IT", DepartmentPhone: "555-555-5555", Email: "alex.madera@fabrikam.com"}),
+          ClearCollect(ProfileStatus,
+              {Name: "PhotoComplete"}, {Name: "AboutMeEmailComplete"}, {Name: "ProfileComplete"} 
+          )
+      );
+
+
+
+      ClearCollect(UserPhotoCache,
+      {
+          UserId:MyUserId, 
+          Photo:If(Office365Users.UserPhotoMetadata(MyUserId).HasPhoto,Office365Users.UserPhoto(MyUserId),'default-profile'),
+          Time:Now()
+      });
+
+      Set(
+          SelectedUserProfile,
+          {
+              DisplayName:MyProfile.DisplayName,
+              City:MyProfile.City,
+              JobTitle:MyProfile.JobTitle,
+              UserPrincipalName:MyProfile.UserPrincipalName,
+              GivenName:MyProfile.GivenName,
+              Mail:MyProfile.Mail,
+              Id:MyProfile.Id,
+              Mobile:MyProfile.mobilePhone, 
+              OfficePhone:MyProfile.TelephoneNumber, 
+              Department:MyProfile.Department, 
+              OfficeLocation:MyProfile.OfficeLocation, 
+              Photo: LookUp(UserPhotoCache,UserId = MyUserId).Photo
+          }
+      );
+
+      ClearCollect(
+          MyReportList,
+          ForAll(
+              Office365Users.DirectReports(MyUserId),
+              {
+                  DisplayName:DisplayName,
+                  City:City,
+                  JobTitle:JobTitle,
+                  UserPrincipalName:UserPrincipalName,
+                  GivenName:GivenName,
+                  Mail:Mail,
+                  Id:Id,
+                  Mobile:mobilePhone, 
+                  OfficePhone:TelephoneNumber, 
+                  Department:Department, 
+                  OfficeLocation:OfficeLocation, 
+                  Photo:If(
+                      Not(Id in UserPhotoCache.UserId),
+                          Collect(UserPhotoCache,
+                          {
+                              UserId:Id, 
+                              Photo:If(Office365Users.UserPhotoMetadata(Id).HasPhoto,Office365Users.UserPhoto(Id),'default-profile'),
+                              Time:Now()
+                          }
+                          );
+                      LookUp(UserPhotoCache,UserId = Id).Photo,
+                      LookUp(UserPhotoCache,UserId = Id).Photo)
+              }
+          )
+      );
+
+
+      ClearCollect(
+          MyPeersList,
+          ForAll(
+              Office365Users.DirectReports(Office365Users.Manager(MyUserId).Id),
+              {
+                  DisplayName:DisplayName,
+                  City:City,
+                  JobTitle:JobTitle,
+                  UserPrincipalName:UserPrincipalName,
+                  GivenName:GivenName,
+                  Mail:Mail,
+                  Id:Id,
+                  Mobile:mobilePhone, 
+                  OfficePhone:TelephoneNumber, 
+                  Department:Department, 
+                  OfficeLocation:OfficeLocation,
+                  Photo:If(
+                              Not(Id in UserPhotoCache.UserId),
+                                 Collect(
+                                          UserPhotoCache,
+                                          {
+                                              UserId:Id, 
+                                              Photo:If(Office365Users.UserPhotoMetadata(Id).HasPhoto,Office365Users.UserPhoto(Id),'default-profile'),
+                                              Time:Now()
+                                          }
+                                  );
+                              LookUp(UserPhotoCache,UserId = Id).Photo,
+                              LookUp(UserPhotoCache,UserId = Id).Photo
+                  )
+              }
+          )
+      );
+
+      Set(ManagerProfile,Office365Users.Manager(MyUserId));
+
+      ClearCollect(
+          MyManagerList,
+          {
+              DisplayName:ManagerProfile.DisplayName,
+              City:ManagerProfile.City,
+              JobTitle:ManagerProfile.JobTitle,
+              UserPrincipalName:ManagerProfile.UserPrincipalName,
+              GivenName:ManagerProfile.GivenName,
+              Mail:ManagerProfile.Mail,
+              Id:ManagerProfile.Id,
+              Mobile:ManagerProfile.mobilePhone, 
+              OfficePhone:ManagerProfile.TelephoneNumber, 
+              Department:ManagerProfile.Department, 
+              OfficeLocation:ManagerProfile.OfficeLocation,
+              Photo:If(
+                      Not(
+                             ManagerProfile.Id in UserPhotoCache.UserId
+                         ),
+                         Collect(
+                             UserPhotoCache,
+                             {
+                                  UserId:ManagerProfile.Id, 
+                                  Photo:If(
+                                  Office365Users.UserPhotoMetadata(ManagerProfile.Id).HasPhoto,Office365Users.UserPhoto(ManagerProfile.Id),'default-profile'),
+                                  Time:Now()
+                              }
+                          );
+                          LookUp(UserPhotoCache,UserId = ManagerProfile.Id).Photo,
+                          LookUp(UserPhotoCache,UserId = ManagerProfile.Id).Photo
+                      )
+          }
+      );
+
+      Set(ProfileTaskFolder, "GetOnboardMyProfile" );
+      Set(ToDoTaskFolder, "GetOnboardToDoList" );
+      Set(TipsTaskFolder, "GetOnboardTips" );
+      ClearCollect(MyFolders, OutlookTasks.GetTaskFolders(MyOutlookGroupId));
+      Set(MyOutlookFolderId, LookUp(MyFolders,Name = ProfileTaskFolder).Id);
+      Set(MyOutlookTaskFolderId, LookUp(MyFolders,Name = ToDoTaskFolder).Id);
+      Set(MyOutlookTipsFolderId, LookUp(MyFolders,Name = TipsTaskFolder).Id);
+      If(IsBlank(MyOutlookFolderId),OutlookTasks.CreateTaskFolder(ProfileTaskFolder,{groupId:MyOutlookGroupId}));
+      If(IsBlank(MyOutlookTaskFolderId),OutlookTasks.CreateTaskFolder(ToDoTaskFolder,{groupId:MyOutlookGroupId}));
+      If(IsBlank(MyOutlookTipsFolderId),Set(ShowProfilePageTip,true),Set(ShowProfilePageTip,false));
+      If(IsBlank(MyOutlookTipsFolderId),OutlookTasks.CreateTaskFolder(TipsTaskFolder,{groupId:MyOutlookGroupId}));
+      Set(isAdmin,MyUserEmail in Administrators.Email);
+      If(!isAdmin, Navigate(WelcomeScreen, BorderStyle.None))
+
+
+
+    Theme: =PowerAppsTheme

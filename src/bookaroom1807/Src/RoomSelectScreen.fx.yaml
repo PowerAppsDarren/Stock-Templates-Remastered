@@ -1,0 +1,950 @@
+RoomSelectScreen As screen:
+    Fill: =RGBA(241,241,241,1)
+    Height: =Max(App.Height, App.DesignHeight)
+    OnVisible: |-
+        =Set(CalendarFromSelectMeeting, false);
+        If(DateTimeRoomChange,
+            Set(AvailableRoomsCounter, 1);
+            UpdateContext({ShowLoading: true});
+            Set(RoomsLeft, Blank());
+            Set(DateTimeRoomChange, false);
+            If(!NoRoomsList,
+                ClearCollect(AllRooms, Office365.GetRoomsInRoomList(RoomsListsGallery.Selected.Address).value)
+            );
+            If(CountRows(AllRooms) > 20,
+                Set(AllRoomsConnector, Concat(FirstN(AllRooms, 20), Address & ";")),
+                Set(AllRoomsConnector, Concat(AllRooms, Address & ";"))
+            );
+        
+            ClearCollect(AvailableRooms, Office365.FindMeetingTimes({RequiredAttendees: AllRoomsConnector, IsOrganizerOptional: true, 
+                Start: StartDateTimeUTC, End: EndDateTimeUTC, MeetingDuration: DateDiff(StartDateTime, EndDateTime, TimeUnit.Minutes),
+                MinimumAttendeePercentage: "1", ActivityDomain: "Unrestricted"}));
+        
+            ClearCollect(AvailableRoomsSorted, SortByColumns(First(AvailableRooms).MeetingTimeSuggestions, "Confidence", SortOrder.Descending));
+        
+            ClearCollect(AvailableRoomsConcat, Concat(Filter(First(AvailableRoomsSorted).AttendeeAvailability, Availability = "Free"), 
+                Attendee.EmailAddress.Address, ","));
+        
+            ClearCollect(AvailableRoomEmails, ForAll(Split(First(AvailableRoomsConcat).Value, ","), {Result: ThisRecord.Value}));
+        
+            ClearCollect(AvailableRoomEmailName, AddColumns(RenameColumns(AvailableRoomEmails, Result, Email), Name, 
+                LookUp(AllRooms, Email = Address).Name));
+        
+            UpdateContext({ShowLoading: false});
+            Set(RoomsLeft, CountRows(AllRooms) - 20 * AvailableRoomsCounter)
+        )
+    Orientation: =If(RoomSelectScreen.Width < RoomSelectScreen.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= RoomSelectScreen.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    Label3_1 As label:
+        Fill: =RGBA(18, 107, 240, 1)
+        FocusedBorderColor: =Label3_1.BorderColor
+        Height: =90
+        HoverBorderColor: =Label3_1.BorderColor
+        HoverColor: =Label3_1.Color
+        HoverFill: =Label3_1.Fill
+        PressedBorderColor: =Label3_1.BorderColor
+        PressedColor: =Label3_1.Color
+        PressedFill: =Label3_1.Fill
+        Text: =
+        Width: =1366
+        ZIndex: =1
+
+    ButtonSwitchFlow_2 As button:
+        BorderColor: =Color.White
+        BorderThickness: =1
+        DisabledBorderColor: =ColorFade(ButtonSwitchFlow_2.BorderColor, 70%)
+        Fill: =RGBA(0, 96, 0, 0)
+        FocusedBorderColor: =ButtonSwitchFlow_2.BorderColor
+        FocusedBorderThickness: =1
+        Height: =48
+        HoverBorderColor: =ColorFade(ButtonSwitchFlow_2.BorderColor, 20%)
+        HoverColor: =ButtonSwitchFlow_2.Color
+        HoverFill: =ColorFade(ButtonSwitchFlow_2.Fill, 20%)
+        OnSelect: |-
+            =Set(ChosenMeeting, Blank());
+            Set(DateTimeRoomChange, true);
+            If(BookForMeeting, 
+                Set(DateSelected, Today());
+                If(Mod(Minute(Now()), 30) <= 14, 
+                    Set(StartDateTime, DateAdd(Now(), -Mod(Minute(Now()), 30), TimeUnit.Minutes));
+                    Set(EndDateTime, DateAdd(StartDateTime, 30, TimeUnit.Minutes)),
+                   Mod(Minute(Now()), 30) >= 15,
+                    Set(StartDateTime, DateAdd(Now(), -Mod(Minute(Now()), 30) + 30, TimeUnit.Minutes));
+                    Set(EndDateTime, DateAdd(StartDateTime, 30, TimeUnit.Minutes)),
+                    Set(StartDateTime, Now());
+                    Set(EndDateTime, DateAdd(Now(), -Mod(Minute(Now()), 30) + 60, TimeUnit.Minutes))
+                );
+            
+                Set(StartDateTimeUTC, Text(DateAdd(StartDateTime, TimeZoneOffset(), TimeUnit.Minutes), "[$-en-US]yyyy-mm-ddThh:mm") & ":00.000Z");
+                Set(EndDateTimeUTC, Text(DateAdd(EndDateTime, TimeZoneOffset(), TimeUnit.Minutes), "[$-en-US]yyyy-mm-ddThh:mm") & ":00.000Z");
+            
+                Set(BookForMeeting, false);
+            
+                If(NoRoomsList,
+            
+                    Navigate(RoomSelectScreen, BorderStyle.None),
+                
+                    Navigate(RoomListSelectScreen, BorderStyle.None)
+                ),
+                
+                Set(BookForMeeting, true);
+                Set(StartDateTime, Blank());
+                Set(StartDateTimeUTC, Blank());
+                Set(EndDateTime, Blank());
+                Set(EndDateTimeUTC, Blank());
+                Navigate(MeetingSelectScreen, BorderStyle.None)
+                
+            )
+        PressedBorderColor: =ButtonSwitchFlow_2.Fill
+        PressedColor: =RGBA(18, 107, 240, 1)
+        PressedFill: =ButtonSwitchFlow_2.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =13
+        Text: =If(!BookForMeeting, "Book for an existing meeting", "Book now without a meeting")
+        Width: =274
+        X: =Parent.Width - ButtonSwitchFlow_2.Width - 25
+        Y: =21
+        ZIndex: =2
+
+    Image2_1 As image:
+        FocusedBorderColor: =Image2_1.BorderColor
+        Height: =60
+        HoverBorderColor: =ColorFade(Image2_1.BorderColor, 20%)
+        HoverFill: =ColorFade(Image2_1.Fill, 20%)
+        Image: ='logo-icon@3x'
+        PressedBorderColor: =ColorFade(Image2_1.BorderColor, -20%)
+        PressedFill: =ColorFade(Image2_1.Fill, -20%)
+        Width: =60
+        X: =31
+        Y: =15
+        ZIndex: =3
+
+    LabelScreenHeader_2 As label:
+        AutoHeight: =true
+        Color: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =LabelScreenHeader_2.BorderColor
+        FontWeight: =FontWeight.Lighter
+        HoverBorderColor: =LabelScreenHeader_2.BorderColor
+        HoverColor: =LabelScreenHeader_2.Color
+        HoverFill: =LabelScreenHeader_2.Fill
+        PressedBorderColor: =LabelScreenHeader_2.BorderColor
+        PressedColor: =LabelScreenHeader_2.Color
+        PressedFill: =LabelScreenHeader_2.Fill
+        Size: =24
+        Text: =If(BookForMeeting, "Book for an existing meeting", "Book without a meeting")
+        Width: =650
+        X: =112
+        Y: =20
+        ZIndex: =4
+
+    "RoomsGallery As gallery.'BrowseLayout_Vertical_ThreeTextVariant_ver4.0'":
+        '#CopilotOverlayLabel': ="Filtered"
+        DisabledBorderColor: =RoomsGallery.BorderColor
+        DisabledFill: =RoomsGallery.Fill
+        Height: =522
+        HoverBorderColor: =RoomsGallery.BorderColor
+        HoverFill: =RoomsGallery.Fill
+        Items: =AvailableRoomEmailName
+        Layout: =Layout.Vertical
+        LoadingSpinnerColor: =RoomsGallery.BorderColor
+        PressedBorderColor: =RoomsGallery.BorderColor
+        PressedFill: =RoomsGallery.Fill
+        TemplatePadding: =0
+        TemplateSize: =176
+        Visible: =CountRows(AvailableRoomEmailName) > 0 && !ShowLoading
+        Width: =1017
+        WrapCount: =3
+        X: =349
+        Y: =231
+        ZIndex: =5
+
+        BorderRadius As button:
+            BorderColor: =RGBA(187, 187, 187, 1)
+            BorderThickness: =1
+            DisabledBorderColor: =ColorFade(BorderRadius.BorderColor, 70%)
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =BorderRadius.BorderColor
+            FocusedBorderThickness: =1
+            Height: =163
+            HoverBorderColor: =ColorFade(BorderRadius.BorderColor, 20%)
+            HoverColor: =BorderRadius.Color
+            HoverFill: =ColorFade(BorderRadius.Fill, 20%)
+            OnSelect: =Select(Parent)
+            PressedBorderColor: =BorderRadius.BorderColor
+            PressedColor: =RGBA(0,0,0,0)
+            PressedFill: =BorderRadius.Color
+            Text: =""
+            Width: =308
+            X: =2
+            Y: =2
+            ZIndex: =1
+
+        Title2_1 As label:
+            Align: =LayoutAlignItems.Center
+            AutoHeight: =true
+            Color: =RGBA(42, 67, 90, 1)
+            FocusedBorderColor: =Title2_1.BorderColor
+            Height: =Title2_1.Size * 1.8
+            HoverBorderColor: =Title2_1.BorderColor
+            HoverColor: =Title2_1.Color
+            HoverFill: =Title2_1.Fill
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =Title2_1.BorderColor
+            PressedColor: =Title2_1.Color
+            PressedFill: =Title2_1.Fill
+            Size: =15
+            Text: =ThisItem.Name
+            Tooltip: ="This is a tool tip"
+            VerticalAlign: =VerticalAlign.Top
+            Width: =287
+            X: =13
+            Y: =18
+            ZIndex: =2
+
+        Button9 As button:
+            BorderColor: =ColorFade(Button9.Fill, -15%)
+            BorderThickness: =0
+            DisabledBorderColor: =ColorFade(Button9.BorderColor, 70%)
+            Fill: =RGBA(18, 107, 240, 1)
+            FocusedBorderColor: =Button9.BorderColor
+            FocusedBorderThickness: =0
+            HoverBorderColor: =ColorFade(Button9.BorderColor, 20%)
+            HoverColor: =Button9.Color
+            HoverFill: =ColorFade(Button9.Fill, 20%)
+            OnSelect: |-
+                =Set(IsBooking, true);
+                Navigate(ConfirmationScreen, ScreenTransition.Cover)
+            PressedBorderColor: =Button9.Fill
+            PressedColor: =Button9.Fill
+            PressedFill: =Button9.Color
+            Size: =13
+            Text: ="BOOK"
+            Width: =112
+            X: =101
+            Y: =110
+            ZIndex: =3
+
+    Label7_1 As label:
+        FocusedBorderColor: =Label7_1.BorderColor
+        Height: =45
+        HoverBorderColor: =Label7_1.BorderColor
+        HoverColor: =Label7_1.Color
+        HoverFill: =Label7_1.Fill
+        PressedBorderColor: =Label7_1.BorderColor
+        PressedColor: =Label7_1.Color
+        PressedFill: =Label7_1.Fill
+        Size: =20
+        Text: |-
+            ="Select an available room:"
+        Visible: =RoomsGallery.Visible
+        Width: =697
+        X: =349
+        Y: =117
+        ZIndex: =6
+
+    LabelAvailableRoomsCount As label:
+        Color: =RGBA(42,67,90,1)
+        FocusedBorderColor: =LabelAvailableRoomsCount.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =45
+        HoverBorderColor: =LabelAvailableRoomsCount.BorderColor
+        HoverColor: =LabelAvailableRoomsCount.Color
+        HoverFill: =LabelAvailableRoomsCount.Fill
+        PressedBorderColor: =LabelAvailableRoomsCount.BorderColor
+        PressedColor: =LabelAvailableRoomsCount.Color
+        PressedFill: =LabelAvailableRoomsCount.Fill
+        Size: =16
+        Text: =CountRows(AvailableRoomEmailName) & If(!BookForMeeting," rooms available for booking", " rooms available for " & ChosenMeeting.Subject)
+        Tooltip: =
+        Visible: =RoomsGallery.Visible
+        Width: =718
+        Wrap: =false
+        X: =349
+        Y: =165
+        ZIndex: =7
+
+    ButtonShowMoreRooms As button:
+        BorderColor: =ColorFade(ButtonShowMoreRooms.Fill, -15%)
+        DisabledBorderColor: =ColorFade(ButtonShowMoreRooms.BorderColor, 70%)
+        Fill: =RGBA(18, 107, 240, 1)
+        FocusedBorderColor: =ButtonShowMoreRooms.BorderColor
+        Height: =60
+        HoverBorderColor: =ColorFade(ButtonShowMoreRooms.BorderColor, 20%)
+        HoverColor: =ButtonShowMoreRooms.Color
+        HoverFill: =ColorFade(ButtonShowMoreRooms.Fill, 20%)
+        OnSelect: |-
+            =If(RoomsLeft >= 20, 
+                  Set(AvailableRoomsCounter, AvailableRoomsCounter+1);
+                  Set(AllRoomsConnector, Concat(LastN(FirstN(AllRooms, 20*AvailableRoomsCounter), 20), Address & ";"));
+                  Set(RoomsLeft, CountRows(AllRooms) - 20*AvailableRoomsCounter), 
+                
+                RoomsLeft < 20 && RoomsLeft > 0, 
+                  Set(AllRoomsConnector, Concat(LastN(AllRooms, RoomsLeft), Address & ";"));
+                  Set(RoomsLeft, 0));
+                
+            
+            ClearCollect(AvailableRooms, Office365.FindMeetingTimes({RequiredAttendees: AllRoomsConnector, 
+                IsOrganizerOptional: true, Start: StartDateTimeUTC, End: EndDateTimeUTC, 
+                MeetingDuration: DateDiff(StartDateTime, EndDateTime, TimeUnit.Minutes),MinimumAttendeePercentage: "1", 
+                ActivityDomain: "Unrestricted"}));
+            
+            ClearCollect(AvailableRoomsSorted, SortByColumns(First(AvailableRooms).MeetingTimeSuggestions, "Confidence", SortOrder.Descending));
+            
+            ClearCollect(AvailableRoomsConcat, Concat(Filter(First(AvailableRoomsSorted).AttendeeAvailability, 
+                Availability = "Free"), Attendee.EmailAddress.Address, ","));
+            
+            ClearCollect(AvailableRoomEmails, ForAll(Split(First(AvailableRoomsConcat).Value, ","), {Result: ThisRecord.Value}));
+            
+            Collect(AvailableRoomEmailName, AddColumns(RenameColumns(AvailableRoomEmails, Result, Email), Name, LookUp(AllRooms, Email = Address).Name))
+                
+        PressedBorderColor: =ButtonShowMoreRooms.Fill
+        PressedColor: =ButtonShowMoreRooms.Fill
+        PressedFill: =ButtonShowMoreRooms.Color
+        Size: =14
+        Text: ="More Rooms"
+        Visible: =RoomsLeft > 0 && CountRows(AllRooms) > 20
+        Width: =190
+        X: =1146
+        Y: =144
+        ZIndex: =8
+
+    Label7 As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(42, 67, 90, 1)
+        FocusedBorderColor: =Label7.BorderColor
+        FontWeight: =FontWeight.Bold
+        Height: =48
+        HoverBorderColor: =Label7.BorderColor
+        HoverColor: =Label7.Color
+        HoverFill: =Label7.Fill
+        PaddingLeft: =0
+        PaddingRight: =0
+        PressedBorderColor: =Label7.BorderColor
+        PressedColor: =Label7.Color
+        PressedFill: =Label7.Fill
+        Size: =14
+        Text: =If(ShowLoading, "Gathering available rooms...", "There are no rooms available")
+        Visible: =!RoomsGallery.Visible
+        Width: =274
+        X: =721
+        Y: =396
+        ZIndex: =10
+
+    Rectangle6 As rectangle:
+        DisabledFill: =Rectangle6.Fill
+        Fill: =RGBA(0,0,0,.6)
+        FocusedBorderColor: =Rectangle6.BorderColor
+        Height: =768
+        HoverFill: =Rectangle6.Fill
+        PressedFill: =Rectangle6.Fill
+        Visible: =ShowWarning
+        Width: =1366
+        ZIndex: =32
+
+    Button2 As button:
+        BorderColor: =ColorFade(Button2.Fill, -15%)
+        Color: =RGBA(43, 67, 90, 1)
+        DisabledBorderColor: =ColorFade(Button2.BorderColor, 70%)
+        DisplayMode: =DisplayMode.View
+        Fill: =Color.White
+        FocusedBorderColor: =Button2.BorderColor
+        Height: =241
+        HoverBorderColor: =ColorFade(Button2.BorderColor, 20%)
+        HoverColor: =Button2.Color
+        HoverFill: =ColorFade(Button2.Fill, 20%)
+        PaddingBottom: =38
+        PaddingLeft: =38
+        PaddingRight: =38
+        PressedBorderColor: =Button2.Fill
+        PressedColor: =Button2.Fill
+        PressedFill: =Button2.Color
+        Size: =14
+        Text: ="Do you wish to update the date or time of this meeting?"
+        Visible: =ShowWarning
+        Width: =371
+        X: =659
+        Y: =279
+        ZIndex: =33
+
+    Exclamation As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(43,67,90,1)
+        FocusedBorderColor: =Exclamation.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =Circle1.Height
+        HoverBorderColor: =Exclamation.BorderColor
+        HoverColor: =Exclamation.Color
+        HoverFill: =Exclamation.Fill
+        PressedBorderColor: =Exclamation.BorderColor
+        PressedColor: =Exclamation.Color
+        PressedFill: =Exclamation.Fill
+        Size: =30
+        Text: ="!"
+        Visible: =ShowWarning
+        Width: =Circle1.Width
+        X: =Circle1.X
+        Y: =Circle1.Y
+        ZIndex: =34
+
+    ContinueNav As button:
+        BorderColor: =ColorFade(ContinueNav.Fill, -15%)
+        DisabledBorderColor: =ColorFade(ContinueNav.BorderColor, 70%)
+        Fill: =RGBA(18, 107, 240, 1)
+        FocusedBorderColor: =ContinueNav.BorderColor
+        Height: =36
+        HoverBorderColor: =ColorFade(ContinueNav.BorderColor, 20%)
+        HoverColor: =ContinueNav.Color
+        HoverFill: =ColorFade(ContinueNav.Fill, 20%)
+        OnSelect: =Set(ShowWarning, false); Navigate(AdjustDateScreen, BorderStyle.None)
+        PressedBorderColor: =ContinueNav.Fill
+        PressedColor: =ContinueNav.Fill
+        PressedFill: =ContinueNav.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =14
+        Text: ="Yes, continue"
+        Visible: =ShowWarning
+        Width: =174
+        X: =763
+        Y: =424
+        ZIndex: =35
+
+    CancelNav As button:
+        BorderColor: =RGBA(18, 107, 240, 1)
+        Color: =RGBA(18, 107, 240, 1)
+        DisabledBorderColor: =ColorFade(CancelNav.BorderColor, 70%)
+        Fill: =Color.White
+        FocusedBorderColor: =CancelNav.BorderColor
+        Height: =36
+        HoverBorderColor: =ColorFade(CancelNav.BorderColor, 20%)
+        HoverColor: =CancelNav.Color
+        HoverFill: =ColorFade(CancelNav.Fill, 20%)
+        OnSelect: =Set(ShowWarning, false)
+        PressedBorderColor: =CancelNav.Fill
+        PressedColor: =CancelNav.Fill
+        PressedFill: =CancelNav.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =14
+        Text: ="Cancel"
+        Visible: =ShowWarning
+        Width: =176
+        X: =761
+        Y: =473
+        ZIndex: =36
+
+    Circle1 As circle:
+        BorderColor: =RGBA(43,67,90,1)
+        BorderThickness: =4
+        DisabledFill: =Circle1.Fill
+        Fill: =RGBA(62,96,170,0)
+        FocusedBorderColor: =Circle1.BorderColor
+        FocusedBorderThickness: =4
+        Height: =45
+        HoverFill: =Circle1.Fill
+        PressedFill: =Circle1.Fill
+        Visible: =ShowWarning
+        Width: =45
+        X: =827
+        Y: =298
+        ZIndex: =37
+
+    Button6_5 As button:
+        BorderColor: =ColorFade(Button6_5.Fill, -15%)
+        BorderThickness: =If(Button6_5.DisplayMode = DisplayMode.Disabled, 0,2)
+        DisabledBorderColor: =ColorFade(Button6_5.BorderColor, 50%)
+        DisabledColor: =ColorFade(RGBA(181, 181, 181, 1), 70%)
+        DisabledFill: =ColorFade(Button6_5.Fill, 40%)
+        Fill: =RGBA(18, 107, 240, 1)
+        FocusedBorderColor: =Button6_5.BorderColor
+        FocusedBorderThickness: =If(Button6_5.DisplayMode = DisplayMode.Disabled, 0,2)
+        Height: =36
+        HoverBorderColor: =ColorFade(Button6_5.BorderColor, 20%)
+        HoverColor: =Button6_5.Color
+        HoverFill: =ColorFade(Button6_5.Fill, 20%)
+        OnSelect: =Navigate(RoomListSelectScreen, BorderStyle.None)
+        PressedBorderColor: =Button6_5.Fill
+        PressedColor: =Button6_5.Fill
+        PressedFill: =Button6_5.Color
+        RadiusBottomLeft: =15
+        RadiusBottomRight: =15
+        RadiusTopLeft: =15
+        RadiusTopRight: =15
+        Size: =14
+        Text: ="EDIT"
+        Visible: =!NoRoomsList
+        Width: =65
+        X: =Button6_2.X
+        Y: =LabelMeetingLocation_2.Y + LabelMeetingLocation_2.Height/2 - Button6_5.Height/2
+        ZIndex: =38
+
+    BookingDetails_2 As group:
+        Height: =5
+        Width: =5
+        X: =4
+        Y: =40
+        ZIndex: =62
+
+        Button4_3 As button:
+            BorderColor: =ColorFade(Button4_3.Fill, -15%)
+            BorderThickness: =0
+            DisabledBorderColor: =ColorFade(Button4_3.BorderColor, 70%)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(42, 67, 90, 1)
+            FocusedBorderColor: =Button4_3.BorderColor
+            FocusedBorderThickness: =0
+            Height: =Parent.Height - 20 - Button4_3.Y + (LabelChosenMeeting_2.Height - 36 + LabelMeetingLocation_2.Height - 36)/4
+            HoverBorderColor: =ColorFade(Button4_3.BorderColor, 20%)
+            HoverColor: =Button4_3.Color
+            HoverFill: =Button4_3.Fill
+            PressedBorderColor: =Button4_3.Fill
+            PressedColor: =Button4_3.Fill
+            PressedFill: =Button4_3.Color
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Text: =""
+            Width: =319
+            X: =16 + 0
+            Y: =Label3.Height + 20
+            ZIndex: =11
+
+        LabelBookingDetailsHeader_2 As label:
+            AutoHeight: =true
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =LabelBookingDetailsHeader_2.BorderColor
+            HoverBorderColor: =LabelBookingDetailsHeader_2.BorderColor
+            HoverColor: =LabelBookingDetailsHeader_2.Color
+            HoverFill: =LabelBookingDetailsHeader_2.Fill
+            PressedBorderColor: =LabelBookingDetailsHeader_2.BorderColor
+            PressedColor: =LabelBookingDetailsHeader_2.Color
+            PressedFill: =LabelBookingDetailsHeader_2.Fill
+            Size: =21
+            Text: ="Booking Details"
+            Width: =249
+            X: =Button4_3.X + 21
+            Y: =Button4_3.Y + 15
+            ZIndex: =12
+
+        Rectangle4_12 As rectangle:
+            DisabledFill: =Rectangle4_12.Fill
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =Rectangle4_12.BorderColor
+            Height: =2
+            HoverFill: =Rectangle4_12.Fill
+            PressedFill: =Rectangle4_12.Fill
+            Width: =Button4_3.Width - 40
+            X: =Button4_3.X + 20
+            Y: =Rectangle4_15.Y + Rectangle4_15.Height + 125
+            ZIndex: =13
+
+        Rectangle4_13 As rectangle:
+            DisabledFill: =Rectangle4_13.Fill
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =Rectangle4_13.BorderColor
+            Height: =2
+            HoverFill: =Rectangle4_13.Fill
+            PressedFill: =Rectangle4_13.Fill
+            Visible: =BookForMeeting
+            Width: =Button4_3.Width - 40
+            X: =Button4_3.X + 20
+            Y: =Rectangle4_12.Y + Rectangle4_12.Height + 125
+            ZIndex: =14
+
+        Rectangle4_14 As rectangle:
+            DisabledFill: =Rectangle4_14.Fill
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =Rectangle4_14.BorderColor
+            Height: =2
+            HoverFill: =Rectangle4_14.Fill
+            PressedFill: =Rectangle4_14.Fill
+            Visible: =!NoRoomsList
+            Width: =Button4_3.Width - 40
+            X: =Button4_3.X + 20
+            Y: =If(Rectangle4_13.Visible, LabelChosenMeeting_2.Y + LabelChosenMeeting_2.Height + 20, Rectangle4_13.Y)
+            ZIndex: =15
+
+        LabelLocationHeader_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =LabelLocationHeader_2.BorderColor
+            FontWeight: =FontWeight.Lighter
+            HoverBorderColor: =LabelLocationHeader_2.BorderColor
+            HoverColor: =LabelLocationHeader_2.Color
+            HoverFill: =LabelLocationHeader_2.Fill
+            PressedBorderColor: =LabelLocationHeader_2.BorderColor
+            PressedColor: =LabelLocationHeader_2.Color
+            PressedFill: =LabelLocationHeader_2.Fill
+            Size: =15
+            Text: |-
+                ="Location:"
+            Visible: =!NoRoomsList
+            X: =Button4_3.X + 20
+            Y: =If(BookForMeeting, Rectangle4_14.Y + 15, Rectangle4_13.Y + 15)
+            ZIndex: =16
+
+        LabelDateHeader_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =LabelDateHeader_2.BorderColor
+            FontWeight: =FontWeight.Lighter
+            HoverBorderColor: =LabelDateHeader_2.BorderColor
+            HoverColor: =LabelDateHeader_2.Color
+            HoverFill: =LabelDateHeader_2.Fill
+            PressedBorderColor: =LabelDateHeader_2.BorderColor
+            PressedColor: =LabelDateHeader_2.Color
+            PressedFill: =LabelDateHeader_2.Fill
+            Size: =16
+            Text: |-
+                ="Date:"
+            X: =Rectangle4_12.X
+            Y: =Rectangle4_15.Y + 7
+            ZIndex: =17
+
+        Label6_4 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =Label6_4.BorderColor
+            FontWeight: =FontWeight.Lighter
+            HoverBorderColor: =Label6_4.BorderColor
+            HoverColor: =Label6_4.Color
+            HoverFill: =Label6_4.Fill
+            PressedBorderColor: =Label6_4.BorderColor
+            PressedColor: =Label6_4.Color
+            PressedFill: =Label6_4.Fill
+            Size: =16
+            Text: |-
+                ="Time:"
+            X: =Rectangle4_12.X
+            Y: =Rectangle4_12.Y + 7
+            ZIndex: =18
+
+        LabelMeetingLocation_2 As label:
+            AutoHeight: =true
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =LabelMeetingLocation_2.BorderColor
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            HoverBorderColor: =LabelMeetingLocation_2.BorderColor
+            HoverColor: =LabelMeetingLocation_2.Color
+            HoverFill: =LabelMeetingLocation_2.Fill
+            PressedBorderColor: =LabelMeetingLocation_2.BorderColor
+            PressedColor: =LabelMeetingLocation_2.Color
+            PressedFill: =LabelMeetingLocation_2.Fill
+            Size: =14
+            Text: =If(!IsBlank(RoomsListsGallery.Selected), RoomsListsGallery.Selected.Name, MyOrg)
+            Visible: =!NoRoomsList
+            Width: =203
+            X: =Button4_3.X + 20
+            Y: =LabelLocationHeader_2.Y + LabelLocationHeader_2.Height
+            ZIndex: =19
+
+        Button6_2 As button:
+            BorderColor: =ColorFade(Button6_2.Fill, -15%)
+            BorderThickness: =If(Button6_2.DisplayMode = DisplayMode.Disabled, 0,2)
+            DisabledBorderColor: =ColorFade(Button6_2.BorderColor, 50%)
+            DisabledColor: =ColorFade(RGBA(181, 181, 181, 1), 70%)
+            DisabledFill: =ColorFade(Button6_2.Fill, 40%)
+            Fill: =RGBA(18, 107, 240, 1)
+            FocusedBorderColor: =Button6_2.BorderColor
+            FocusedBorderThickness: =If(Button6_2.DisplayMode = DisplayMode.Disabled, 0,2)
+            Height: =36
+            HoverBorderColor: =ColorFade(Button6_2.BorderColor, 20%)
+            HoverColor: =Button6_2.Color
+            HoverFill: =ColorFade(Button6_2.Fill, 20%)
+            OnSelect: |-
+                =Set(DateTimeRoomChange, true);
+                Navigate(MeetingSelectScreen, BorderStyle.None)
+            PressedBorderColor: =Button6_2.Fill
+            PressedColor: =Button6_2.Fill
+            PressedFill: =Button6_2.Color
+            RadiusBottomLeft: =15
+            RadiusBottomRight: =15
+            RadiusTopLeft: =15
+            RadiusTopRight: =15
+            Size: =14
+            Text: ="EDIT"
+            Visible: =!IsBlank(ChosenMeeting)
+            Width: =65
+            X: =254
+            Y: =LabelChosenMeeting_2.Y + LabelChosenMeeting_2.Height/2 - Button6_2.Height/2
+            ZIndex: =20
+
+        MeetingDateText_2 As button:
+            Align: =TextPosition.Left
+            BorderColor: =ColorFade(MeetingDateText_2.Fill, -15%)
+            BorderThickness: =0
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledBorderColor: =ColorFade(MeetingDateText_2.BorderColor, 70%)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            FocusedBorderColor: =MeetingDateText_2.BorderColor
+            FocusedBorderThickness: =0
+            Height: =47
+            HoverBorderColor: =ColorFade(MeetingDateText_2.BorderColor, 20%)
+            HoverColor: =MeetingDateText_2.Color
+            HoverFill: =ColorFade(MeetingDateText_2.Fill, 20%)
+            OnSelect: =
+            PaddingLeft: =20
+            PressedBorderColor: =MeetingDateText_2.Fill
+            PressedColor: =MeetingDateText_2.Fill
+            PressedFill: =MeetingDateText_2.Color
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Size: =14
+            Text: =If(Text(DateSelected, DateTimeFormat.ShortDate) = Text(Today(), DateTimeFormat.ShortDate), "Today", Text(DateSelected, "[$-en-US]mmm dd, yyyy"))
+            Width: =Rectangle4_12.Width
+            X: =40
+            Y: =LabelDateHeader_2.Y + LabelDateHeader_2.Height + 5
+            ZIndex: =21
+
+        Button7_7 As button:
+            Align: =TextPosition.Left
+            BorderColor: =ColorFade(Button7_7.Fill, -15%)
+            BorderThickness: =0
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledBorderColor: =ColorFade(Button7_7.BorderColor, 70%)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(18, 107, 240, 1)
+            FocusedBorderColor: =Button7_7.BorderColor
+            FocusedBorderThickness: =0
+            Height: =47
+            HoverBorderColor: =ColorFade(Button7_7.BorderColor, 20%)
+            HoverColor: =Button7_7.Color
+            HoverFill: =ColorFade(Button7_7.Fill, 20%)
+            OnSelect: =
+            PaddingLeft: =20
+            PressedBorderColor: =Button7_7.Fill
+            PressedColor: =Button7_7.Fill
+            PressedFill: =Button7_7.Color
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =5
+            RadiusTopLeft: =0   
+            RadiusTopRight: =5
+            Text: =""
+            Width: =52
+            X: =267
+            Y: =MeetingDateText_2.Y
+            ZIndex: =22
+
+        iconCalendar_2 As icon.Calendar:
+            Color: =Color.White
+            DisabledFill: =iconCalendar_2.Fill
+            FocusedBorderColor: =iconCalendar_2.BorderColor
+            Height: =30
+            HoverBorderColor: =ColorFade(iconCalendar_2.BorderColor, 20%)
+            HoverColor: =ColorFade(iconCalendar_2.Color, 20%)
+            HoverFill: =iconCalendar_2.Fill
+            Icon: =Icon.AddToCalendar
+            PressedBorderColor: =ColorFade(iconCalendar_2.BorderColor, -20%)
+            PressedColor: =ColorFade(iconCalendar_2.Color, -20%)
+            PressedFill: =iconCalendar_2.Fill
+            Width: =30
+            X: =Button7_7.X + Button7_7.Width/2 - iconCalendar_2.Width/2
+            Y: =Button7_8.Y + Button7_8.Height/2 - iconCalendar_2.Height/2
+            ZIndex: =23
+
+        Button7_8 As button:
+            Align: =TextPosition.Left
+            BorderColor: =ColorFade(Button7_8.Fill, -15%)
+            BorderThickness: =4
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledBorderColor: =ColorFade(Button7_8.BorderColor, 70%)
+            Fill: =RGBA(0,0,0,0)
+            FocusedBorderColor: =Button7_8.BorderColor
+            FocusedBorderThickness: =0
+            Height: =47
+            HoverBorderColor: =RGBA(18, 107, 240, 1)
+            HoverColor: =Button7_8.Color
+            HoverFill: =RGBA(0,0,0,0)
+            OnSelect: |-
+                =Set(ShowCalendar, true);
+                Set(ShowTime, false);
+                If(BookForMeeting, Set(ShowWarning, true), Navigate(AdjustDateScreen, BorderStyle.None))
+            PaddingLeft: =20
+            PressedBorderColor: =Button7_8.Fill
+            PressedColor: =Button7_8.Fill
+            PressedFill: =RGBA(0,0,0,0)
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Text: =""
+            Width: =Rectangle4_12.Width
+            X: =40
+            Y: =MeetingDateText_2.Y
+            ZIndex: =24
+
+        MeetingTimeText_2 As button:
+            Align: =TextPosition.Left
+            BorderColor: =ColorFade(MeetingTimeText_2.Fill, -15%)
+            BorderThickness: =0
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledBorderColor: =ColorFade(MeetingTimeText_2.BorderColor, 70%)
+            DisplayMode: =DisplayMode.View
+            Fill: =Color.White
+            FocusedBorderColor: =MeetingTimeText_2.BorderColor
+            FocusedBorderThickness: =0
+            Height: =47
+            HoverBorderColor: =ColorFade(MeetingTimeText_2.BorderColor, 20%)
+            HoverColor: =MeetingTimeText_2.Color
+            HoverFill: =ColorFade(MeetingTimeText_2.Fill, 20%)
+            OnSelect: =
+            PaddingLeft: =20
+            PressedBorderColor: =MeetingTimeText_2.Fill
+            PressedColor: =MeetingTimeText_2.Fill
+            PressedFill: =MeetingTimeText_2.Color
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Size: =14
+            Text: =Text(StartDateTime, DateTimeFormat.ShortTime) & " - " & Text(EndDateTime, DateTimeFormat.ShortTime)
+            Width: =Rectangle4_12.Width
+            X: =40
+            Y: =Label6_4.Y + Label6_4.Height + 5
+            ZIndex: =25
+
+        Button7_10 As button:
+            Align: =TextPosition.Left
+            BorderColor: =ColorFade(Button7_10.Fill, -15%)
+            BorderThickness: =0
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledBorderColor: =ColorFade(Button7_10.BorderColor, 70%)
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(18, 107, 240, 1)
+            FocusedBorderColor: =Button7_10.BorderColor
+            FocusedBorderThickness: =0
+            Height: =47
+            HoverBorderColor: =ColorFade(Button7_10.BorderColor, 20%)
+            HoverColor: =Button7_10.Color
+            HoverFill: =ColorFade(Button7_10.Fill, 20%)
+            OnSelect: =
+            PaddingLeft: =20
+            PressedBorderColor: =Button7_10.Fill
+            PressedColor: =Button7_10.Fill
+            PressedFill: =Button7_10.Color
+            RadiusBottomLeft: =0
+            RadiusBottomRight: =5
+            RadiusTopLeft: =0   
+            RadiusTopRight: =5
+            Text: =""
+            Width: =52
+            X: =267
+            Y: =MeetingTimeText_2.Y
+            ZIndex: =26
+
+        iconClock_2 As icon.Clock:
+            Color: =Color.White
+            DisabledFill: =iconClock_2.Fill
+            Fill: =RGBA(0,0,0,0)
+            FocusedBorderColor: =iconClock_2.BorderColor
+            Height: =30
+            HoverBorderColor: =ColorFade(iconClock_2.BorderColor, 20%)
+            HoverColor: =ColorFade(iconClock_2.Color, 20%)
+            HoverFill: =iconClock_2.Fill
+            Icon: =Icon.Clock
+            PressedBorderColor: =ColorFade(iconClock_2.BorderColor, -20%)
+            PressedColor: =ColorFade(iconClock_2.Color, -20%)
+            PressedFill: =iconClock_2.Fill
+            Width: =30
+            X: =Button7_10.X + Button7_10.Width/2 - iconClock_2.Width/2
+            Y: =Button7_10.Y + Button7_10.Height/2 - iconClock_2.Height/2
+            ZIndex: =27
+
+        Button7_13 As button:
+            Align: =TextPosition.Left
+            BorderColor: =ColorFade(Button7_13.Fill, -15%)
+            BorderThickness: =If(Button7_13.DisplayMode = DisplayMode.Disabled, 0, 4)
+            Color: =RGBA(0, 0, 0, 1)
+            DisabledBorderColor: =RGBA(0,0,0,0)
+            DisabledFill: =ColorFade(RGBA(159, 167, 165, .7), 50%)
+            Fill: =RGBA(0,0,0,0)
+            FocusedBorderColor: =Button7_13.BorderColor
+            FocusedBorderThickness: =0
+            Height: =47
+            HoverBorderColor: =RGBA(18, 107, 240, 1)
+            HoverColor: =Button7_13.Color
+            HoverFill: =RGBA(0,0,0,0)
+            OnSelect: |+
+                =Set(ShowTime, true);
+                Set(ShowCalendar, false);
+                If(BookForMeeting, Set(ShowWarning, true), Navigate(AdjustDateScreen, BorderStyle.None))
+                
+            PaddingLeft: =20
+            PressedBorderColor: =Button7_13.Fill
+            PressedColor: =Button7_13.Fill
+            PressedFill: =RGBA(0,0,0,0)
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Text: =""
+            Width: =Rectangle4_12.Width
+            X: =40
+            Y: =MeetingTimeText_2.Y
+            ZIndex: =28
+
+        Rectangle4_15 As rectangle:
+            DisabledFill: =Rectangle4_15.Fill
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =Rectangle4_15.BorderColor
+            Height: =2
+            HoverFill: =Rectangle4_15.Fill
+            PressedFill: =Rectangle4_15.Fill
+            Width: =Button4_3.Width - 40
+            X: =Button4_3.X + 20
+            Y: =LabelBookingDetailsHeader_2.Y + LabelBookingDetailsHeader_2.Height + 20
+            ZIndex: =29
+
+        LabelMeetingHeader_2 As label:
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =LabelMeetingHeader_2.BorderColor
+            FontWeight: =FontWeight.Lighter
+            HoverBorderColor: =LabelMeetingHeader_2.BorderColor
+            HoverColor: =LabelMeetingHeader_2.Color
+            HoverFill: =LabelMeetingHeader_2.Fill
+            PressedBorderColor: =LabelMeetingHeader_2.BorderColor
+            PressedColor: =LabelMeetingHeader_2.Color
+            PressedFill: =LabelMeetingHeader_2.Fill
+            Size: =15
+            Text: |-
+                ="Meeting:"
+            Visible: =BookForMeeting
+            X: =40
+            Y: =Rectangle4_13.Y + 15
+            ZIndex: =30
+
+        LabelChosenMeeting_2 As label:
+            AutoHeight: =true
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =LabelChosenMeeting_2.BorderColor
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            HoverBorderColor: =LabelChosenMeeting_2.BorderColor
+            HoverColor: =LabelChosenMeeting_2.Color
+            HoverFill: =LabelChosenMeeting_2.Fill
+            PressedBorderColor: =LabelChosenMeeting_2.BorderColor
+            PressedColor: =LabelChosenMeeting_2.Color
+            PressedFill: =LabelChosenMeeting_2.Fill
+            Size: =14
+            Text: =If(IsBlank(ChosenMeeting), "No Meeting", ChosenMeeting.Subject)
+            Visible: =BookForMeeting
+            Width: =203
+            X: =40
+            Y: =LabelMeetingHeader_2.Y + LabelMeetingHeader_2.Height
+            ZIndex: =31
+

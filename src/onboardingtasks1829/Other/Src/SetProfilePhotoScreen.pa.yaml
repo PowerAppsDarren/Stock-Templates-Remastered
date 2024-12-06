@@ -1,0 +1,277 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  SetProfilePhotoScreen:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: =Set(MyPhoto,Office365Users.UserPhoto(MyUserId))
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - SetProfilePhotoScreenLayer:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Height: =768
+            Width: =Parent.Width
+          Children:
+            - SetProfilePhotoSection:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =Parent.Height
+                  Width: =Parent.Width
+                Children:
+                  - SetProfilePhotoLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =SetProfilePhotoLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =408
+                        HoverBorderColor: =ColorFade(SetProfilePhotoLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(SetProfilePhotoLogo.Fill, 20%)
+                        Image: ='camera-green'
+                        PaddingBottom: =11
+                        PaddingLeft: =655
+                        PaddingRight: =655
+                        PressedBorderColor: =ColorFade(SetProfilePhotoLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(SetProfilePhotoLogo.Fill, -20%)
+                        Width: =Parent.Width
+                  - SetProfilePhotoTitle:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =SetProfilePhotoTitle.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =50
+                        HoverBorderColor: =SetProfilePhotoTitle.BorderColor
+                        HoverColor: =SetProfilePhotoTitle.Color
+                        HoverFill: =SetProfilePhotoTitle.Fill
+                        PaddingLeft: =10
+                        PressedBorderColor: =SetProfilePhotoTitle.BorderColor
+                        PressedColor: =SetProfilePhotoTitle.Color
+                        PressedFill: =SetProfilePhotoTitle.Fill
+                        Size: =18
+                        Text: ="Set company profile photo"
+                        Width: =Parent.Width
+                        Y: =245
+                  - SetProfilePhotoSubtitle:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =SetProfilePhotoSubtitle.BorderColor
+                        Height: =60
+                        HoverBorderColor: =SetProfilePhotoSubtitle.BorderColor
+                        HoverColor: =SetProfilePhotoSubtitle.Color
+                        HoverFill: =SetProfilePhotoSubtitle.Fill
+                        LineHeight: =1.4
+                        PaddingLeft: =10
+                        PressedBorderColor: =SetProfilePhotoSubtitle.BorderColor
+                        PressedColor: =SetProfilePhotoSubtitle.Color
+                        PressedFill: =SetProfilePhotoSubtitle.Fill
+                        Size: =12
+                        Text: |-
+                          ="Put a face to your  name and take a photo or select from your gallery. This profile photo will
+                          be seen by others across your Office 365 account in apps like Outlook and Skype."
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.Width
+                        Y: =305
+                  - SetProfilePhotoTakePhotoLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =SetProfilePhotoTakePhotoLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =25
+                        HoverBorderColor: =ColorFade(SetProfilePhotoTakePhotoLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(SetProfilePhotoTakePhotoLogo.Fill, 20%)
+                        Image: ='photo-icon'
+                        PressedBorderColor: =ColorFade(SetProfilePhotoTakePhotoLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(SetProfilePhotoTakePhotoLogo.Fill, -20%)
+                        Visible: =false
+                        Width: =25
+                        X: =SetProfilePhotoTakePhoto.X + 55
+                        Y: =SetProfilePhotoTakePhoto.Y + 9
+                  - SetProfilePhotoTakePhoto:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =SetProfilePhotoTakePhoto.BorderColor
+                        DisabledBorderColor: =ColorFade(SetProfilePhotoTakePhoto.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =SetProfilePhotoTakePhoto.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =43
+                        HoverBorderColor: =SetProfilePhotoTakePhoto.BorderColor
+                        HoverColor: =SetProfilePhotoTakePhoto.Color
+                        HoverFill: =SetProfilePhotoTakePhoto.Fill
+                        OnSelect: =
+                        PaddingLeft: =40
+                        PaddingRight: =0
+                        PressedBorderColor: =SetProfilePhotoTakePhoto.BorderColor
+                        PressedColor: =SetProfilePhotoTakePhoto.Color
+                        PressedFill: =SetProfilePhotoTakePhoto.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Take photo"
+                        Visible: =false
+                        Width: =227
+                        X: =675
+                        Y: =484
+                  - SetProfilePhotoSelectFromGalleryLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =SetProfilePhotoSelectFromGalleryLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =25
+                        HoverBorderColor: =ColorFade(SetProfilePhotoSelectFromGalleryLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(SetProfilePhotoSelectFromGalleryLogo.Fill, 20%)
+                        Image: =gallery
+                        PressedBorderColor: =ColorFade(SetProfilePhotoSelectFromGalleryLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(SetProfilePhotoSelectFromGalleryLogo.Fill, -20%)
+                        Width: =25
+                        X: =SetProfilePhotoSelectFromGallery.X + 22
+                        Y: =515
+                  - SetProfilePhotoSelectFromGallery:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =SetProfilePhotoSelectFromGallery.BorderColor
+                        DisabledBorderColor: =ColorFade(SetProfilePhotoSelectFromGallery.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =SetProfilePhotoSelectFromGallery.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =43
+                        HoverBorderColor: =SetProfilePhotoSelectFromGallery.BorderColor
+                        HoverColor: =SetProfilePhotoSelectFromGallery.Color
+                        HoverFill: =SetProfilePhotoSelectFromGallery.Fill
+                        PaddingLeft: =38
+                        PaddingRight: =0
+                        PressedBorderColor: =SetProfilePhotoSelectFromGallery.BorderColor
+                        PressedColor: =SetProfilePhotoSelectFromGallery.Color
+                        PressedFill: =SetProfilePhotoSelectFromGallery.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Select from gallery"
+                        Width: =227
+                        X: =675
+                        Y: =506
+                  - SetProfilePhotoUserPhoto:
+                      Control: Image@2.2.3
+                      Properties:
+                        BorderColor: =RGBA(129, 129, 129, 1)
+                        FocusedBorderColor: =SetProfilePhotoUserPhoto.BorderColor
+                        FocusedBorderThickness: =SetProfilePhotoUserPhoto.BorderThickness
+                        Height: =150
+                        HoverBorderColor: =ColorFade(SetProfilePhotoUserPhoto.BorderColor, 20%)
+                        HoverFill: =ColorFade(SetProfilePhotoUserPhoto.Fill, 20%)
+                        Image: =If(And(IsBlank(MyPhoto),IsBlank(PhotoToUpload)),profile,IsBlank(PhotoToUpload),MyPhoto,PhotoToUpload)
+                        ImagePosition: =LayoutAlignItems.Stretch
+                        PaddingBottom: =SetProfilePhotoUserPhoto.PaddingTop
+                        PaddingLeft: =SetProfilePhotoUserPhoto.PaddingTop
+                        PaddingRight: =SetProfilePhotoUserPhoto.PaddingTop
+                        PaddingTop: =If(IsBlank(MyPhoto),50,0)
+                        PressedBorderColor: =ColorFade(SetProfilePhotoUserPhoto.BorderColor, -20%)
+                        PressedFill: =ColorFade(SetProfilePhotoUserPhoto.Fill, -20%)
+                        Width: =150
+                        X: =474
+                        Y: =458
+                  - SetProfilePhotoClose:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =SetProfilePhotoClose.Fill
+                        FocusedBorderColor: =SetProfilePhotoClose.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(SetProfilePhotoClose.BorderColor, 20%)
+                        HoverColor: =ColorFade(SetProfilePhotoClose.Color, 20%)
+                        HoverFill: =SetProfilePhotoClose.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Navigate(MyProfileScreen,BorderStyle.None)
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(SetProfilePhotoClose.BorderColor, -20%)
+                        PressedColor: =ColorFade(SetProfilePhotoClose.Color, -20%)
+                        PressedFill: =SetProfilePhotoClose.Fill
+                        X: =1273
+                        Y: =30
+                  - SetProfilePhotoAddMedia:
+                      Control: AddMedia@2.2.1
+                      Properties:
+                        BorderColor: =ColorFade(SetProfilePhotoAddMedia.Fill, -15%)
+                        ChangePictureText: =""
+                        FocusedBorderColor: =SetProfilePhotoAddMedia.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =SetProfilePhotoSelectFromGallery.Height
+                        HoverBorderColor: =ColorFade(SetProfilePhotoAddMedia.BorderColor, 20%)
+                        HoverColor: =SetProfilePhotoAddMedia.Color
+                        HoverFill: =ColorFade(SetProfilePhotoAddMedia.Fill, 20%)
+                        OnChange: =If(And(IsBlank(SetProfilePhotoAddMedia.Error),Not(IsBlank(SetProfilePhotoAddMedia.Media))),Set(PhotoToUpload, SetProfilePhotoAddMedia.Media))
+                        PressedBorderColor: =ColorFade(SetProfilePhotoAddMedia.BorderColor, -20%)
+                        PressedColor: =SetProfilePhotoAddMedia.Color
+                        PressedFill: =ColorFade(SetProfilePhotoAddMedia.Fill, -20%)
+                        Size: =25
+                        Text: =""
+                        Tooltip: ="The size of the image should be less than 4M."
+                        Width: =SetProfilePhotoSelectFromGallery.Width
+                        X: =SetProfilePhotoSelectFromGallery.X
+                        Y: =504
+                  - SetProfilePhotoSaveChanges:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =SetProfilePhotoTakePhoto.BorderColor
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(SetProfilePhotoSaveChanges.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =SetProfilePhotoSaveChanges.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =46
+                        HoverBorderColor: =ColorFade(SetProfilePhotoSaveChanges.BorderColor, 20%)
+                        HoverColor: =SetProfilePhotoSaveChanges.Color
+                        HoverFill: =ColorFade(SetProfilePhotoSaveChanges.Fill, 20%)
+                        OnSelect: |-
+                          =Office365Users.UpdateMyPhoto("image/jpeg", PhotoToUpload);
+                          Set(MyPhoto,Office365Users.UserPhoto(MyUserId));
+                          Set(PhotoTaskId,LookUp(MyProfileOutlookTasks,Subject = "PhotoComplete").Id);
+                          If(Not(And(IsBlank(MyPhoto),IsBlank(PhotoTaskId))),OutlookTasks.CompleteTask(LookUp(MyProfileOutlookTasks,Subject = "PhotoComplete").Id));
+                          Patch(MyPeersList,LookUp(MyPeersList,Id = MyUserId),{Photo:MyPhoto});
+                          Set(SelectedUserProfile,LookUp(MyPeersList,Id = MyUserId));
+                          ClearCollect(UserPhotoCache,{UserId:MyUserId, Photo:MyPhoto,Time:Now()});
+                          Navigate(MyProfileScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =SetProfilePhotoSaveChanges.Fill
+                        PressedColor: =SetProfilePhotoSaveChanges.Fill
+                        PressedFill: =SetProfilePhotoSaveChanges.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: ="Save changes"
+                        Width: =428
+                        X: =474
+                        Y: =658

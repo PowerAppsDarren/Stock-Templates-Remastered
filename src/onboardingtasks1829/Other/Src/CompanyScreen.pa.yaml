@@ -1,0 +1,973 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  CompanyScreen:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - CompanyCanvas:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Height: =768
+            Width: =1366
+          Children:
+            - CompanyScreenDataCard:
+                Control: DataCard@1.0.2
+                Variant: BlankCard
+                Properties:
+                  Height: =768
+                  Width: =1366
+                  WidthFit: =true
+                Children:
+                  - CompanyLeadershipLabel:
+                      Control: Label@2.5.1
+                      Group: CompanyLeadershipGroup
+                      Properties:
+                        Align: =Align.Center
+                        AutoHeight: =true
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =CompanyLeadershipLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        HoverBorderColor: =CompanyLeadershipLabel.BorderColor
+                        HoverColor: =CompanyLeadershipLabel.Color
+                        HoverFill: =CompanyLeadershipLabel.Fill
+                        LineHeight: =1.4
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PressedBorderColor: =CompanyLeadershipLabel.BorderColor
+                        PressedColor: =CompanyLeadershipLabel.Color
+                        PressedFill: =CompanyLeadershipLabel.Fill
+                        Size: =10.5
+                        Text: =LearnMoreLeadership.Text
+                        Width: =Min(180,Len(CompanyLeadershipLabel.Text)*9)
+                        X: =LearnMoreLeadership.X
+                        Y: =LearnMoreLeadership.Y
+                  - AppIcon_1:
+                      Control: Image@2.2.3
+                      Group: TopMenu2
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =AppIcon_1.BorderColor
+                        Height: =20
+                        HoverBorderColor: =ColorFade(AppIcon_1.BorderColor, 20%)
+                        HoverFill: =ColorFade(AppIcon_1.Fill, 20%)
+                        Image: ='get-onboard-logo-large'
+                        PressedBorderColor: =ColorFade(AppIcon_1.BorderColor, -20%)
+                        PressedFill: =ColorFade(AppIcon_1.Fill, -20%)
+                        Width: =157
+                        X: =58
+                        Y: =28
+                  - MyProfileLabel_1:
+                      Control: Label@2.5.1
+                      Group: TopMenu2
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =MyProfileLabel_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Label1.Height
+                        HoverBorderColor: =MyProfileLabel_1.BorderColor
+                        HoverColor: =MyProfileLabel_1.Color
+                        HoverFill: =MyProfileLabel_1.Fill
+                        OnSelect: =Navigate(MyProfileScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyProfileLabel_1.BorderColor
+                        PressedColor: =MyProfileLabel_1.Color
+                        PressedFill: =MyProfileLabel_1.Fill
+                        Size: =12
+                        Text: ="My profile"
+                        Width: =Label1.Width
+                        X: =Label1.X
+                        Y: =Label1.Y
+                  - TeamLabel_1:
+                      Control: Label@2.5.1
+                      Group: TopMenu2
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =TeamLabel_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Label1_1.Height
+                        HoverBorderColor: =TeamLabel_1.BorderColor
+                        HoverColor: =TeamLabel_1.Color
+                        HoverFill: =TeamLabel_1.Fill
+                        OnSelect: =Navigate(TeamScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =TeamLabel_1.BorderColor
+                        PressedColor: =TeamLabel_1.Color
+                        PressedFill: =TeamLabel_1.Fill
+                        Size: =12
+                        Text: ="Team"
+                        Width: =Label1_1.Width
+                        X: =Label1_1.X
+                        Y: =Label1_1.Y
+                  - CompanyLabel_1:
+                      Control: Label@2.5.1
+                      Group: TopMenu2
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompanyLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =Label1_2.Height
+                        HoverBorderColor: =CompanyLabel_1.BorderColor
+                        HoverColor: =CompanyLabel_1.Color
+                        HoverFill: =CompanyLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyLabel_1.BorderColor
+                        PressedColor: =CompanyLabel_1.Color
+                        PressedFill: =CompanyLabel_1.Fill
+                        Size: =12
+                        Text: ="Company"
+                        Width: =Label1_2.Width
+                        X: =Label1_2.X
+                        Y: =Label1_2.Y
+                  - CompanyContactsBackground:
+                      Control: Rectangle@2.3.0
+                      Group: ContactGroup
+                      Properties:
+                        DisabledFill: =CompanyContactsBackground.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =CompanyContactsBackground.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =CompanyEnd.Y - CompanyContactsBackground.Y - 1
+                        HoverFill: =CompanyContactsBackground.Fill
+                        OnSelect: =
+                        PressedFill: =CompanyContactsBackground.Fill
+                        Width: =395
+                        X: =970
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 1
+                  - TeamRectangle_1:
+                      Control: Rectangle@2.3.0
+                      Group: CompanyDetailsGroup
+                      Properties:
+                        DisabledFill: =TeamRectangle_1.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(236, 240, 244, 1)
+                        FocusedBorderColor: =TeamRectangle_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =CompanyHeaderLinks.Y + CompanyHeaderLinks.Height - TeamRectangle_1.Y + 21
+                        HoverFill: =TeamRectangle_1.Fill
+                        PressedFill: =TeamRectangle_1.Fill
+                        Width: =1365
+                        Y: =104
+                  - TeamName_1:
+                      Control: Label@2.5.1
+                      Group: CompanyDetailsGroup
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =TeamName_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =33
+                        HoverBorderColor: =TeamName_1.BorderColor
+                        HoverColor: =TeamName_1.Color
+                        HoverFill: =TeamName_1.Fill
+                        PressedBorderColor: =TeamName_1.BorderColor
+                        PressedColor: =TeamName_1.Color
+                        PressedFill: =TeamName_1.Fill
+                        Size: =18
+                        Text: =First(Company).Name
+                        Width: =Parent.Width - TeamName_1.X
+                        X: =45
+                        Y: =TeamRectangle_1.Y + 32
+                  - TeamSelectedRectangle_2:
+                      Control: Rectangle@2.3.0
+                      Group: TopMenu2
+                      Properties:
+                        DisabledFill: =TeamSelectedRectangle_2.Fill
+                        Fill: =RGBA(65, 225, 127, 1)
+                        FocusedBorderColor: =TeamSelectedRectangle_2.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =5
+                        HoverFill: =TeamSelectedRectangle_2.Fill
+                        PressedFill: =TeamSelectedRectangle_2.Fill
+                        Width: =CompanyLabel_1.Width - 20
+                        X: =CompanyLabel_1.X + 10
+                        Y: =104
+                  - MyUserLogo:
+                      Control: Image@2.2.3
+                      Group: TopMenu2
+                      Properties:
+                        FocusedBorderColor: =MyUserLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =60
+                        HoverBorderColor: =ColorFade(MyUserLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(MyUserLogo.Fill, 20%)
+                        Image: =LookUp(UserPhotoCache,UserId = MyUserId).Photo
+                        ImagePosition: =ImagePosition.Stretch
+                        PressedBorderColor: =ColorFade(MyUserLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(MyUserLogo.Fill, -20%)
+                        Width: =60
+                        X: =1256
+                        Y: =22
+                  - MyDisplayName2:
+                      Control: Label@2.5.1
+                      Group: TopMenu2
+                      Properties:
+                        Align: =TextPosition.Right
+                        FocusedBorderColor: =MyDisplayName2.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =25
+                        HoverBorderColor: =MyDisplayName2.BorderColor
+                        HoverColor: =MyDisplayName2.Color
+                        HoverFill: =MyDisplayName2.Fill
+                        PaddingBottom: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyDisplayName2.BorderColor
+                        PressedColor: =MyDisplayName2.Color
+                        PressedFill: =MyDisplayName2.Fill
+                        Size: |+
+                          =12
+                        Text: =MyProfile.DisplayName
+                        Width: =285
+                        X: =960
+                        Y: =30
+                  - MyJobTitle2:
+                      Control: Label@2.5.1
+                      Group: TopMenu2
+                      Properties:
+                        Align: =TextPosition.Right
+                        FocusedBorderColor: =MyJobTitle2.BorderColor
+                        Height: =19
+                        HoverBorderColor: =MyJobTitle2.BorderColor
+                        HoverColor: =MyJobTitle2.Color
+                        HoverFill: =MyJobTitle2.Fill
+                        PaddingBottom: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyJobTitle2.BorderColor
+                        PressedColor: =MyJobTitle2.Color
+                        PressedFill: =MyJobTitle2.Fill
+                        Size: |+
+                          =10.5
+                        Text: =MyProfile.JobTitle
+                        Width: =285
+                        X: =960
+                        Y: =55
+                  - AboutCompany:
+                      Control: Label@2.5.1
+                      Properties:
+                        AutoHeight: =true
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =AboutCompany.BorderColor
+                        Height: =154
+                        HoverBorderColor: =AboutCompany.BorderColor
+                        HoverColor: =AboutCompany.Color
+                        HoverFill: =AboutCompany.Fill
+                        Overflow: =Overflow.Scroll
+                        PressedBorderColor: =AboutCompany.BorderColor
+                        PressedColor: =AboutCompany.Color
+                        PressedFill: =AboutCompany.Fill
+                        Size: =12
+                        Text: =First(Company).About
+                        Width: =542
+                        X: =45
+                        Y: =CompanyIntroName.Y + CompanyIntroName.Height + 15
+                  - FaqText:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =FaqText.BorderColor
+                        Height: =33
+                        HoverBorderColor: =FaqText.BorderColor
+                        HoverColor: =FaqText.Color
+                        HoverFill: =FaqText.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =FaqText.BorderColor
+                        PressedColor: =FaqText.Color
+                        PressedFill: =FaqText.Fill
+                        Size: =18
+                        Text: ="FAQs"
+                        Width: =500
+                        X: =50
+                        Y: =AboutCompany.Y + AboutCompany.Height + 30
+                  - CompanyLeadershipLogo:
+                      Control: Image@2.2.3
+                      Group: CompanyLeadershipGroup
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =CompanyLeadershipLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =18
+                        HoverBorderColor: =ColorFade(CompanyLeadershipLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(CompanyLeadershipLogo.Fill, 20%)
+                        Image: ='leadership@3x'
+                        PressedBorderColor: =ColorFade(CompanyLeadershipLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(CompanyLeadershipLogo.Fill, -20%)
+                        Width: =24
+                        X: =673
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 87
+                  - CompanyLeadershipText:
+                      Control: Label@2.5.1
+                      Group: CompanyLeadershipGroup
+                      Properties:
+                        FocusedBorderColor: =CompanyLeadershipText.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =42
+                        HoverBorderColor: =CompanyLeadershipText.BorderColor
+                        HoverColor: =CompanyLeadershipText.Color
+                        HoverFill: =CompanyLeadershipText.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyLeadershipText.BorderColor
+                        PressedColor: =CompanyLeadershipText.Color
+                        PressedFill: =CompanyLeadershipText.Fill
+                        Size: =12
+                        Text: ="Company leadership"
+                        Width: =260
+                        X: =710
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 75
+                  - CompanyLeadershipData:
+                      Control: Label@2.5.1
+                      Group: CompanyLeadershipGroup
+                      Properties:
+                        AutoHeight: =true
+                        FocusedBorderColor: =CompanyLeadershipData.BorderColor
+                        HoverBorderColor: =CompanyLeadershipData.BorderColor
+                        HoverColor: =CompanyLeadershipData.Color
+                        HoverFill: =CompanyLeadershipData.Fill
+                        PressedBorderColor: =CompanyLeadershipData.BorderColor
+                        PressedColor: =CompanyLeadershipData.Color
+                        PressedFill: =CompanyLeadershipData.Fill
+                        Size: |+
+                          =10.5
+                        Text: =First(Leadership).Description
+                        Width: =232
+                        X: =668
+                        Y: =CompanyLeadershipLogo.Y + CompanyLeadershipLogo.Height + 14
+                  - LearnMoreLeadership:
+                      Control: Classic/Button@2.2.0
+                      Group: CompanyLeadershipGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,54,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(LearnMoreLeadership.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =LearnMoreLeadership.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =CompanyLeadershipLabel.Height
+                        HoverBorderColor: =ColorFade(LearnMoreLeadership.BorderColor, 20%)
+                        HoverColor: =LearnMoreLeadership.Color
+                        HoverFill: =ColorFade(LearnMoreLeadership.Fill, 20%)
+                        OnSelect: =Launch(First(LeadershipLinks).URL)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =LearnMoreLeadership.Fill
+                        PressedColor: =LearnMoreLeadership.Fill
+                        PressedFill: =LearnMoreLeadership.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: |+
+                          =10.5
+                        Text: =First(LeadershipLinks).Name
+                        Width: =CompanyLeadershipLabel.Width
+                        X: =673
+                        Y: =CompanyLeadershipData.Y + CompanyLeadershipData.Height + 20
+                  - ContactsText:
+                      Control: Label@2.5.1
+                      Group: ContactGroup
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =ContactsText.BorderColor
+                        Height: =56
+                        HoverBorderColor: =ContactsText.BorderColor
+                        HoverColor: =ContactsText.Color
+                        HoverFill: =ContactsText.Fill
+                        PressedBorderColor: =ContactsText.BorderColor
+                        PressedColor: =ContactsText.Color
+                        PressedFill: =ContactsText.Fill
+                        Size: =18
+                        Text: =If(isAdmin,"Contacts","Important contacts")
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =350
+                        X: =CompanyContactsBackground.X + 45
+                        Y: =CompanyContactsBackground.Y + 30
+                  - ContactsGallery:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Group: ContactGroup
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =CountRows(Contacts) * ContactsGallery.TemplateHeight
+                        Items: =Contacts
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =ContactsGallery.BorderColor
+                        ShowScrollbar: =false
+                        TemplateSize: =105
+                        Width: =395
+                        X: =971
+                        Y: =CompanyContactsBackground.Y + 67
+                      Children:
+                        - ContactGaleryTitle:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =LayoutAlignItems.Center
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              FocusedBorderColor: =ContactGaleryTitle.BorderColor
+                              FontWeight: =FontWeight.Bold
+                              Height: =22
+                              HoverBorderColor: =ContactGaleryTitle.BorderColor
+                              HoverColor: =ContactGaleryTitle.Color
+                              HoverFill: =ContactGaleryTitle.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =ContactGaleryTitle.BorderColor
+                              PressedColor: =ContactGaleryTitle.Color
+                              PressedFill: =ContactGaleryTitle.Fill
+                              Size: =12
+                              Text: =ThisItem.DepartmentName
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =395
+                              Y: =15
+                        - PhoneData:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              FocusedBorderColor: =PhoneData.BorderColor
+                              Height: =19
+                              HoverBorderColor: =PhoneData.BorderColor
+                              HoverColor: =PhoneData.Color
+                              HoverFill: =PhoneData.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =PhoneData.BorderColor
+                              PressedColor: =PhoneData.Color
+                              PressedFill: =PhoneData.Fill
+                              Size: |+
+                                =10.5
+                              Text: =ThisItem.DepartmentPhone
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.TemplateWidth - PhoneData.X
+                              Wrap: =false
+                              X: =155
+                              Y: =PhoneText.Y
+                        - PhoneText:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Right
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              FocusedBorderColor: =PhoneText.BorderColor
+                              Height: =19
+                              HoverBorderColor: =PhoneText.BorderColor
+                              HoverColor: =PhoneText.Color
+                              HoverFill: =PhoneText.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =PhoneText.BorderColor
+                              PressedColor: =PhoneText.Color
+                              PressedFill: =PhoneText.Fill
+                              Size: |+
+                                =10.5
+                              Text: ="Phone:"
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =88
+                              X: =52
+                              Y: =49
+                        - EmailData:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =EmailData.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =38
+                              HoverBorderColor: =EmailData.BorderColor
+                              HoverColor: =EmailData.Color
+                              HoverFill: =EmailData.Fill
+                              PaddingBottom: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EmailData.BorderColor
+                              PressedColor: =EmailData.Color
+                              PressedFill: =EmailData.Fill
+                              Size: |+
+                                =10.5
+                              Text: =ThisItem.Email
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.TemplateWidth - EmailData.X
+                              Wrap: =false
+                              X: =155
+                              Y: =69
+                        - EmailText:
+                            Control: Label@2.5.1
+                            Properties:
+                              Align: =Align.Right
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              FocusedBorderColor: =EmailText.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EmailText.BorderColor
+                              HoverColor: =EmailText.Color
+                              HoverFill: =EmailText.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EmailText.BorderColor
+                              PressedColor: =EmailText.Color
+                              PressedFill: =EmailText.Fill
+                              Size: |+
+                                =10.5
+                              Text: ="Email:"
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =88
+                              X: =52
+                              Y: =69
+                        - ContactGallerySeparator:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =ContactGallerySeparator.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =ContactGallerySeparator.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =ContactGallerySeparator.Fill
+                              OnSelect: =
+                              PressedFill: =ContactGallerySeparator.Fill
+                              Width: =Parent.Width - 103
+                              X: =50
+                              Y: =-2
+                  - CompanyIntroName:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(21, 166, 211, 1)
+                        FocusedBorderColor: =CompanyIntroName.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        HoverBorderColor: =CompanyIntroName.BorderColor
+                        HoverColor: =CompanyIntroName.Color
+                        HoverFill: =CompanyIntroName.Fill
+                        PressedBorderColor: =CompanyIntroName.BorderColor
+                        PressedColor: =CompanyIntroName.Color
+                        PressedFill: =CompanyIntroName.Fill
+                        Size: =13.5
+                        Text: =First(Company).Name
+                        Visible: =false
+                        Width: =900
+                        X: =61
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 27
+                  - CompanyHeaderLinks:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        AutoHeight: =true
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisplayMode: =DisplayMode.View
+                        Height: =60
+                        HoverBorderColor: =CompanyHeaderLinks.BorderColor
+                        HtmlText: |-
+                          ="<div style="""">" & Concat(CompanyLinks,"<a style=""display:inline-block;line-height:40px;vertical-align:middle;text-decoration:none;font-size: 16px;
+                            font-weight: 600;color: #1a1a54;padding:0 12px;border: solid 1px #1a1a54;margin:10px;border-radius:4px;"" href=""" & URL & """>" & Name & "</a>") & "</div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =40
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        Y: =169
+                  - CompanyFAQList:
+                      Control: Gallery@2.15.0
+                      Variant: VariableHeight
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =Sum(CompanyFAQList.AllItems, CompanyFaqHeight.Text)
+                        Items: =FAQs
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =CompanyFAQList.BorderColor
+                        ShowScrollbar: =false
+                        TemplatePadding: =0
+                        TemplateSize: =0
+                        Width: =542
+                        X: =45
+                        Y: =FaqText.Y +FaqText.Height+18
+                      Children:
+                        - CompanyFaqQuestion:
+                            Control: Label@2.5.1
+                            Properties:
+                              AutoHeight: =true
+                              Color: =RGBA(26, 26, 84, 1)
+                              DisplayMode: =DisplayMode.View
+                              FocusedBorderColor: =CompanyFaqQuestion.BorderColor
+                              FontWeight: =FontWeight.Bold
+                              HoverBorderColor: =CompanyFaqQuestion.BorderColor
+                              HoverColor: =CompanyFaqQuestion.Color
+                              HoverFill: =CompanyFaqQuestion.Fill
+                              LineHeight: =1.38
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =CompanyFaqQuestion.BorderColor
+                              PressedColor: =CompanyFaqQuestion.Color
+                              PressedFill: =CompanyFaqQuestion.Fill
+                              Size: =12
+                              Text: =ThisItem.Question
+                              Width: =Parent.TemplateWidth
+                        - CompanyFaqAnswer:
+                            Control: Label@2.5.1
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(41, 40, 55, 1)
+                              DisplayMode: =DisplayMode.View
+                              FocusedBorderColor: =CompanyFaqAnswer.BorderColor
+                              Height: =1
+                              HoverBorderColor: =CompanyFaqAnswer.BorderColor
+                              HoverColor: =CompanyFaqAnswer.Color
+                              HoverFill: =CompanyFaqAnswer.Fill
+                              LineHeight: =1.38
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =CompanyFaqAnswer.BorderColor
+                              PressedColor: =CompanyFaqAnswer.Color
+                              PressedFill: =CompanyFaqAnswer.Fill
+                              Size: =12
+                              Text: =ThisItem.Answer
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.Width
+                              X: =CompanyFaqQuestion.X
+                              Y: =CompanyFaqQuestion.Height
+                        - CompanyFaqHeight:
+                            Control: Label@2.5.1
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(41, 40, 55, 1)
+                              DisplayMode: =DisplayMode.View
+                              FocusedBorderColor: =CompanyFaqHeight.BorderColor
+                              Height: =1
+                              HoverBorderColor: =CompanyFaqHeight.BorderColor
+                              HoverColor: =CompanyFaqHeight.Color
+                              HoverFill: =CompanyFaqHeight.Fill
+                              LineHeight: =1.38
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =CompanyFaqHeight.BorderColor
+                              PressedColor: =CompanyFaqHeight.Color
+                              PressedFill: =CompanyFaqHeight.Fill
+                              Size: =12
+                              Text: =CompanyFaqAnswer.Height + CompanyFaqQuestion.Height
+                              VerticalAlign: =VerticalAlign.Top
+                              Visible: =false
+                              Width: =Parent.Width
+                              X: =CompanyFaqQuestion.X
+                  - CompanyIntroLogo:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =CompanyIntroLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =16
+                        HoverBorderColor: =ColorFade(CompanyIntroLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(CompanyIntroLogo.Fill, 20%)
+                        Image: ='company-logo'
+                        PressedBorderColor: =ColorFade(CompanyIntroLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(CompanyIntroLogo.Fill, -20%)
+                        Width: =148
+                        X: =50
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 40
+                  - CompanyEditLeadershipButton:
+                      Control: Classic/Button@2.2.0
+                      Group: CompanyEditLeadership
+                      Properties:
+                        BorderColor: =ColorFade(CompanyEditLeadershipButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(CompanyEditLeadershipButton.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompanyEditLeadershipButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(CompanyEditLeadershipButton.BorderColor, 20%)
+                        HoverColor: =CompanyEditLeadershipButton.Color
+                        HoverFill: =ColorFade(CompanyEditLeadershipButton.Fill, 20%)
+                        OnSelect: =Navigate(EditLeadership,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyEditLeadershipButton.Fill
+                        PressedColor: =CompanyEditLeadershipButton.Fill
+                        PressedFill: =CompanyEditLeadershipButton.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: |+
+                          =10
+                        Text: ="Edit Leadership"
+                        Visible: =isAdmin
+                        Width: =137
+                        X: =673
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 33
+                  - CompanyEditLeadershipIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: CompanyEditLeadership
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =CompanyEditLeadershipIcon.Fill
+                        FocusedBorderColor: =CompanyEditLeadershipIcon.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(CompanyEditLeadershipIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(CompanyEditLeadershipIcon.Color, 20%)
+                        HoverFill: =CompanyEditLeadershipIcon.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Navigate(EditLeadership,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(CompanyEditLeadershipIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(CompanyEditLeadershipIcon.Color, -20%)
+                        PressedFill: =CompanyEditLeadershipIcon.Fill
+                        Visible: =isAdmin
+                        Width: =15
+                        X: =678
+                        Y: =CompanyEditLeadershipButton.Y - 4
+                  - CompanyEditAboutButton:
+                      Control: Classic/Button@2.2.0
+                      Group: CompanyEditAbout
+                      Properties:
+                        BorderColor: =ColorFade(CompanyEditAboutButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(CompanyEditAboutButton.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompanyEditAboutButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(CompanyEditAboutButton.BorderColor, 20%)
+                        HoverColor: =CompanyEditAboutButton.Color
+                        HoverFill: =ColorFade(CompanyEditAboutButton.Fill, 20%)
+                        OnSelect: =Navigate(EditCompanyIntro,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyEditAboutButton.Fill
+                        PressedColor: =CompanyEditAboutButton.Fill
+                        PressedFill: =CompanyEditAboutButton.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: |+
+                          =10
+                        Text: ="Edit Intro"
+                        Visible: =isAdmin
+                        Width: =137
+                        X: =433
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 33
+                  - CompanyEditAboutIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: CompanyEditAbout
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =CompanyEditAboutIcon.Fill
+                        FocusedBorderColor: =CompanyEditAboutIcon.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(CompanyEditAboutIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(CompanyEditAboutIcon.Color, 20%)
+                        HoverFill: =CompanyEditAboutIcon.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Navigate(EditCompanyIntro,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(CompanyEditAboutIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(CompanyEditAboutIcon.Color, -20%)
+                        PressedFill: =CompanyEditAboutIcon.Fill
+                        Visible: =isAdmin
+                        Width: =15
+                        X: =441
+                        Y: =CompanyEditAboutButton.Y- 4
+                  - CompanyEditHeaderButton:
+                      Control: Classic/Button@2.2.0
+                      Group: CompanyEditHeader
+                      Properties:
+                        BorderColor: =ColorFade(CompanyEditHeaderButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(CompanyEditHeaderButton.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompanyEditHeaderButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(CompanyEditHeaderButton.BorderColor, 20%)
+                        HoverColor: =CompanyEditHeaderButton.Color
+                        HoverFill: =ColorFade(CompanyEditHeaderButton.Fill, 20%)
+                        OnSelect: =Navigate(EditCompanyHeader,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =31
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyEditHeaderButton.Fill
+                        PressedColor: =CompanyEditHeaderButton.Fill
+                        PressedFill: =CompanyEditHeaderButton.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =9
+                        Text: ="Edit Company header"
+                        Visible: =isAdmin
+                        Width: =171
+                        X: =1145
+                        Y: =140
+                  - CompanyEditHeaderIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: CompanyEditHeader
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =CompanyEditHeaderIcon.Fill
+                        FocusedBorderColor: =CompanyEditHeaderIcon.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(CompanyEditHeaderIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(CompanyEditHeaderIcon.Color, 20%)
+                        HoverFill: =CompanyEditHeaderIcon.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Select(CompanyEditHeaderButton)
+                        PressedBorderColor: =ColorFade(CompanyEditHeaderIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(CompanyEditHeaderIcon.Color, -20%)
+                        PressedFill: =CompanyEditHeaderIcon.Fill
+                        Visible: =isAdmin
+                        Width: =15
+                        X: =CompanyEditHeaderButton.X + 14
+                        Y: =CompanyEditHeaderButton.Y - 3
+                  - CompanyEditContactsButton:
+                      Control: Classic/Button@2.2.0
+                      Group: CompanyEditContacts
+                      Properties:
+                        BorderColor: =ColorFade(CompanyEditContactsButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(CompanyEditContactsButton.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompanyEditContactsButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(CompanyEditContactsButton.BorderColor, 20%)
+                        HoverColor: =CompanyEditContactsButton.Color
+                        HoverFill: =ColorFade(CompanyEditContactsButton.Fill, 20%)
+                        OnSelect: =Navigate(EditContact,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =26
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyEditContactsButton.Fill
+                        PressedColor: =CompanyEditContactsButton.Fill
+                        PressedFill: =CompanyEditContactsButton.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =9
+                        Text: ="Edit Contacts"
+                        Visible: =isAdmin
+                        Width: =125
+                        X: =1191
+                        Y: =TeamRectangle_1.Y + TeamRectangle_1.Height + 33
+                  - CompanyEditContactsIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: CompanyEditContacts
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =CompanyEditContactsIcon.Fill
+                        FocusedBorderColor: =CompanyEditContactsIcon.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(CompanyEditContactsIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(CompanyEditContactsIcon.Color, 20%)
+                        HoverFill: =CompanyEditContactsIcon.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Select(CompanyEditContactsButton)
+                        PressedBorderColor: =ColorFade(CompanyEditContactsIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(CompanyEditContactsIcon.Color, -20%)
+                        PressedFill: =CompanyEditContactsIcon.Fill
+                        Visible: =isAdmin
+                        Width: =15
+                        X: =CompanyEditContactsButton.X + 14
+                        Y: =CompanyEditContactsButton.Y - 3
+                  - CompnayEditFAQButton:
+                      Control: Classic/Button@2.2.0
+                      Group: CompanyEditFAQs
+                      Properties:
+                        BorderColor: =ColorFade(CompnayEditFAQButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(CompnayEditFAQButton.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompnayEditFAQButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(CompnayEditFAQButton.BorderColor, 20%)
+                        HoverColor: =CompnayEditFAQButton.Color
+                        HoverFill: =ColorFade(CompnayEditFAQButton.Fill, 20%)
+                        OnSelect: =Navigate(EditFAQs,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompnayEditFAQButton.Fill
+                        PressedColor: =CompnayEditFAQButton.Fill
+                        PressedFill: =CompnayEditFAQButton.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: |+
+                          =10
+
+                        Text: ="Edit FAQs"
+                        Visible: =isAdmin
+                        Width: =137
+                        X: =433
+                        Y: =AboutCompany.Y + AboutCompany.Height + 30
+                  - CompnayEditFAQIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: CompanyEditFAQs
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =CompnayEditFAQIcon.Fill
+                        FocusedBorderColor: =CompnayEditFAQIcon.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(CompnayEditFAQIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(CompnayEditFAQIcon.Color, 20%)
+                        HoverFill: =CompnayEditFAQIcon.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Navigate(EditCompanyIntro,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(CompnayEditFAQIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(CompnayEditFAQIcon.Color, -20%)
+                        PressedFill: =CompnayEditFAQIcon.Fill
+                        Visible: =isAdmin
+                        Width: =15
+                        X: =441
+                        Y: =AboutCompany.Y + AboutCompany.Height + 27
+                  - CompanyEnd:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =CompanyEnd.Fill
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =CompanyEnd.BorderColor
+                        Height: =1
+                        HoverFill: =CompanyEnd.Fill
+                        PressedFill: =CompanyEnd.Fill
+                        Width: =Parent.Width
+                        Y: =Max(768,CompanyFAQList.Y + CompanyFAQList.Height,LearnMoreLeadership.Y + LearnMoreLeadership.Height,ContactsGallery.Y + ContactsGallery.Height)

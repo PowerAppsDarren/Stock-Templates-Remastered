@@ -1,0 +1,644 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  BuildEmployeeProfileScreen:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |-
+        =Collect(TempCollection,"");
+        ClearCollect(SkillsSubmit2, {Value:""});
+        ClearCollect(SkillsSubmit2, {Value:""});
+        ClearCollect(SkillsSubmit2, {Value:""})
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - BuildEmployeeProfileLayer:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =768
+            Width: =1366
+          Children:
+            - BuildEmployeeProfileSection:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: |+
+                    =1000
+                  Width: =1366
+                  Y: =900
+                Children:
+                  - BuildEmployeeProfileSaveChanges:
+                      Control: Classic/Button@2.2.0
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =BuildEmployeeProfileSaveChanges.BorderColor
+                        DisabledBorderColor: =ColorFade(BuildEmployeeProfileSaveChanges.BorderColor, 70%)
+                        DisplayMode: |-
+                          =If((Not(IsBlank(BuildEmployeeProfileInterests.Text)))&&(Not(IsBlank(BuildEmployeeProfileSchoolsInput.Text)))&&(Not(IsBlank(BuildEmployeeProfileSkillsInput.Text)))&&(Not(IsBlank(BuildEmployeeProfileAboutMe.Text)))&&(Value(BuildEmployeeProfileBirthdayMonth.Text) <= 12)&&((First(LastN(ForAll(Split(TempDate.Text,"/"), {Result: ThisRecord.Value}),2)).Result) = BuildEmployeeProfileBirthdayDay.Text),DisplayMode.Edit,DisplayMode.Disabled)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =BuildEmployeeProfileSaveChanges.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =45
+                        HoverBorderColor: =BuildEmployeeProfileSaveChanges.BorderColor
+                        HoverColor: =BuildEmployeeProfileSaveChanges.Color
+                        HoverFill: =BuildEmployeeProfileSaveChanges.Fill
+                        OnSelect: |-
+                          =Set(MyBirthday,DateTimeValue(BuildEmployeeProfileBirthdayMonth.Text & "/" &BuildEmployeeProfileBirthdayDay.Text & "/" &BuildEmployeeProfileBirthdayYear.Text));
+                          Set(AboutMeText,BuildEmployeeProfileAboutMe.Text);
+
+                          ForAll(ForAll(Split(Trim(BuildEmployeeProfileSkillsInput.Text), ","), {Result: ThisRecord.Value}), Collect(Temp2, {Value: Trim(Result)}));
+                          ClearCollect(TempCollection,ForAll(Distinct(Temp2,Value), {Result: ThisRecord.Value}));
+                          Clear(Temp2);
+                          Clear(SkillsSubmit);
+                          ForAll(TempCollection,Collect(SkillsSubmit,{Value:Result}));
+                          Clear(TempCollection);
+
+                          ForAll(ForAll(Split(Trim(BuildEmployeeProfileInterests.Text), ","), {Result: ThisRecord.Value}), Collect(Temp2, {Value: Trim(Result)}));
+                          ClearCollect(TempCollection,ForAll(Distinct(Temp2,Value), {Result: ThisRecord.Value}));
+                          Clear(InterestsSubmit);
+                          Clear(Temp2);
+                          ForAll(TempCollection,Collect(InterestsSubmit,{Value:Result}));
+                          Clear(TempCollection);
+
+                          ForAll(ForAll(Split(Trim(BuildEmployeeProfileSchoolsInput.Text), ","), {Result: ThisRecord.Value}), Collect(Temp2, {Value: Trim(Result)}));
+                          ClearCollect(TempCollection,ForAll(Distinct(Temp2,Value), {Result: ThisRecord.Value}));
+                          Clear(SchoolsSubmit);
+                          Clear(Temp2);
+                          ForAll(TempCollection,Collect(SchoolsSubmit,{Value:Result}));
+                          Clear(TempCollection);
+
+                          Office365Users.UpdateMyProfile({aboutMe:AboutMeText,birthday:MyBirthday,interests:InterestsSubmit,skills:SkillsSubmit,schools:SchoolsSubmit});
+                          OutlookTasks.CompleteTask(First(Filter(MyProfileOutlookTasks,Subject = "ProfileComplete")).Id);
+
+                          Clear(SchoolsSubmit);
+                          Clear(InterestsSubmit);
+                          Clear(SkillsSubmit);
+                          Navigate(MyProfileScreen,BorderStyle.None)
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PressedBorderColor: =BuildEmployeeProfileSaveChanges.BorderColor
+                        PressedColor: =BuildEmployeeProfileSaveChanges.Color
+                        PressedFill: =BuildEmployeeProfileSaveChanges.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Save changes"
+                        Width: =137
+                        X: =596
+                        Y: =912
+                  - BuildEmployeeProfileBackground:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =BuildEmployeeProfileBackground.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileBackground.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =890
+                        HoverFill: =BuildEmployeeProfileBackground.Fill
+                        PressedFill: =BuildEmployeeProfileBackground.Fill
+                        Width: =Parent.Width
+                  - BuildEmployeeProfilePersonalInformationSeperator:
+                      Control: Rectangle@2.3.0
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        DisabledFill: =BuildEmployeeProfilePersonalInformationSeperator.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =BuildEmployeeProfilePersonalInformationSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =2
+                        HoverFill: =BuildEmployeeProfilePersonalInformationSeperator.Fill
+                        PressedFill: =BuildEmployeeProfilePersonalInformationSeperator.Fill
+                        Width: =932
+                        X: =217
+                        Y: =616
+                  - BuildEmployeeProfilePersonalInformationLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfilePersonalInformationLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfilePersonalInformationLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfilePersonalInformationLabel.Color
+                        HoverFill: =BuildEmployeeProfilePersonalInformationLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfilePersonalInformationLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfilePersonalInformationLabel.Color
+                        PressedFill: =BuildEmployeeProfilePersonalInformationLabel.Fill
+                        Size: =12
+                        Text: ="Personal information"
+                        Width: =600
+                        X: =312
+                        Y: =332
+                  - BuildEmployeeProfileBirthdayLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileBirthdayLabel.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileBirthdayLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfileBirthdayLabel.Color
+                        HoverFill: =BuildEmployeeProfileBirthdayLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileBirthdayLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfileBirthdayLabel.Color
+                        PressedFill: =BuildEmployeeProfileBirthdayLabel.Fill
+                        Size: =10.5
+                        Text: ="Birthday"
+                        Width: =200
+                        X: =312
+                        Y: =351
+                  - BuildEmployeeProfileSchoolsInput:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =BuildEmployeeProfileSchoolsInput.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =43
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSchoolsInput.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileSchoolsInput.Color
+                        PressedFill: =BuildEmployeeProfileSchoolsInput.Fill
+                        Size: =12
+                        Width: =731
+                        X: =BuildEmployeeProfileSchoolsLabel.X + 5
+                        Y: =BuildEmployeeProfileSchoolsLabel.Y + 31
+                  - BuildEmployeeProfileExperienceLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileExperienceLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileExperienceLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfileExperienceLabel.Color
+                        HoverFill: =BuildEmployeeProfileExperienceLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileExperienceLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfileExperienceLabel.Color
+                        PressedFill: =BuildEmployeeProfileExperienceLabel.Fill
+                        Size: =12
+                        Text: ="Experience"
+                        Width: =600
+                        X: =312
+                        Y: =636
+                  - BuildEmployeeProfileSchoolsLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileSchoolsLabel.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileSchoolsLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfileSchoolsLabel.Color
+                        HoverFill: =BuildEmployeeProfileSchoolsLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSchoolsLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfileSchoolsLabel.Color
+                        PressedFill: =BuildEmployeeProfileSchoolsLabel.Fill
+                        Size: =10.5
+                        Text: ="Schools attended"
+                        Width: =600
+                        X: =BuildEmployeeProfileExperienceLabel.X
+                        Y: =BuildEmployeeProfileExperienceLabel.Y + 29
+                  - BuildEmployeeProfileSchoolsNote:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(129, 129, 129, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileSchoolsNote.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileSchoolsNote.BorderColor
+                        HoverColor: =BuildEmployeeProfileSchoolsNote.Color
+                        HoverFill: =BuildEmployeeProfileSchoolsNote.Fill
+                        Italic: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSchoolsNote.BorderColor
+                        PressedColor: =BuildEmployeeProfileSchoolsNote.Color
+                        PressedFill: =BuildEmployeeProfileSchoolsNote.Fill
+                        Size: =9
+                        Text: ="Separate each school with a comma."
+                        Width: =467
+                        Wrap: =false
+                        X: =582
+                        Y: =666
+                  - BuildEmployeeProfileSkillsInput:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =BuildEmployeeProfileSkillsInput.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =43
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSkillsInput.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileSkillsInput.Color
+                        PressedFill: =BuildEmployeeProfileSkillsInput.Fill
+                        Size: =12
+                        Width: =731
+                        X: =BuildEmployeeProfileSkillsLabel.X + 5
+                        Y: =BuildEmployeeProfileSkillsLabel.Y + 31
+                  - BuildEmployeeProfileSkillsLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileSkillsLabel.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileSkillsLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfileSkillsLabel.Color
+                        HoverFill: =BuildEmployeeProfileSkillsLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSkillsLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfileSkillsLabel.Color
+                        PressedFill: =BuildEmployeeProfileSkillsLabel.Fill
+                        Size: =10.5
+                        Text: ="Skills"
+                        Width: =600
+                        X: =312
+                        Y: =756
+                  - BuildEmployeeProfileBirthdayNote:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(129, 129, 129, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileBirthdayNote.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileBirthdayNote.BorderColor
+                        HoverColor: =BuildEmployeeProfileBirthdayNote.Color
+                        HoverFill: =BuildEmployeeProfileBirthdayNote.Fill
+                        Italic: =true
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileBirthdayNote.BorderColor
+                        PressedColor: =BuildEmployeeProfileBirthdayNote.Color
+                        PressedFill: =BuildEmployeeProfileBirthdayNote.Fill
+                        Size: =9
+                        Text: ="Your birth year will be kept private."
+                        Width: =400
+                        Wrap: =false
+                        X: =268
+                        Y: =352
+                  - BuildEmployeeProfileAboutMeLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileAboutMeLabel.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileAboutMeLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfileAboutMeLabel.Color
+                        HoverFill: =BuildEmployeeProfileAboutMeLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileAboutMeLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfileAboutMeLabel.Color
+                        PressedFill: =BuildEmployeeProfileAboutMeLabel.Fill
+                        Size: =10.5
+                        Text: ="About me"
+                        Width: =200
+                        X: =312
+                        Y: =442
+                  - BuildEmployeeProfileInterestsLabel:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileInterestsLabel.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileInterestsLabel.BorderColor
+                        HoverColor: =BuildEmployeeProfileInterestsLabel.Color
+                        HoverFill: =BuildEmployeeProfileInterestsLabel.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileInterestsLabel.BorderColor
+                        PressedColor: =BuildEmployeeProfileInterestsLabel.Color
+                        PressedFill: =BuildEmployeeProfileInterestsLabel.Fill
+                        Size: =10.5
+                        Text: ="Interests"
+                        Width: =200
+                        X: =BuildEmployeeProfileInterests.X - 5
+                        Y: =442
+                  - BuildEmployeeProfileInterests:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =BuildEmployeeProfileInterests.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =113
+                        MaxLength: =2000
+                        Mode: =TextMode.MultiLine
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        PressedBorderColor: =BuildEmployeeProfileInterests.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileInterests.Color
+                        PressedFill: =BuildEmployeeProfileInterests.Fill
+                        Size: =12
+                        Width: =350
+                        X: =698
+                        Y: =472
+                  - BuildEmployeeProfileAboutMe:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =BuildEmployeeProfileAboutMe.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =113
+                        MaxLength: =2250
+                        Mode: =TextMode.MultiLine
+                        PaddingBottom: =10
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =10
+                        PressedBorderColor: =BuildEmployeeProfileAboutMe.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileAboutMe.Color
+                        PressedFill: =BuildEmployeeProfileAboutMe.Fill
+                        Size: =12
+                        Width: =350
+                        X: =317
+                        Y: =472
+                  - BuildEmployeeProfileBirthdayDay:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: |-
+                          =If((First(LastN(ForAll(Split(TempDate.Text,"/"), {Result: ThisRecord.Value}),2)).Result) = BuildEmployeeProfileBirthdayDay.Text ,RGBA(221, 224, 227, 1),RGBA(255, 0, 0, 1))
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =BuildEmployeeProfileBirthdayDay.BorderColor
+                        FocusedBorderThickness: =1
+                        Format: =TextFormat.Number
+                        Height: =43
+                        HintText: ="Day"
+                        MaxLength: =2
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileBirthdayDay.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileBirthdayDay.Color
+                        PressedFill: =BuildEmployeeProfileBirthdayDay.Fill
+                        Size: =12
+                        Width: =109
+                        X: =438
+                        Y: =381
+                  - BuildEmployeeProfileSkillsNote:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileExperience
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(129, 129, 129, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileSkillsNote.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileSkillsNote.BorderColor
+                        HoverColor: =BuildEmployeeProfileSkillsNote.Color
+                        HoverFill: =BuildEmployeeProfileSkillsNote.Fill
+                        Italic: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSkillsNote.BorderColor
+                        PressedColor: =BuildEmployeeProfileSkillsNote.Color
+                        PressedFill: =BuildEmployeeProfileSkillsNote.Fill
+                        Size: =9
+                        Text: ="Separate each skill with a comma."
+                        Width: =467
+                        Wrap: =false
+                        X: =BuildEmployeeProfileSkillsLabel.X + 270
+                        Y: =BuildEmployeeProfileSkillsLabel.Y + 1
+                  - BuildEmployeeProfileBirthdayYear:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =BuildEmployeeProfileBirthdayYear.BorderColor
+                        FocusedBorderThickness: =1
+                        Format: =TextFormat.Number
+                        Height: =43
+                        HintText: ="Year"
+                        MaxLength: =4
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileBirthdayYear.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileBirthdayYear.Color
+                        PressedFill: =BuildEmployeeProfileBirthdayYear.Fill
+                        Size: =12
+                        Width: =109
+                        X: =558
+                        Y: =381
+                  - BuildEmployeeProfileBirthdayMonth:
+                      Control: Classic/TextInput@2.3.2
+                      Group: BuildEmployeeProfilePersonalInformation
+                      Properties:
+                        Align: =Align.Right
+                        BorderColor: =If(Value(BuildEmployeeProfileBirthdayMonth.Text) >12,RGBA(255, 0, 0, 1),  RGBA(221, 224, 227, 1))
+                        BorderThickness: =1
+                        Default: =
+                        FocusedBorderColor: =BuildEmployeeProfileBirthdayMonth.BorderColor
+                        FocusedBorderThickness: =1
+                        Format: =TextFormat.Number
+                        Height: =43
+                        HintText: ="Month"
+                        MaxLength: =2
+                        PaddingBottom: =0
+                        PaddingLeft: =10
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileBirthdayMonth.HoverBorderColor
+                        PressedColor: =BuildEmployeeProfileBirthdayMonth.Color
+                        PressedFill: =BuildEmployeeProfileBirthdayMonth.Fill
+                        Size: =12
+                        Width: =109
+                        X: =317
+                        Y: =381
+                  - BuildEmployeeProfileClose:
+                      Control: Classic/Icon@2.5.0
+                      Group: BuildEmployeeProfileContactInformation
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =BuildEmployeeProfileClose.Fill
+                        FocusedBorderColor: =BuildEmployeeProfileClose.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(BuildEmployeeProfileClose.BorderColor, 20%)
+                        HoverColor: =ColorFade(BuildEmployeeProfileClose.Color, 20%)
+                        HoverFill: =BuildEmployeeProfileClose.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Back()
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(BuildEmployeeProfileClose.BorderColor, -20%)
+                        PressedColor: =ColorFade(BuildEmployeeProfileClose.Color, -20%)
+                        PressedFill: =BuildEmployeeProfileClose.Fill
+                        X: =1282
+                  - BuildEmployeeProfileTitle:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileContactInformation
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileTitle.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =50
+                        HoverBorderColor: =BuildEmployeeProfileTitle.BorderColor
+                        HoverColor: =BuildEmployeeProfileTitle.Color
+                        HoverFill: =BuildEmployeeProfileTitle.Fill
+                        PressedBorderColor: =BuildEmployeeProfileTitle.BorderColor
+                        PressedColor: =BuildEmployeeProfileTitle.Color
+                        PressedFill: =BuildEmployeeProfileTitle.Fill
+                        Size: =18
+                        Text: ="Build your employee profile"
+                        Width: =Parent.Width
+                        Y: =169
+                  - BuildEmployeeProfileSubtitle:
+                      Control: Label@2.5.1
+                      Group: BuildEmployeeProfileContactInformation
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileSubtitle.BorderColor
+                        Height: =30
+                        HoverBorderColor: =BuildEmployeeProfileSubtitle.BorderColor
+                        HoverColor: =BuildEmployeeProfileSubtitle.Color
+                        HoverFill: =BuildEmployeeProfileSubtitle.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSubtitle.BorderColor
+                        PressedColor: =BuildEmployeeProfileSubtitle.Color
+                        PressedFill: =BuildEmployeeProfileSubtitle.Fill
+                        Size: =12
+                        Text: ="We want to get to know you! Share your details in the form below."
+                        Width: =Parent.Width
+                        Y: =241
+                  - BuildEmployeeProfileLogo:
+                      Control: Image@2.2.3
+                      Group: BuildEmployeeProfileContactInformation
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =BuildEmployeeProfileLogo.BorderColor
+                        Height: =44
+                        HoverBorderColor: =ColorFade(BuildEmployeeProfileLogo.BorderColor, 20%)
+                        HoverFill: =ColorFade(BuildEmployeeProfileLogo.Fill, 20%)
+                        Image: ='user-profile'
+                        PressedBorderColor: =ColorFade(BuildEmployeeProfileLogo.BorderColor, -20%)
+                        PressedFill: =ColorFade(BuildEmployeeProfileLogo.Fill, -20%)
+                        Width: =76
+                        X: =645
+                        Y: =106
+                  - BuildEmployeeProfileBasicSeperator:
+                      Control: Rectangle@2.3.0
+                      Group: BuildEmployeeProfileContactInformation
+                      Properties:
+                        DisabledFill: =BuildEmployeeProfileBasicSeperator.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileBasicSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =2
+                        HoverFill: =BuildEmployeeProfileBasicSeperator.Fill
+                        PressedFill: =BuildEmployeeProfileBasicSeperator.Fill
+                        Width: =932
+                        X: =217
+                        Y: =300
+                  - TempDate:
+                      Control: Label@2.5.1
+                      Properties:
+                        FocusedBorderColor: =TempDate.BorderColor
+                        HoverBorderColor: =TempDate.BorderColor
+                        HoverColor: =TempDate.Color
+                        HoverFill: =TempDate.Fill
+                        PressedBorderColor: =TempDate.BorderColor
+                        PressedColor: =TempDate.Color
+                        PressedFill: =TempDate.Fill
+                        Text: =DateValue(BuildEmployeeProfileBirthdayMonth.Text &"/"&BuildEmployeeProfileBirthdayDay.Text &"/" &BuildEmployeeProfileBirthdayYear.Text)
+                        Visible: =false
+                        Width: =114
+                        X: =945
+                        Y: =501
+                  - BuildEmployeeProfileSchoolsNote_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(129, 129, 129, 1)
+                        FocusedBorderColor: =BuildEmployeeProfileSchoolsNote_1.BorderColor
+                        Height: =24
+                        HoverBorderColor: =BuildEmployeeProfileSchoolsNote_1.BorderColor
+                        HoverColor: =BuildEmployeeProfileSchoolsNote_1.Color
+                        HoverFill: =BuildEmployeeProfileSchoolsNote_1.Fill
+                        Italic: =true
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BuildEmployeeProfileSchoolsNote_1.BorderColor
+                        PressedColor: =BuildEmployeeProfileSchoolsNote_1.Color
+                        PressedFill: =BuildEmployeeProfileSchoolsNote_1.Fill
+                        Size: =9
+                        Text: ="Separate each school with a comma."
+                        Width: =260
+                        Wrap: =false
+                        X: =788
+                        Y: =442

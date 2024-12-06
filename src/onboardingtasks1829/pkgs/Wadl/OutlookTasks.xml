@@ -1,0 +1,381 @@
+<application xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:service="https://msmanaged-na.azure-apim.net/apim/outlooktasks" xmlns:siena="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11" siena:serviceId="OutlookTasks" xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="Outlook Tasks">Outlook Tasks service lets you create, read, synchronize, update and delete your tasks that are secured by Azure Active Directory in Office 365 or a Microsoft account.</doc>
+  <grammars>
+    <jsonTypes targetNamespace="https://msmanaged-na.azure-apim.net/apim/outlooktasks" xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+      <string name="TaskGroup__odata_id_def" />
+      <string name="TaskGroup_Id_def" />
+      <string name="TaskGroup_ChangeKey_def" />
+      <boolean name="TaskGroup_IsDefaultGroup_def" />
+      <string name="TaskGroup_Name_def" />
+      <string name="TaskGroup_GroupKey_def" />
+      <object name="TaskGroup">
+        <property name="@odata.id" type="string" />
+        <property name="Id" type="string" />
+        <property name="ChangeKey" type="string" />
+        <property name="IsDefaultGroup" type="boolean" />
+        <property name="Name" type="string" />
+        <property name="GroupKey" type="string" />
+      </object>
+      <string name="CreateTaskGroupBody_Name_def" />
+      <object name="CreateTaskGroupBody">
+        <property name="Name" type="string" />
+      </object>
+      <string name="IncompleteTaskBody_Status_def" />
+      <dateTimeString name="IncompleteTaskBody_CompletedDateTime_def_DateTime_def" />
+      <string name="IncompleteTaskBody_CompletedDateTime_def_TimeZone_def" />
+      <object name="IncompleteTaskBody_CompletedDateTime_def">
+        <property name="DateTime" typeRef="IncompleteTaskBody_CompletedDateTime_def_DateTime_def" />
+        <property name="TimeZone" type="string" />
+      </object>
+      <object name="IncompleteTaskBody">
+        <property name="Status" type="string" />
+        <property name="CompletedDateTime" typeRef="IncompleteTaskBody_CompletedDateTime_def" />
+      </object>
+      <string name="Task__odata_context_def" />
+      <string name="Task__odata_id_def" />
+      <string name="Task__odata_etag_def" />
+      <string name="Task_Id_def" />
+      <dateTimeString name="Task_CreatedDateTime_def" />
+      <dateTimeString name="Task_LastModifiedDateTime_def" />
+      <string name="Task_ChangeKey_def" />
+      <string name="Task_Categories_def_items_def" />
+      <array type="string" name="Task_Categories_def" />
+      <string name="Task_AssignedTo_def" />
+      <string name="Task_Body_def_ContentType_def" />
+      <string name="Task_Body_def_Content_def" />
+      <object name="Task_Body_def">
+        <property name="ContentType" type="string" />
+        <property name="Content" type="string" />
+      </object>
+      <dateTimeString name="Task_CompletedDateTime_def_DateTime_def" />
+      <object name="Task_CompletedDateTime_def">
+        <property name="DateTime" typeRef="Task_CompletedDateTime_def_DateTime_def" />
+      </object>
+      <dateTimeString name="Task_DueDateTime_def_DateTime_def" />
+      <object name="Task_DueDateTime_def">
+        <property name="DateTime" typeRef="Task_DueDateTime_def_DateTime_def" />
+      </object>
+      <string name="Task_Importance_def" />
+      <boolean name="Task_IsReminderOn_def" />
+      <string name="Task_Owner_def" />
+      <string name="Task_ParentFolderId_def" />
+      <dateTimeString name="Task_ReminderDateTime_def_DateTime_def" />
+      <object name="Task_ReminderDateTime_def">
+        <property name="DateTime" typeRef="Task_ReminderDateTime_def_DateTime_def" />
+      </object>
+      <dateTimeString name="Task_StartDateTime_def_DateTime_def" />
+      <object name="Task_StartDateTime_def">
+        <property name="DateTime" typeRef="Task_StartDateTime_def_DateTime_def" />
+      </object>
+      <string name="Task_Status_def" />
+      <string name="Task_Subject_def" />
+      <object name="Task">
+        <property name="@odata.context" type="string" />
+        <property name="@odata.id" type="string" />
+        <property name="@odata.etag" type="string" />
+        <property name="Id" type="string" />
+        <property name="CreatedDateTime" typeRef="Task_CreatedDateTime_def" />
+        <property name="LastModifiedDateTime" typeRef="Task_LastModifiedDateTime_def" />
+        <property name="ChangeKey" type="string" />
+        <property name="Categories" typeRef="Task_Categories_def" />
+        <property name="AssignedTo" type="string" />
+        <property name="Body" typeRef="Task_Body_def" />
+        <property name="CompletedDateTime" typeRef="Task_CompletedDateTime_def" />
+        <property name="DueDateTime" typeRef="Task_DueDateTime_def" />
+        <property name="Importance" type="string" />
+        <property name="IsReminderOn" type="boolean" />
+        <property name="Owner" type="string" />
+        <property name="ParentFolderId" type="string" />
+        <property name="ReminderDateTime" typeRef="Task_ReminderDateTime_def" />
+        <property name="StartDateTime" typeRef="Task_StartDateTime_def" />
+        <property name="Status" type="string" />
+        <property name="Subject" type="string" />
+      </object>
+      <dateTimeString name="CreateTaskBody_DueDateTime_def_DateTime_def" />
+      <string name="CreateTaskBody_DueDateTime_def_TimeZone_def" />
+      <object name="CreateTaskBody_DueDateTime_def">
+        <property name="DateTime" typeRef="CreateTaskBody_DueDateTime_def_DateTime_def" />
+        <property name="TimeZone" type="string" />
+      </object>
+      <dateTimeString name="CreateTaskBody_ReminderDateTime_def_DateTime_def" />
+      <string name="CreateTaskBody_ReminderDateTime_def_TimeZone_def" />
+      <object name="CreateTaskBody_ReminderDateTime_def">
+        <property name="DateTime" typeRef="CreateTaskBody_ReminderDateTime_def_DateTime_def" />
+        <property name="TimeZone" type="string" />
+      </object>
+      <dateTimeString name="CreateTaskBody_StartDateTime_def_DateTime_def" />
+      <string name="CreateTaskBody_StartDateTime_def_TimeZone_def" />
+      <object name="CreateTaskBody_StartDateTime_def">
+        <property name="DateTime" typeRef="CreateTaskBody_StartDateTime_def_DateTime_def" />
+        <property name="TimeZone" type="string" />
+      </object>
+      <string name="CreateTaskBody_Importance_def" />
+      <string name="CreateTaskBody_Subject_def" />
+      <string name="CreateTaskBody_Status_def" />
+      <string name="CreateTaskBody_Sensitivity_def" />
+      <string name="CreateTaskBody_Body_def_ContentType_def" />
+      <string name="CreateTaskBody_Body_def_Content_def" />
+      <object name="CreateTaskBody_Body_def">
+        <property name="ContentType" type="string" />
+        <property name="Content" type="string" />
+      </object>
+      <string name="CreateTaskBody_Categories_def_items_def" />
+      <array type="string" name="CreateTaskBody_Categories_def" />
+      <boolean name="CreateTaskBody_IsReminderOn_def" />
+      <object name="CreateTaskBody">
+        <property name="DueDateTime" typeRef="CreateTaskBody_DueDateTime_def" />
+        <property name="ReminderDateTime" typeRef="CreateTaskBody_ReminderDateTime_def" />
+        <property name="StartDateTime" typeRef="CreateTaskBody_StartDateTime_def" />
+        <property name="Importance" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Status" type="string" />
+        <property name="Sensitivity" type="string" />
+        <property name="Body" typeRef="CreateTaskBody_Body_def" />
+        <property name="Categories" typeRef="CreateTaskBody_Categories_def" />
+        <property name="IsReminderOn" type="boolean" />
+      </object>
+      <string name="TaskFolder__odata_id_def" />
+      <string name="TaskFolder_Id_def" />
+      <string name="TaskFolder_ChangeKey_def" />
+      <string name="TaskFolder_Name_def" />
+      <boolean name="TaskFolder_IsDefaultFolder_def" />
+      <string name="TaskFolder_ParentGroupKey_def" />
+      <object name="TaskFolder">
+        <property name="@odata.id" type="string" />
+        <property name="Id" type="string" />
+        <property name="ChangeKey" type="string" />
+        <property name="Name" type="string" />
+        <property name="IsDefaultFolder" type="boolean" />
+        <property name="ParentGroupKey" type="string" />
+      </object>
+      <string name="CreateTaskFolderBody_Name_def" />
+      <object name="CreateTaskFolderBody">
+        <property name="Name" type="string" />
+      </object>
+      <array typeRef="Task" name="Internal_GetAllCompletedTasks_responses_default_def" />
+      <array typeRef="Task" name="Internal_GetAllIncompleteTasks_responses_default_def" />
+      <array typeRef="TaskFolder" name="GetAllTaskFolders_responses_default_def" />
+      <array typeRef="TaskGroup" name="GetTaskGroups_responses_default_def" />
+      <array typeRef="Task" name="GetTasksByFolder_responses_default_def" />
+      <array typeRef="Task" name="GetAllTasks_responses_default_def" />
+      <array typeRef="TaskFolder" name="GetTaskFolders_responses_default_def" />
+    </jsonTypes>
+  </grammars>
+  <resources siena:authenticationProviderHref="#PowerAppAuth" base="https://msmanaged-na.azure-apim.net/apim/outlooktasks">
+    <resource path="/{connectionId}/internal/completed/tasks">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="InternalGetAllCompletedTasks">
+        <doc title="Get all completed tasks&#xA;Get a list of all of my completed tasks." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:Internal_GetAllCompletedTasks_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/internal/incomplete/tasks">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="InternalGetAllIncompleteTasks">
+        <doc title="Get all incomplete tasks&#xA;Get a list of all of my incomplete tasks." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:Internal_GetAllIncompleteTasks_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/taskfolders">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetAllTaskFolders">
+        <doc title="List all task folders&#xA;Returns a list of all the task folders in your mailbox." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:GetAllTaskFolders_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/taskfolders">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="CreateTaskFolder">
+        <doc title="Create a task folder&#xA;This operation creates a new folder. Optionally, you may choose to put the new folder in an existing task group." />
+        <request>
+          <param style="query" name="groupId" type="xs:string">
+            <doc title="Group id for your task group." />
+          </param>
+          <representation mediaType="application/json">
+            <param style="plain" name="Name" path="/Name" type="xs:string" required="true">
+              <doc title="Folder name" />
+            </param>
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:TaskFolder" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/taskgroups">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetTaskGroups">
+        <doc title="List all task groups&#xA;Returns a list of all the task groups in your mailbox." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:GetTaskGroups_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/taskgroups">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="CreateTaskGroup">
+        <doc title="Create a task group&#xA;This operation is used to create a new task group in your mailbox." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Name" path="/Name" type="xs:string" required="true" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:TaskGroup" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/taskfolders('{folderId}')/tasks">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="folderId" type="xs:string" required="true">
+        <doc title="Pick a task folder." />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="GetTasksByFolder">
+        <doc title="List all tasks in folder&#xA;This operation returns a list of all tasks in a given folder." />
+        <request>
+          <param style="query" name="groupId" type="xs:string" required="true">
+            <doc title="Pick a task group." />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:GetTasksByFolder_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/tasks">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetAllTasks">
+        <doc title="List all tasks&#xA;This operation returns a list of all your tasks." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:GetAllTasks_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/tasks">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="CreateTask">
+        <doc title="Create a task&#xA;This operation is used to create a task in the specified task folder (defaults to My Tasks)." />
+        <request>
+          <param style="query" name="folderId" type="xs:string">
+            <doc title="Folder" />
+          </param>
+          <representation mediaType="application/json">
+            <param style="plain" name="DueDateTime" path="/DueDateTime" type="service:CreateTaskBody_DueDateTime_def" />
+            <param style="plain" name="ReminderDateTime" path="/ReminderDateTime" type="service:CreateTaskBody_ReminderDateTime_def" />
+            <param style="plain" name="StartDateTime" path="/StartDateTime" type="service:CreateTaskBody_StartDateTime_def" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <doc title="Importance" />
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true">
+              <doc title="Subject" />
+            </param>
+            <param style="plain" name="Status" path="/Status" type="xs:string">
+              <doc title="Status" />
+              <option value="NotStarted" />
+              <option value="InProgress" />
+              <option value="Completed" />
+              <option value="WaitingOnOthers" />
+              <option value="Deferred" />
+            </param>
+            <param style="plain" name="Sensitivity" path="/Sensitivity" type="xs:string">
+              <doc title="Sensitivity" />
+              <option value="Nomral" />
+              <option value="Personal" />
+              <option value="Private" />
+              <option value="Confidential" />
+            </param>
+            <param style="plain" name="Body" path="/Body" type="service:CreateTaskBody_Body_def">
+              <doc title="Body" />
+            </param>
+            <param style="plain" name="Categories" path="/Categories" type="service:CreateTaskBody_Categories_def">
+              <doc title="Categories" />
+            </param>
+            <param style="plain" name="IsReminderOn" path="/IsReminderOn" type="xs:boolean" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:Task" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/taskgroups('{groupId}')/taskFolders">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="groupId" type="xs:string" required="true">
+        <doc title="Task group" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="GetTaskFolders">
+        <doc title="Get task folders in group&#xA;Returns a list of task folders in the given task group." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:GetTaskFolders_responses_default_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/tasks('{taskId}')/complete">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="taskId" type="xs:string" required="true">
+        <doc title="Unique id of the task to complete." />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="CompleteTask">
+        <doc title="Complete a task&#xA;This operation marks the given task as complete." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:Task" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/tasks('{taskId}')">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="taskId" type="xs:string" required="true">
+        <doc title="Unique id of the task." />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="GetTask">
+        <doc title="Get task&#xA;This operation is used to retrieve the details of a task by its id." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:Task" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/tasks('{taskId}')">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="taskId" type="xs:string" required="true">
+        <doc title="Unique id of the task." />
+      </param>
+      <method siena:requiresAuthentication="true" name="PATCH" id="IncompleteTask">
+        <doc title="Mark a task as incomplete&#xA;This operation is used to mark the given task as incomplete." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Status" path="/Status" type="xs:string" default="InProgress" />
+            <param style="plain" name="CompletedDateTime" path="/CompletedDateTime" type="service:IncompleteTaskBody_CompletedDateTime_def" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:Task" />
+        </response>
+      </method>
+    </resource>
+  </resources>
+  <authenticationProviders xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+    <connectionProvider id="PowerAppAuth" siena:connectionProviderId="outlooktasks" />
+  </authenticationProviders>
+  <template xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+    <variable name="connectionId">
+      <modifyParams style="template" name="connectionId" attribute="fixed" />
+    </variable>
+  </template>
+</application>

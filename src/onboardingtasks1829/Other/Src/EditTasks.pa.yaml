@@ -1,0 +1,534 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  EditTasks:
+    Properties:
+      Fill: =RGBA(0,0,0,0)
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: =Set(EditMode,false)
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - EditTasksUniqueErrorMessage:
+          Control: Label@2.5.1
+          Group: EditTasksErrorMessages
+          Properties:
+            Color: =RGBA(208, 2, 27, 0.95)
+            FocusedBorderColor: =EditTasksUniqueErrorMessage.BorderColor
+            Height: =19
+            HoverBorderColor: =EditTasksUniqueErrorMessage.BorderColor
+            HoverColor: =EditTasksUniqueErrorMessage.Color
+            HoverFill: =EditTasksUniqueErrorMessage.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksUniqueErrorMessage.BorderColor
+            PressedColor: =EditTasksUniqueErrorMessage.Color
+            PressedFill: =EditTasksUniqueErrorMessage.Fill
+            Size: |+
+              =10.5
+
+            Text: ="(Task name must be unique)"
+            Visible: =(EditTasksNameInput.Text in Tasks.Name)&&(Not(EditMode))
+            Width: =900
+            X: =310
+            Y: =260
+      - EditTasksUrlErrorMessage:
+          Control: Label@2.5.1
+          Group: EditTasksErrorMessages
+          Properties:
+            Color: =RGBA(208, 2, 27, 0.95)
+            FocusedBorderColor: =EditTasksUrlErrorMessage.BorderColor
+            Height: =19
+            HoverBorderColor: =EditTasksUrlErrorMessage.BorderColor
+            HoverColor: =EditTasksUrlErrorMessage.Color
+            HoverFill: =EditTasksUrlErrorMessage.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksUrlErrorMessage.BorderColor
+            PressedColor: =EditTasksUrlErrorMessage.Color
+            PressedFill: =EditTasksUrlErrorMessage.Fill
+            Size: |+
+              =10.5
+
+            Text: ="(Task link must be a valid URL with the http:// or https:// prefix.)"
+            Visible: =Not(IsBlank(EditTasksLinkInput.Text) || IsMatch(EditTasksLinkInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))
+            Width: =900
+            X: =363
+            Y: =487
+      - EditTasksClose:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            DisabledFill: =EditTasksClose.Fill
+            FocusedBorderColor: =EditTasksClose.BorderColor
+            FocusedBorderThickness: =0
+            Height: =34
+            HoverBorderColor: =ColorFade(EditTasksClose.BorderColor, 20%)
+            HoverColor: =ColorFade(EditTasksClose.Color, 20%)
+            HoverFill: =EditTasksClose.Fill
+            Icon: =Icon.Cancel
+            OnSelect: =Navigate(MyProfileScreen,BorderStyle.None)
+            PressedBorderColor: =ColorFade(EditTasksClose.BorderColor, -20%)
+            PressedColor: =ColorFade(EditTasksClose.Color, -20%)
+            PressedFill: =EditTasksClose.Fill
+            Width: =34
+            X: =1291
+            Y: =37
+      - EditTasksSaveButton:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(EditTasksSaveButton.Fill, -15%)
+            BorderThickness: =1
+            DisabledBorderColor: =ColorFade(EditTasksSaveButton.BorderColor, 70%)
+            DisplayMode: =If(Or(IsBlank(EditTasksNameInput.Text),IsBlank(EditTasksDescriptionInput.Text)),DisplayMode.Disabled,DisplayMode.Edit)
+            Fill: =RGBA(26, 26, 84, 1)
+            FocusedBorderColor: =EditTasksSaveButton.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            HoverBorderColor: =ColorFade(EditTasksSaveButton.BorderColor, 20%)
+            HoverColor: =EditTasksSaveButton.Color
+            HoverFill: =ColorFade(EditTasksSaveButton.Fill, 20%)
+            OnSelect: |-
+              =Patch(Tasks,EditTasksGallery.Selected, { Name: EditTasksNameInput.Text, Description: EditTasksDescriptionInput.Text, URL: EditTasksLinkInput.Text})
+            PressedBorderColor: =EditTasksSaveButton.Fill
+            PressedColor: =EditTasksSaveButton.Fill
+            PressedFill: =EditTasksSaveButton.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =12
+            Text: ="Save task"
+            Visible: =EditMode
+            Width: =150
+            X: =428
+            Y: =589
+      - EditTasksTitle:
+          Control: Label@2.5.1
+          Group: EditTasksTitleBar
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditTasksTitle.BorderColor
+            HoverBorderColor: =EditTasksTitle.BorderColor
+            HoverColor: =EditTasksTitle.Color
+            HoverFill: =EditTasksTitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksTitle.BorderColor
+            PressedColor: =EditTasksTitle.Color
+            PressedFill: =EditTasksTitle.Fill
+            Size: |+
+              =27
+            Text: ="Edit tasks"
+            Width: =900
+            X: =236
+            Y: =135
+      - EditTasksSubtitle:
+          Control: Label@2.5.1
+          Group: EditTasksTitleBar
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditTasksSubtitle.BorderColor
+            FontWeight: =FontWeight.Semibold
+            HoverBorderColor: =EditTasksSubtitle.BorderColor
+            HoverColor: =EditTasksSubtitle.Color
+            HoverFill: =EditTasksSubtitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksSubtitle.BorderColor
+            PressedColor: =EditTasksSubtitle.Color
+            PressedFill: =EditTasksSubtitle.Fill
+            Size: =13.5
+            Text: ="Add onboarding tasks for your new employees."
+            Width: =900
+            X: =236
+            Y: =175
+      - EditTasksNameLabel:
+          Control: Label@2.5.1
+          Group: EditTasksDetailsGroup
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditTasksNameLabel.BorderColor
+            Height: =19
+            HoverBorderColor: =EditTasksNameLabel.BorderColor
+            HoverColor: =EditTasksNameLabel.Color
+            HoverFill: =EditTasksNameLabel.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksNameLabel.BorderColor
+            PressedColor: =EditTasksNameLabel.Color
+            PressedFill: =EditTasksNameLabel.Fill
+            Size: |+
+              =10.5
+
+            Text: ="Task name"
+            Width: =600
+            X: =236
+            Y: =260
+      - EditTasksNameInput:
+          Control: Classic/TextInput@2.3.2
+          Group: EditTasksDetailsGroup
+          Properties:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =If(And(Not(IsBlank(EditTasksGallery.Selected)),EditMode),EditTasksGallery.Selected.Name,Blank())
+            FocusedBorderColor: =EditTasksNameInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            PaddingBottom: =0
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksNameInput.HoverBorderColor
+            PressedColor: =EditTasksNameInput.Color
+            PressedFill: =EditTasksNameInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =1
+            Width: =550
+            X: =236
+            Y: =288
+      - EditTasksDescriptionLabel:
+          Control: Label@2.5.1
+          Group: EditTasksDetailsGroup
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditTasksDescriptionLabel.BorderColor
+            Height: =19
+            HoverBorderColor: =EditTasksDescriptionLabel.BorderColor
+            HoverColor: =EditTasksDescriptionLabel.Color
+            HoverFill: =EditTasksDescriptionLabel.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksDescriptionLabel.BorderColor
+            PressedColor: =EditTasksDescriptionLabel.Color
+            PressedFill: =EditTasksDescriptionLabel.Fill
+            Size: |+
+              =10.5
+
+            Text: ="Task description"
+            Width: =600
+            X: =236
+            Y: =352
+      - EditTasksDescriptionInput:
+          Control: Classic/TextInput@2.3.2
+          Group: EditTasksDetailsGroup
+          Properties:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =If(And(Not(IsBlank(EditTasksGallery.Selected)),EditMode),EditTasksGallery.Selected.Description)
+            FocusedBorderColor: =EditTasksDescriptionInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =88
+            LineHeight: =1.5
+            Mode: =TextMode.MultiLine
+            PaddingBottom: =12
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =12
+            PressedBorderColor: =EditTasksDescriptionInput.HoverBorderColor
+            PressedColor: =EditTasksDescriptionInput.Color
+            PressedFill: =EditTasksDescriptionInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =2
+            Width: =550
+            X: =236
+            Y: =380
+      - EditTasksLinkLabel:
+          Control: Label@2.5.1
+          Group: EditTasksDetailsGroup
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditTasksLinkLabel.BorderColor
+            Height: =19
+            HoverBorderColor: =EditTasksLinkLabel.BorderColor
+            HoverColor: =EditTasksLinkLabel.Color
+            HoverFill: =EditTasksLinkLabel.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksLinkLabel.BorderColor
+            PressedColor: =EditTasksLinkLabel.Color
+            PressedFill: =EditTasksLinkLabel.Fill
+            Size: |+
+              =10.5
+
+            Text: ="Task link (optional)"
+            Width: =600
+            X: =236
+            Y: =487
+      - EditTasksLinkInput:
+          Control: Classic/TextInput@2.3.2
+          Group: EditTasksDetailsGroup
+          Properties:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =If(And(Not(IsBlank(EditTasksGallery.Selected)),EditMode),EditTasksGallery.Selected.URL)
+            FocusedBorderColor: =EditTasksLinkInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            PaddingBottom: =0
+            PaddingLeft: =15
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksLinkInput.HoverBorderColor
+            PressedColor: =EditTasksLinkInput.Color
+            PressedFill: =EditTasksLinkInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =3
+            Width: =550
+            X: =236
+            Y: =515
+      - EditTasksAddButton:
+          Control: Classic/Button@2.2.0
+          Group: EditTasksAddGroup
+          Properties:
+            Align: =LayoutAlignItems.Center
+            BorderColor: =ColorFade(EditTasksAddButton.Fill, -15%)
+            BorderThickness: =1
+            DisabledBorderColor: =ColorFade(EditTasksAddButton.BorderColor, 70%)
+            DisplayMode: =If(Or(IsBlank(EditTasksNameInput.Text),IsBlank(EditTasksDescriptionInput.Text),(EditTasksNameInput.Text in Tasks.Name),EditTasksUrlErrorMessage.Visible),DisplayMode.Disabled,DisplayMode.Edit)
+            Fill: =RGBA(26, 26, 84, 1)
+            FocusedBorderColor: =EditTasksAddButton.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            HoverBorderColor: =ColorFade(EditTasksAddButton.BorderColor, 20%)
+            HoverColor: =EditTasksAddButton.Color
+            HoverFill: =ColorFade(EditTasksAddButton.Fill, 20%)
+            OnSelect: |-
+              =Patch(Tasks, Defaults(Tasks), {Name:EditTasksNameInput.Text,Description:EditTasksDescriptionInput.Text,URL:EditTasksLinkInput.Text});
+              Reset(EditTasksNameInput);
+              Reset(EditTasksDescriptionInput);
+              Reset(EditTasksLinkInput)
+            PaddingBottom: =0
+            PaddingLeft: =27
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksAddButton.Fill
+            PressedColor: =EditTasksAddButton.Fill
+            PressedFill: =EditTasksAddButton.Color
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Size: =12
+            Text: ="Add task"
+            Visible: =Not(EditMode)
+            Width: =131
+            X: =236
+            Y: =589
+      - EditTasksAddLogo:
+          Control: Classic/Icon@2.5.0
+          Group: EditTasksAddGroup
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledFill: =EditTasksAddLogo.Fill
+            DisplayMode: =EditTasksAddButton.DisplayMode
+            FocusedBorderColor: =EditTasksAddLogo.BorderColor
+            FocusedBorderThickness: =0
+            Height: =24
+            HoverBorderColor: =ColorFade(EditTasksAddLogo.BorderColor, 20%)
+            HoverColor: =ColorFade(EditTasksAddLogo.Color, 20%)
+            HoverFill: =EditTasksAddLogo.Fill
+            Icon: =Icon.Add
+            OnSelect: =Select(EditTasksAddButton)
+            PressedBorderColor: =ColorFade(EditTasksAddLogo.BorderColor, -20%)
+            PressedColor: =ColorFade(EditTasksAddLogo.Color, -20%)
+            PressedFill: =EditTasksAddLogo.Fill
+            Visible: =Not(EditMode)
+            Width: =24
+            X: =249
+            Y: =599
+      - EditTasksSavedTasksText:
+          Control: Label@2.5.1
+          Group: EditTasksList
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditTasksSavedTasksText.BorderColor
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            HoverBorderColor: =EditTasksSavedTasksText.BorderColor
+            HoverColor: =EditTasksSavedTasksText.Color
+            HoverFill: =EditTasksSavedTasksText.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditTasksSavedTasksText.BorderColor
+            PressedColor: =EditTasksSavedTasksText.Color
+            PressedFill: =EditTasksSavedTasksText.Fill
+            Size: =13.5
+            Text: ="Saved tasks"
+            Width: =300
+            X: =879
+            Y: =260
+      - EditTasksDeleteButton:
+          Control: Classic/Button@2.2.0
+          Group: EditTasksDeleteGroup
+          Properties:
+            BorderColor: =RGBA(26,26,84,1)
+            BorderThickness: =1
+            Color: =RGBA(26, 26, 84, 1)
+            DisabledBorderColor: =ColorFade(EditTasksDeleteButton.BorderColor, 70%)
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =EditTasksDeleteButton.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            HoverBorderColor: =ColorFade(EditTasksDeleteButton.BorderColor, 20%)
+            HoverColor: =EditTasksDeleteButton.Color
+            HoverFill: =ColorFade(EditTasksDeleteButton.Fill, 20%)
+            OnSelect: |-
+              =Remove(Tasks,{Description:EditTasksGallery.Selected.Description, Name:EditTasksGallery.Selected.Name, URL:EditTasksGallery.Selected.URL});
+              Set(EditMode,CountRows(Tasks) > 0)
+            PressedBorderColor: =EditTasksDeleteButton.Fill
+            PressedColor: =EditTasksDeleteButton.Fill
+            PressedFill: =EditTasksDeleteButton.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =12
+            Text: ="     Delete task"
+            Visible: =EditMode
+            Width: =173
+            X: =235
+            Y: =589
+      - EditTasksDeleteLogo:
+          Control: Classic/Icon@2.5.0
+          Group: EditTasksDeleteGroup
+          Properties:
+            Color: =RGBA(26, 26, 84, 1)
+            DisabledFill: =EditTasksDeleteLogo.Fill
+            DisplayMode: =EditTasksDeleteButton.DisplayMode
+            FocusedBorderColor: =EditTasksDeleteLogo.BorderColor
+            FocusedBorderThickness: =0
+            Height: =20
+            HoverBorderColor: =ColorFade(EditTasksDeleteLogo.BorderColor, 20%)
+            HoverColor: =ColorFade(EditTasksDeleteLogo.Color, 20%)
+            HoverFill: =EditTasksDeleteLogo.Fill
+            Icon: =Icon.Trash
+            OnSelect: =Select(EditTasksDeleteButton)
+            PressedBorderColor: =ColorFade(EditTasksDeleteLogo.BorderColor, -20%)
+            PressedColor: =ColorFade(EditTasksDeleteLogo.Color, -20%)
+            PressedFill: =EditTasksDeleteLogo.Fill
+            Visible: =EditMode
+            Width: =20
+            X: =256
+            Y: =600
+      - EditTasksGallery:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Group: EditTasksList
+          Properties:
+            DelayItemLoading: =false
+            Height: =337
+            Items: =Tasks
+            LoadingSpinner: =LoadingSpinner.None
+            LoadingSpinnerColor: =EditTasksGallery.BorderColor
+            OnSelect: =Set(EditMode,true)
+            TemplatePadding: =0
+            TemplateSize: =39
+            Width: =270
+            X: =879
+            Y: =296
+          Children:
+            - EditTasksListName:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =If(And(ThisItem.IsSelected,EditMode),RGBA(41, 40, 55, 1),RGBA(26, 26, 84, 1))
+                  FocusedBorderColor: =EditTasksListName.BorderColor
+                  FontWeight: =If(And(ThisItem.IsSelected,EditMode),FontWeight.Bold,FontWeight.Semibold)
+                  Height: =39
+                  HoverBorderColor: =EditTasksListName.BorderColor
+                  HoverColor: =EditTasksListName.Color
+                  HoverFill: =EditTasksListName.Fill
+                  LineHeight: =1.5
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =9
+                  PaddingLeft: =1
+                  PaddingTop: =9
+                  PressedBorderColor: =EditTasksListName.BorderColor
+                  PressedColor: =EditTasksListName.Color
+                  PressedFill: =EditTasksListName.Fill
+                  Size: =9
+                  Text: =ThisItem.Name
+                  Width: =Parent.Width - 40
+            - EditTasksTaskSeparator:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(221, 224, 227, 1)
+                  DisabledFill: =EditTasksTaskSeparator.Fill
+                  DisplayMode: =DisplayMode.View
+                  Fill: =RGBA(221, 224, 227, 1)
+                  FocusedBorderColor: =EditTasksTaskSeparator.BorderColor
+                  FocusedBorderThickness: =0
+                  Height: =2
+                  HoverFill: =EditTasksTaskSeparator.Fill
+                  PressedFill: =EditTasksTaskSeparator.Fill
+                  Width: =Parent.TemplateWidth - 20
+                  Y: =EditTasksListName.Height + 1
+            - EditTasksTaskEditButton:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  Color: =RGBA(26, 26, 84, 1)
+                  DisabledFill: =EditTasksTaskEditButton.Fill
+                  FocusedBorderColor: =EditTasksTaskEditButton.BorderColor
+                  FocusedBorderThickness: =0
+                  Height: =20
+                  HoverBorderColor: =ColorFade(EditTasksTaskEditButton.BorderColor, 20%)
+                  HoverColor: =ColorFade(EditTasksTaskEditButton.Color, 20%)
+                  HoverFill: =EditTasksTaskEditButton.Fill
+                  Icon: =Icon.Edit
+                  OnSelect: =Select(Parent)
+                  PressedBorderColor: =ColorFade(EditTasksTaskEditButton.BorderColor, -20%)
+                  PressedColor: =ColorFade(EditTasksTaskEditButton.Color, -20%)
+                  PressedFill: =EditTasksTaskEditButton.Fill
+                  Visible: =Not(And(ThisItem.IsSelected,EditMode))
+                  Width: =20
+                  X: =225
+                  Y: =9
+      - EditTasksBorderTop:
+          Control: Rectangle@2.3.0
+          Group: EditTasksList
+          Properties:
+            DisabledFill: =EditTasksBorderTop.Fill
+            Fill: =RGBA(221, 224, 227, 1)
+            FocusedBorderColor: =EditTasksBorderTop.BorderColor
+            FocusedBorderThickness: =0
+            Height: =2
+            HoverFill: =EditTasksBorderTop.Fill
+            OnSelect: =250
+            PressedFill: =EditTasksBorderTop.Fill
+            Width: =250
+            X: =EditTasksGallery.X
+            Y: =EditTasksGallery.Y - EditTasksBorderTop.Height

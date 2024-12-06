@@ -1,0 +1,386 @@
+EditCompanyIntro As screen:
+    Height: =Max(App.Height, App.DesignHeight)
+    Orientation: =If(EditCompanyIntro.Width < EditCompanyIntro.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= EditCompanyIntro.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    EditCompanyIntroSubTitleGroup As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =4
+
+        EditCompanyIntroTitle As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditCompanyIntroTitle.BorderColor
+            HoverBorderColor: =EditCompanyIntroTitle.BorderColor
+            HoverColor: =EditCompanyIntroTitle.Color
+            HoverFill: =EditCompanyIntroTitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroTitle.BorderColor
+            PressedColor: =EditCompanyIntroTitle.Color
+            PressedFill: =EditCompanyIntroTitle.Fill
+            Size: |
+                =27
+            Text: ="Edit Company intro"
+            Width: =900
+            X: =236
+            Y: =60
+            ZIndex: =1
+
+        EditCompanyIntroSubTitle As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditCompanyIntroSubTitle.BorderColor
+            FontWeight: =FontWeight.Semibold
+            HoverBorderColor: =EditCompanyIntroSubTitle.BorderColor
+            HoverColor: =EditCompanyIntroSubTitle.Color
+            HoverFill: =EditCompanyIntroSubTitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroSubTitle.BorderColor
+            PressedColor: =EditCompanyIntroSubTitle.Color
+            PressedFill: =EditCompanyIntroSubTitle.Fill
+            Size: =13.5
+            Text: ="Update your company logo and provide a brief introduction."
+            Width: =900
+            X: =236
+            Y: =100
+            ZIndex: =2
+
+        EditCompanyIntroSubTitle2 As label:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditCompanyIntroSubTitle2.BorderColor
+            Height: =58
+            HoverBorderColor: =EditCompanyIntroSubTitle2.BorderColor
+            HoverColor: =EditCompanyIntroSubTitle2.Color
+            HoverFill: =EditCompanyIntroSubTitle2.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroSubTitle2.BorderColor
+            PressedColor: =EditCompanyIntroSubTitle2.Color
+            PressedFill: =EditCompanyIntroSubTitle2.Fill
+            Size: =13.5
+            Text: |-
+                ="To update your company logo throughout the app, follow these steps:"
+            Width: =1000
+            X: =236
+            Y: =185
+            ZIndex: =3
+
+    EditCompanyIntroStep1 As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =6
+
+        EditCompanyIntroStep1Text As label:
+            FocusedBorderColor: =EditCompanyIntroStep1Text.BorderColor
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =EditCompanyIntroStep1Text.BorderColor
+            HoverColor: =EditCompanyIntroStep1Text.Color
+            HoverFill: =EditCompanyIntroStep1Text.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Text.BorderColor
+            PressedColor: =EditCompanyIntroStep1Text.Color
+            PressedFill: =EditCompanyIntroStep1Text.Fill
+            Size: |
+                =10.5
+            Text: ="Step 1"
+            Width: =200
+            X: =236
+            Y: =271
+            ZIndex: =4
+
+        EditCompanyIntroStep1Data As label:
+            AutoHeight: =true
+            FocusedBorderColor: =EditCompanyIntroStep1Data.BorderColor
+            Height: =66
+            HoverBorderColor: =EditCompanyIntroStep1Data.BorderColor
+            HoverColor: =EditCompanyIntroStep1Data.Color
+            HoverFill: =EditCompanyIntroStep1Data.Fill
+            LineHeight: =1.4
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Data.BorderColor
+            PressedColor: =EditCompanyIntroStep1Data.Color
+            PressedFill: =EditCompanyIntroStep1Data.Fill
+            Size: |
+                =10.5
+            Text: ="Create your company logo file and name it company-logo.png (ideal image size is under 1MB)."
+            Width: =211
+            X: =236
+            Y: =312
+            ZIndex: =5
+
+    EditCompanyIntroStep4 As group:
+        Height: =5
+        Width: =5
+        X: =-196
+        Y: =-294
+        ZIndex: =8
+
+        EditCompanyIntroStep1Text4 As label:
+            FocusedBorderColor: =EditCompanyIntroStep1Text4.BorderColor
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =EditCompanyIntroStep1Text4.BorderColor
+            HoverColor: =EditCompanyIntroStep1Text4.Color
+            HoverFill: =EditCompanyIntroStep1Text4.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Text4.BorderColor
+            PressedColor: =EditCompanyIntroStep1Text4.Color
+            PressedFill: =EditCompanyIntroStep1Text4.Fill
+            Size: |
+                =10.5
+            Text: ="Step 4"
+            Width: =200
+            X: =920
+            Y: =274
+            ZIndex: =6
+
+        EditCompanyIntroStep1Data4 As label:
+            AutoHeight: =true
+            FocusedBorderColor: =EditCompanyIntroStep1Data4.BorderColor
+            Height: =66
+            HoverBorderColor: =EditCompanyIntroStep1Data4.BorderColor
+            HoverColor: =EditCompanyIntroStep1Data4.Color
+            HoverFill: =EditCompanyIntroStep1Data4.Fill
+            LineHeight: =1.4
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Data4.BorderColor
+            PressedColor: =EditCompanyIntroStep1Data4.Color
+            PressedFill: =EditCompanyIntroStep1Data4.Fill
+            Size: |
+                =10.5
+            Text: ="Click Browse, select the company-logo.png file you created, then click Open."
+            Width: =211
+            X: =920
+            Y: =314
+            ZIndex: =7
+
+    EditCompanyIntroStep3 As group:
+        Height: =5
+        Width: =5
+        X: =-176
+        Y: =-274
+        ZIndex: =10
+
+        EditCompanyIntroStep1Text3 As label:
+            FocusedBorderColor: =EditCompanyIntroStep1Text3.BorderColor
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =EditCompanyIntroStep1Text3.BorderColor
+            HoverColor: =EditCompanyIntroStep1Text3.Color
+            HoverFill: =EditCompanyIntroStep1Text3.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Text3.BorderColor
+            PressedColor: =EditCompanyIntroStep1Text3.Color
+            PressedFill: =EditCompanyIntroStep1Text3.Fill
+            Size: |
+                =10.5
+            Text: ="Step 3"
+            Width: =200
+            X: =692
+            Y: =271
+            ZIndex: =8
+
+        EditCompanyIntroStep1Data3 As label:
+            AutoHeight: =true
+            FocusedBorderColor: =EditCompanyIntroStep1Data3.BorderColor
+            Height: =66
+            HoverBorderColor: =EditCompanyIntroStep1Data3.BorderColor
+            HoverColor: =EditCompanyIntroStep1Data3.Color
+            HoverFill: =EditCompanyIntroStep1Data3.Fill
+            LineHeight: =1.4
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Data3.BorderColor
+            PressedColor: =EditCompanyIntroStep1Data3.Color
+            PressedFill: =EditCompanyIntroStep1Data3.Fill
+            Size: |
+                =10.5
+            Text: ="Delete the image named company-logo by clicking the trashcan icon next to it."
+            Width: =211
+            X: =692
+            Y: =311
+            ZIndex: =9
+
+    EditCompanyIntroSeparator As rectangle:
+        DisabledFill: =EditCompanyIntroSeparator.Fill
+        Fill: =RGBA(221, 224, 227, 1)
+        FocusedBorderColor: =EditCompanyIntroSeparator.BorderColor
+        FocusedBorderThickness: =0
+        Height: =3
+        HoverFill: =EditCompanyIntroSeparator.Fill
+        PressedFill: =EditCompanyIntroSeparator.Fill
+        Width: =1366
+        Y: =417
+        ZIndex: =12
+
+    EditCompanyIntroStep2 As group:
+        Height: =5
+        Width: =5
+        X: =-116
+        Y: =-214
+        ZIndex: =12
+
+        EditCompanyIntroStep1Text2 As label:
+            FocusedBorderColor: =EditCompanyIntroStep1Text2.BorderColor
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =EditCompanyIntroStep1Text2.BorderColor
+            HoverColor: =EditCompanyIntroStep1Text2.Color
+            HoverFill: =EditCompanyIntroStep1Text2.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Text2.BorderColor
+            PressedColor: =EditCompanyIntroStep1Text2.Color
+            PressedFill: =EditCompanyIntroStep1Text2.Fill
+            Size: |
+                =10.5
+            Text: ="Step 2"
+            Width: =200
+            X: =464
+            Y: =271
+            ZIndex: =10
+
+        EditCompanyIntroStep1Data2 As label:
+            AutoHeight: =true
+            FocusedBorderColor: =EditCompanyIntroStep1Data2.BorderColor
+            Height: =66
+            HoverBorderColor: =EditCompanyIntroStep1Data2.BorderColor
+            HoverColor: =EditCompanyIntroStep1Data2.Color
+            HoverFill: =EditCompanyIntroStep1Data2.Fill
+            LineHeight: =1.4
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditCompanyIntroStep1Data2.BorderColor
+            PressedColor: =EditCompanyIntroStep1Data2.Color
+            PressedFill: =EditCompanyIntroStep1Data2.Fill
+            Size: |
+                =10.5
+            Text: ="In the Ribbon, click View and select Media. You will see a list of all the images in the app."
+            Width: =211
+            X: =464
+            Y: =312
+            ZIndex: =11
+
+    EditCompanyIntroAboutText As label:
+        FocusedBorderColor: =EditCompanyIntroAboutText.BorderColor
+        Height: =19
+        HoverBorderColor: =EditCompanyIntroAboutText.BorderColor
+        HoverColor: =EditCompanyIntroAboutText.Color
+        HoverFill: =EditCompanyIntroAboutText.Fill
+        LineHeight: =1.4
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =EditCompanyIntroAboutText.BorderColor
+        PressedColor: =EditCompanyIntroAboutText.Color
+        PressedFill: =EditCompanyIntroAboutText.Fill
+        Size: |
+            =10.5
+        Text: ="About the company"
+        Width: =900
+        X: =236
+        Y: =453
+        ZIndex: =13
+
+    EditCompanyIntroSaveButton As button:
+        Align: =LayoutAlignItems.Center
+        BorderColor: =ColorFade(EditCompanyIntroSaveButton.Fill, -15%)
+        BorderThickness: =1
+        DisabledBorderColor: =ColorFade(EditCompanyIntroSaveButton.BorderColor, 70%)
+        DisplayMode: =If(IsBlank(EditCompanyIntroAboutTextInput.Text),DisplayMode.Disabled,DisplayMode.Edit)
+        Fill: =RGBA(26, 26, 84, 1)
+        FocusedBorderColor: =EditCompanyIntroSaveButton.BorderColor
+        FocusedBorderThickness: =1
+        Height: =44
+        HoverBorderColor: =ColorFade(EditCompanyIntroSaveButton.BorderColor, 20%)
+        HoverColor: =EditCompanyIntroSaveButton.Color
+        HoverFill: =ColorFade(EditCompanyIntroSaveButton.Fill, 20%)
+        OnSelect: |-
+            =Patch(Company,First(Company),{About:EditCompanyIntroAboutTextInput.Text});
+            Navigate(CompanyScreen,BorderStyle.None)
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =EditCompanyIntroSaveButton.Fill
+        PressedColor: =EditCompanyIntroSaveButton.Fill
+        PressedFill: =EditCompanyIntroSaveButton.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =12
+        Text: ="Save"
+        Width: =85
+        X: =236
+        Y: =666
+        ZIndex: =14
+
+    EditCompanyIntroAboutTextInput As text:
+        BorderColor: =RGBA(202, 202, 202, 1)
+        Default: =First(Company).About
+        FocusedBorderColor: =EditCompanyIntroAboutTextInput.BorderColor
+        Height: =151
+        Mode: =TextMode.MultiLine
+        PaddingBottom: =10
+        PaddingLeft: =10
+        PaddingRight: =10
+        PaddingTop: =10
+        PressedBorderColor: =EditCompanyIntroAboutTextInput.HoverBorderColor
+        PressedColor: =EditCompanyIntroAboutTextInput.Color
+        PressedFill: =EditCompanyIntroAboutTextInput.Fill
+        Width: =924
+        X: =236
+        Y: =479
+        ZIndex: =15
+
+    EditCompanyIntroCloseIcon As icon.Cancel:
+        Color: =RGBA(41, 40, 55, 1)
+        DisabledFill: =EditCompanyIntroCloseIcon.Fill
+        FocusedBorderColor: =EditCompanyIntroCloseIcon.BorderColor
+        FocusedBorderThickness: =0
+        Height: =34
+        HoverBorderColor: =ColorFade(EditCompanyIntroCloseIcon.BorderColor, 20%)
+        HoverColor: =ColorFade(EditCompanyIntroCloseIcon.Color, 20%)
+        HoverFill: =EditCompanyIntroCloseIcon.Fill
+        Icon: =Icon.Cancel
+        OnSelect: =Navigate(CompanyScreen,BorderStyle.None)
+        PressedBorderColor: =ColorFade(EditCompanyIntroCloseIcon.BorderColor, -20%)
+        PressedColor: =ColorFade(EditCompanyIntroCloseIcon.Color, -20%)
+        PressedFill: =EditCompanyIntroCloseIcon.Fill
+        Width: =34
+        X: =1290
+        Y: =26
+        ZIndex: =16
+

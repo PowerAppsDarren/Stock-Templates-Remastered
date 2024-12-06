@@ -1,0 +1,1633 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  TeamScreen:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |+
+        =Set(MyUserId, MyProfile.Id);
+        If(IsBlank(MyPeers_1.Selected.DisplayName),
+            ClearCollect(FrequentContactsList,ForAll(Office365Users.RelevantPeople(MyUserId).value,{DisplayName:displayName,JobTitle:jobTitle,UserPrincipalName:userPrincipalName,
+            GivenName:givenName,Mail:userPrincipalName,Id:id, Photo: If(Not(id in UserPhotoCache.UserId),Collect(UserPhotoCache,{UserId:id, Photo:If(IsBlank(givenName),
+             'default-profile', Office365Users.UserPhotoMetadata(id).HasPhoto,Office365Users.UserPhoto(id),'default-profile'),Time:Now()});LookUp(UserPhotoCache,UserId = id).Photo,
+             LookUp(UserPhotoCache,UserId = id).Photo)}))
+        )
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - TeamScreenCanvas:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Height: =768
+            Width: =1366
+          Children:
+            - TeamScreenDataCard:
+                Control: DataCard@1.0.2
+                Variant: BlankCard
+                Properties:
+                  Height: =TeamRectangle.Y + TeamRectangle.Height
+                  Width: =1366
+                  WidthFit: =true
+                Children:
+                  - AppIcon:
+                      Control: Image@2.2.3
+                      Group: TopMenu
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =AppIcon.BorderColor
+                        Height: =20
+                        HoverBorderColor: =ColorFade(AppIcon.BorderColor, 20%)
+                        HoverFill: =ColorFade(AppIcon.Fill, 20%)
+                        Image: ='get-onboard-logo-large'
+                        PressedBorderColor: =ColorFade(AppIcon.BorderColor, -20%)
+                        PressedFill: =ColorFade(AppIcon.Fill, -20%)
+                        Width: =157
+                        X: =58
+                        Y: =28
+                  - MyProfileLabel:
+                      Control: Label@2.5.1
+                      Group: TopMenu
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =MyProfileLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Label1.Height
+                        HoverBorderColor: =MyProfileLabel.BorderColor
+                        HoverColor: =MyProfileLabel.Color
+                        HoverFill: =MyProfileLabel.Fill
+                        OnSelect: =Navigate(MyProfileScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyProfileLabel.BorderColor
+                        PressedColor: =MyProfileLabel.Color
+                        PressedFill: =MyProfileLabel.Fill
+                        Size: =12
+                        Text: ="My profile"
+                        Width: =Label1.Width
+                        X: =Label1.X
+                        Y: =Label1.Y
+                  - TeamLabel:
+                      Control: Label@2.5.1
+                      Group: TopMenu
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =TeamLabel.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =Label1_1.Height
+                        HoverBorderColor: =TeamLabel.BorderColor
+                        HoverColor: =TeamLabel.Color
+                        HoverFill: =TeamLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =TeamLabel.BorderColor
+                        PressedColor: =TeamLabel.Color
+                        PressedFill: =TeamLabel.Fill
+                        Size: =12
+                        Text: ="Team"
+                        Width: =Label1_1.Width
+                        X: =Label1_1.X
+                        Y: =Label1_1.Y
+                  - CompanyLabel:
+                      Control: Label@2.5.1
+                      Group: TopMenu
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =CompanyLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =Label1_2.Height
+                        HoverBorderColor: =CompanyLabel.BorderColor
+                        HoverColor: =CompanyLabel.Color
+                        HoverFill: =CompanyLabel.Fill
+                        OnSelect: =Navigate(CompanyScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =CompanyLabel.BorderColor
+                        PressedColor: =CompanyLabel.Color
+                        PressedFill: =CompanyLabel.Fill
+                        Size: =12
+                        Text: ="Company"
+                        Width: =Label1_2.Width
+                        X: =Label1_2.X
+                        Y: =Label1_2.Y
+                  - TeamRectangle:
+                      Control: Rectangle@2.3.0
+                      Group: TeamDetailsGroup
+                      Properties:
+                        DisabledFill: =TeamRectangle.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(236, 240, 244, 1)
+                        FocusedBorderColor: =TeamRectangle.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =TeamEditHeaderLiniks.Y + TeamEditHeaderLiniks.Height - TeamRectangle_1.Y + 21
+                        HoverFill: =TeamRectangle.Fill
+                        PressedFill: =TeamRectangle.Fill
+                        Width: =1365
+                        Y: =104
+                  - TeamButton1:
+                      Control: Classic/Button@2.2.0
+                      Group: TeamDetailsGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,54,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(TeamButton1.BorderColor, 70%)
+                        Fill: =RGBA(236, 240, 244, 1)
+                        FocusedBorderColor: =TeamButton1.BorderColor
+                        HoverBorderColor: =ColorFade(TeamButton1.BorderColor, 20%)
+                        HoverColor: =TeamButton1.Color
+                        HoverFill: =ColorFade(TeamButton1.Fill, 20%)
+                        OnSelect: =Launch(First(TeamLinks).URL)
+                        PressedBorderColor: =TeamButton1.Fill
+                        PressedColor: =TeamButton1.Fill
+                        PressedFill: =TeamButton1.Color
+                        Size: =12
+                        Text: =First(TeamLinks).Text
+                        Visible: =false
+                        X: =50
+                        Y: =179
+                  - TeamName:
+                      Control: Label@2.5.1
+                      Group: TeamDetailsGroup
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =TeamName.BorderColor
+                        Height: =33
+                        HoverBorderColor: =TeamName.BorderColor
+                        HoverColor: =TeamName.Color
+                        HoverFill: =TeamName.Fill
+                        PressedBorderColor: =TeamName.BorderColor
+                        PressedColor: =TeamName.Color
+                        PressedFill: =TeamName.Fill
+                        Size: =18
+                        Text: =First(Team).Name
+                        Width: =Parent.Width - TeamName.X - 30
+                        Wrap: =false
+                        X: =45
+                        Y: =TeamRectangle.Y + 32
+                  - TeamButton2:
+                      Control: Classic/Button@2.2.0
+                      Group: TeamDetailsGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,54,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(TeamButton2.BorderColor, 70%)
+                        Fill: =RGBA(236, 240, 244, 1)
+                        FocusedBorderColor: =TeamButton2.BorderColor
+                        HoverBorderColor: =ColorFade(TeamButton2.BorderColor, 20%)
+                        HoverColor: =TeamButton2.Color
+                        HoverFill: =ColorFade(TeamButton2.Fill, 20%)
+                        PressedBorderColor: =TeamButton2.Fill
+                        PressedColor: =TeamButton2.Fill
+                        PressedFill: =TeamButton2.Color
+                        Size: =12
+                        Text: =Last(TeamLinks).Text
+                        Visible: =false
+                        X: =TeamButton1.X + TeamButton1.Width + 20
+                        Y: =179
+                  - TeamSelectedRectangle:
+                      Control: Rectangle@2.3.0
+                      Group: TopMenu
+                      Properties:
+                        DisabledFill: =TeamSelectedRectangle.Fill
+                        Fill: =RGBA(65, 225, 127, 1)
+                        FocusedBorderColor: =TeamSelectedRectangle.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =5
+                        HoverFill: =TeamSelectedRectangle.Fill
+                        PressedFill: =TeamSelectedRectangle.Fill
+                        Width: =TeamLabel.Width - 20
+                        X: =TeamLabel.X + 10
+                        Y: =104
+                  - TeamButton3:
+                      Control: Classic/Button@2.2.0
+                      Group: TeamDetailsGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,54,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(TeamButton3.BorderColor, 70%)
+                        Fill: =RGBA(236, 240, 244, 1)
+                        FocusedBorderColor: =TeamButton3.BorderColor
+                        HoverBorderColor: =ColorFade(TeamButton3.BorderColor, 20%)
+                        HoverColor: =TeamButton3.Color
+                        HoverFill: =ColorFade(TeamButton3.Fill, 20%)
+                        OnSelect: =Launch(Last(TeamLinks).URL)
+                        PressedBorderColor: =TeamButton3.Fill
+                        PressedColor: =TeamButton3.Fill
+                        PressedFill: =TeamButton3.Color
+                        Size: =12
+                        Text: =Last(TeamLinks).Text
+                        Visible: =false
+                        X: =TeamButton2.X + TeamButton2.Width + 20
+                        Y: =180
+                  - MyUserPic:
+                      Control: Image@2.2.3
+                      Group: TopMenu
+                      Properties:
+                        FocusedBorderColor: =MyUserPic.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =60
+                        HoverBorderColor: =ColorFade(MyUserPic.BorderColor, 20%)
+                        HoverFill: =ColorFade(MyUserPic.Fill, 20%)
+                        Image: =LookUp(UserPhotoCache,UserId = MyUserId).Photo
+                        ImagePosition: =ImagePosition.Stretch
+                        PressedBorderColor: =ColorFade(MyUserPic.BorderColor, -20%)
+                        PressedFill: =ColorFade(MyUserPic.Fill, -20%)
+                        Width: =60
+                        X: =1256
+                        Y: =22
+                  - MyDisplayName:
+                      Control: Label@2.5.1
+                      Group: TopMenu
+                      Properties:
+                        Align: =TextPosition.Right
+                        FocusedBorderColor: =MyDisplayName.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =25
+                        HoverBorderColor: =MyDisplayName.BorderColor
+                        HoverColor: =MyDisplayName.Color
+                        HoverFill: =MyDisplayName.Fill
+                        PaddingBottom: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyDisplayName.BorderColor
+                        PressedColor: =MyDisplayName.Color
+                        PressedFill: =MyDisplayName.Fill
+                        Size: =12
+                        Text: =MyProfile.DisplayName
+                        Width: =285
+                        Wrap: =false
+                        X: =960
+                        Y: =30
+                  - MyJobTitle:
+                      Control: Label@2.5.1
+                      Group: TopMenu
+                      Properties:
+                        Align: =TextPosition.Right
+                        FocusedBorderColor: =MyJobTitle.BorderColor
+                        Height: =19
+                        HoverBorderColor: =MyJobTitle.BorderColor
+                        HoverColor: =MyJobTitle.Color
+                        HoverFill: =MyJobTitle.Fill
+                        PaddingBottom: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyJobTitle.BorderColor
+                        PressedColor: =MyJobTitle.Color
+                        PressedFill: =MyJobTitle.Fill
+                        Size: |+
+                          =10.5
+                        Text: =MyProfile.JobTitle
+                        Width: =285
+                        Wrap: =false
+                        X: =960
+                        Y: =55
+                  - TeamEditHeaderLiniks:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        AutoHeight: =true
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisplayMode: =DisplayMode.View
+                        Height: =60
+                        HoverBorderColor: =TeamEditHeaderLiniks.BorderColor
+                        HtmlText: |-
+                          ="<div>" & Concat(TeamLinks,"<a style=""display:inline-block;line-height:40px;vertical-align:middle;text-decoration:none;font-size: 16px;
+                            font-weight: 600;color: #1a1a54;padding:0 12px;border: solid 1px #1a1a54;margin:10px;border-radius:4px;"" href=""" & URL & """>" & Text & "</a>") & "</div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =40
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        Width: =Parent.Width
+                        Y: =169
+                  - TeamEditHeaderButton:
+                      Control: Classic/Button@2.2.0
+                      Group: TeamEditHeader
+                      Properties:
+                        BorderColor: =ColorFade(TeamEditHeaderButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(TeamEditHeaderButton.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =TeamEditHeaderButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(TeamEditHeaderButton.BorderColor, 20%)
+                        HoverColor: =TeamEditHeaderButton.Color
+                        HoverFill: =ColorFade(TeamEditHeaderButton.Fill, 20%)
+                        OnSelect: =Navigate(EditTeamInfo,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =31
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =TeamEditHeaderButton.Fill
+                        PressedColor: =TeamEditHeaderButton.Fill
+                        PressedFill: =TeamEditHeaderButton.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =9
+                        Text: ="Edit Team header"
+                        Visible: =isAdmin
+                        Width: =149
+                        X: =1167
+                        Y: =140
+                  - TeamEditHeaderIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: TeamEditHeader
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =TeamEditHeaderIcon.Fill
+                        FocusedBorderColor: =TeamEditHeaderIcon.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(TeamEditHeaderIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(TeamEditHeaderIcon.Color, 20%)
+                        HoverFill: =TeamEditHeaderIcon.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Select(TeamEditHeaderButton)
+                        PressedBorderColor: =ColorFade(TeamEditHeaderIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(TeamEditHeaderIcon.Color, -20%)
+                        PressedFill: =TeamEditHeaderIcon.Fill
+                        Visible: =isAdmin
+                        Width: =15
+                        X: =TeamEditHeaderButton.X + 14
+                        Y: =TeamEditHeaderButton.Y - 3
+            - TeamScreenMembersDataCard:
+                Control: DataCard@1.0.2
+                Variant: BlankCard
+                Properties:
+                  Height: =
+                  Width: =1366
+                  Y: =1
+                Children:
+                  - UserDetailsRectangle_1:
+                      Control: Rectangle@2.3.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        DisabledFill: =UserDetailsRectangle_1.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =UserDetailsRectangle_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =TeamEnd.Y - 1
+                        HoverFill: =UserDetailsRectangle_1.Fill
+                        OnSelect: =
+                        PressedFill: =UserDetailsRectangle_1.Fill
+                        Width: =395
+                        X: =971
+                        Y: =1
+                  - MyTeamTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: MyManagerGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =MyTeamTextLabel_1.BorderColor
+                        Height: =33
+                        HoverBorderColor: =MyTeamTextLabel_1.BorderColor
+                        HoverColor: =MyTeamTextLabel_1.Color
+                        HoverFill: =MyTeamTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyTeamTextLabel_1.BorderColor
+                        PressedColor: =MyTeamTextLabel_1.Color
+                        PressedFill: =MyTeamTextLabel_1.Fill
+                        Size: =18
+                        Text: ="My team"
+                        Width: =900
+                        X: =51
+                        Y: =30
+                  - MyManagerTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: MyManagerGroup_1
+                      Properties:
+                        FocusedBorderColor: =MyManagerTextLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =19
+                        HoverBorderColor: =MyManagerTextLabel_1.BorderColor
+                        HoverColor: =MyManagerTextLabel_1.Color
+                        HoverFill: =MyManagerTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyManagerTextLabel_1.BorderColor
+                        PressedColor: =MyManagerTextLabel_1.Color
+                        PressedFill: =MyManagerTextLabel_1.Fill
+                        Size: =10.5
+                        Text: ="My manager"
+                        Width: =900
+                        X: =51
+                        Y: =90
+                  - MyManager_1:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Group: MyManagerGroup_1
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =60
+                        Items: =MyManagerList
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =MyManager_1.BorderColor
+                        OnSelect: |-
+                          =Set(SelectedUser,ThisItem.Id);
+                          Set(SelectedUserProfile,ThisItem);
+                          Set(KickOffTimer,true);
+                          Set(ShowLess,false);
+                          ClearCollect(FrequentContactsList,ForAll(Office365Users.RelevantPeople(ThisItem.Id).value,{DisplayName:displayName,JobTitle:jobTitle,UserPrincipalName:userPrincipalName,GivenName:givenName,Mail:userPrincipalName,Id:id, Photo: If(Not(id in UserPhotoCache.UserId),Collect(UserPhotoCache,{UserId:id, Photo:(If(Office365Users.UserPhotoMetadata(id).HasPhoto,Office365Users.UserPhoto(id),'default-profile')),Time:Now()});LookUp(UserPhotoCache,UserId = id).Photo,LookUp(UserPhotoCache,UserId = id).Photo)}));
+                          Set(KickOffTimer,false)
+                        ShowScrollbar: =false
+                        TemplateSize: =60
+                        Width: =970
+                        X: =1
+                        Y: =115
+                      Children:
+                        - RectangleForSelection2_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =RectangleForSelection2_1.Fill
+                              Fill: =If(ThisItem.Id=SelectedUser,RGBA(245, 247, 249, 1),RGBA(0,0,0,0))
+                              FocusedBorderColor: =RectangleForSelection2_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =60
+                              HoverFill: =RectangleForSelection2_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =RectangleForSelection2_1.Fill
+                              Width: =970
+                        - MyManagerUserLogo_1:
+                            Control: Image@2.2.3
+                            Properties:
+                              ApplyEXIFOrientation: =false
+                              FocusedBorderColor: =MyManagerUserLogo_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =35
+                              HoverBorderColor: =ColorFade(MyManagerUserLogo_1.BorderColor, 20%)
+                              HoverFill: =ColorFade(MyManagerUserLogo_1.Fill, 20%)
+                              Image: =If(IsBlank(ThisItem.Photo),profile,ThisItem.Photo)
+                              ImagePosition: =LayoutAlignItems.Stretch
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =ColorFade(MyManagerUserLogo_1.BorderColor, -20%)
+                              PressedFill: =ColorFade(MyManagerUserLogo_1.Fill, -20%)
+                              Width: =35
+                              X: =50
+                              Y: =14
+                        - MyManagerJobTitle_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyManagerJobTitle_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =45
+                              HoverBorderColor: =MyManagerJobTitle_1.BorderColor
+                              HoverColor: =MyManagerJobTitle_1.Color
+                              HoverFill: =MyManagerJobTitle_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyManagerJobTitle_1.BorderColor
+                              PressedColor: =MyManagerJobTitle_1.Color
+                              PressedFill: =MyManagerJobTitle_1.Fill
+                              Size: =12
+                              Text: =ThisItem.JobTitle
+                              Width: =600
+                              Wrap: =false
+                              X: =329
+                              Y: =10
+                        - MyManagerDisplayName_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyManagerDisplayName_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =45
+                              HoverBorderColor: =MyManagerDisplayName_1.BorderColor
+                              HoverColor: =MyManagerDisplayName_1.Color
+                              HoverFill: =MyManagerDisplayName_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyManagerDisplayName_1.BorderColor
+                              PressedColor: =MyManagerDisplayName_1.Color
+                              PressedFill: =MyManagerDisplayName_1.Fill
+                              Size: =12
+                              Text: =ThisItem.DisplayName
+                              Width: =220
+                              X: =103
+                              Y: =10
+                        - MyManagerSeparator_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =MyManagerSeparator_1.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =MyManagerSeparator_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =MyManagerSeparator_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =MyManagerSeparator_1.Fill
+                              Visible: =Not(ThisItem.Id=SelectedUser)
+                              Width: =Parent.TemplateWidth - 99
+                              X: =50
+                              Y: =Parent.TemplateHeight - 2
+                        - MyManagerCity_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyManagerCity_1.BorderColor
+                              HoverBorderColor: =MyManagerCity_1.BorderColor
+                              HoverColor: =MyManagerCity_1.Color
+                              HoverFill: =MyManagerCity_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =MyManagerCity_1.BorderColor
+                              PressedColor: =MyManagerCity_1.Color
+                              PressedFill: =MyManagerCity_1.Fill
+                              Size: =12
+                              Text: =ThisItem.City
+                              X: =671
+                              Y: =14
+                  - MyPeersTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: MyPeersGroup_1
+                      Properties:
+                        FocusedBorderColor: =MyPeersTextLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =19
+                        HoverBorderColor: =MyPeersTextLabel_1.BorderColor
+                        HoverColor: =MyPeersTextLabel_1.Color
+                        HoverFill: =MyPeersTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyPeersTextLabel_1.BorderColor
+                        PressedColor: =MyPeersTextLabel_1.Color
+                        PressedFill: =MyPeersTextLabel_1.Fill
+                        Size: =10.5
+                        Text: ="My peers ("& CountRows(MyPeersList) & ")"
+                        Width: =900
+                        X: =51
+                        Y: =MyManager_1.Y + MyManager_1.Height + 19
+                  - UserLogoImage_1:
+                      Control: Image@2.2.3
+                      Group: UserInfoGroup_1
+                      Properties:
+                        FocusedBorderColor: =UserLogoImage_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =60
+                        HoverBorderColor: =ColorFade(UserLogoImage_1.BorderColor, 20%)
+                        HoverFill: =ColorFade(UserLogoImage_1.Fill, 20%)
+                        Image: =If(IsBlank(SelectedUserProfile.Photo), profile, SelectedUserProfile.Photo)
+                        ImagePosition: =ImagePosition.Stretch
+                        PressedBorderColor: =ColorFade(UserLogoImage_1.BorderColor, -20%)
+                        PressedFill: =ColorFade(UserLogoImage_1.Fill, -20%)
+                        Width: =60
+                        X: =1021
+                        Y: =UserDisplayNameLabel_1.Y - 3
+                  - UserDisplayNameLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        FocusedBorderColor: =UserDisplayNameLabel_1.BorderColor
+                        Height: =33
+                        HoverBorderColor: =UserDisplayNameLabel_1.BorderColor
+                        HoverColor: =UserDisplayNameLabel_1.Color
+                        HoverFill: =UserDisplayNameLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =UserDisplayNameLabel_1.BorderColor
+                        PressedColor: =UserDisplayNameLabel_1.Color
+                        PressedFill: =UserDisplayNameLabel_1.Fill
+                        Size: |+
+                          =18
+                        Text: =SelectedUserProfile.DisplayName
+                        Width: =245
+                        Wrap: =false
+                        X: =1101
+                        Y: =37
+                  - JobTitleLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        FocusedBorderColor: =JobTitleLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =JobTitleLabel_1.BorderColor
+                        HoverColor: =JobTitleLabel_1.Color
+                        HoverFill: =JobTitleLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =JobTitleLabel_1.BorderColor
+                        PressedColor: =JobTitleLabel_1.Color
+                        PressedFill: =JobTitleLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: =SelectedUserProfile.JobTitle
+                        Width: =245
+                        Wrap: =false
+                        X: =1101
+                        Y: =UserDisplayNameLabel_1.Y + 32
+                  - GeneralInformationLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Center
+                        FocusedBorderColor: =GeneralInformationLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =22
+                        HoverBorderColor: =GeneralInformationLabel_1.BorderColor
+                        HoverColor: =GeneralInformationLabel_1.Color
+                        HoverFill: =GeneralInformationLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =GeneralInformationLabel_1.BorderColor
+                        PressedColor: =GeneralInformationLabel_1.Color
+                        PressedFill: =GeneralInformationLabel_1.Fill
+                        Size: |+
+                          =12
+                        Text: ="General Information"
+                        Width: =395
+                        X: =971
+                        Y: =87 + UserDisplayNameLabel_1.Y
+                  - MobilePhoneTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =MobilePhoneTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =MobilePhoneTextLabel_1.BorderColor
+                        HoverColor: =MobilePhoneTextLabel_1.Color
+                        HoverFill: =MobilePhoneTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =MobilePhoneTextLabel_1.BorderColor
+                        PressedColor: =MobilePhoneTextLabel_1.Color
+                        PressedFill: =MobilePhoneTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Mobile Phone:"
+                        Width: =153
+                        X: =971
+                        Y: =UserDisplayNameLabel_1.Y + 121
+                  - OfficePhoneTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =OfficePhoneTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =OfficePhoneTextLabel_1.BorderColor
+                        HoverColor: =OfficePhoneTextLabel_1.Color
+                        HoverFill: =OfficePhoneTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =OfficePhoneTextLabel_1.BorderColor
+                        PressedColor: =OfficePhoneTextLabel_1.Color
+                        PressedFill: =OfficePhoneTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Office phone:"
+                        Width: =153
+                        X: =971
+                        Y: =MobilePhoneTextLabel_1.Y + 20
+                  - EmailTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EmailTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =EmailTextLabel_1.BorderColor
+                        HoverColor: =EmailTextLabel_1.Color
+                        HoverFill: =EmailTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =EmailTextLabel_1.BorderColor
+                        PressedColor: =EmailTextLabel_1.Color
+                        PressedFill: =EmailTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Email:"
+                        Width: =153
+                        X: =971
+                        Y: =OfficePhoneTextLabel_1.Y + 20
+                  - DepartmentTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =DepartmentTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =DepartmentTextLabel_1.BorderColor
+                        HoverColor: =DepartmentTextLabel_1.Color
+                        HoverFill: =DepartmentTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =DepartmentTextLabel_1.BorderColor
+                        PressedColor: =DepartmentTextLabel_1.Color
+                        PressedFill: =DepartmentTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Department:"
+                        Width: =153
+                        X: =971
+                        Y: =EmailTextLabel_1.Y + 20
+                  - ReportsToTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =ReportsToTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =ReportsToTextLabel_1.BorderColor
+                        HoverColor: =ReportsToTextLabel_1.Color
+                        HoverFill: =ReportsToTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =ReportsToTextLabel_1.BorderColor
+                        PressedColor: =ReportsToTextLabel_1.Color
+                        PressedFill: =ReportsToTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Reports to:"
+                        Width: =153
+                        X: =971
+                        Y: =DepartmentTextLabel_1.Y + 20
+                  - OfficeLocationTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =OfficeLocationTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =OfficeLocationTextLabel_1.BorderColor
+                        HoverColor: =OfficeLocationTextLabel_1.Color
+                        HoverFill: =OfficeLocationTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =10
+                        PaddingTop: =0
+                        PressedBorderColor: =OfficeLocationTextLabel_1.BorderColor
+                        PressedColor: =OfficeLocationTextLabel_1.Color
+                        PressedFill: =OfficeLocationTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Office location:"
+                        Width: =153
+                        X: =971
+                        Y: =ReportsToTextLabel_1.Y + 20
+                  - MyPeers_1:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Group: MyPeersGroup_1
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =63*CountRows(MyPeersList)
+                        Items: =MyPeersList
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =MyPeers_1.BorderColor
+                        OnSelect: |-
+                          =Set(SelectedUser,ThisItem.Id);
+                          Set(SelectedUserProfile,ThisItem);
+                          Set(KickOffTimer,true);
+                          Set(ShowLess,false);
+                          ClearCollect(FrequentContactsList,ForAll(Office365Users.RelevantPeople(ThisItem.Id).value,{DisplayName:displayName,JobTitle:jobTitle,UserPrincipalName:userPrincipalName,GivenName:givenName,Mail:userPrincipalName,Id:id,Photo: If(Not(id in UserPhotoCache.UserId),Collect(UserPhotoCache,{UserId:id, Photo:(If(Office365Users.UserPhotoMetadata(id).HasPhoto,Office365Users.UserPhoto(id),'default-profile')),Time:Now()});LookUp(UserPhotoCache,UserId = id).Photo,LookUp(UserPhotoCache,UserId = id).Photo)}));
+                          Set(KickOffTimer,false)
+                        ShowScrollbar: =false
+                        TemplateSize: =63
+                        Width: =970
+                        X: =1
+                        Y: =217
+                      Children:
+                        - MyPeersSeparator_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =MyPeersSeparator_1.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =MyPeersSeparator_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =MyPeersSeparator_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =MyPeersSeparator_1.Fill
+                              Visible: =Not(ThisItem.Id=SelectedUser)
+                              Width: =Parent.TemplateWidth - 99
+                              X: =50
+                              Y: =Parent.TemplateHeight - 2
+                        - RectangleForSelection_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =RectangleForSelection_1.Fill
+                              Fill: =If(ThisItem.Id=SelectedUser,RGBA(245, 247, 249, 1),RGBA(0,0,0,0))
+                              FocusedBorderColor: =RectangleForSelection_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =63
+                              HoverFill: =RectangleForSelection_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =RectangleForSelection_1.Fill
+                              Width: =970
+                        - MyPeersLogo_1:
+                            Control: Image@2.2.3
+                            Properties:
+                              ApplyEXIFOrientation: =false
+                              FocusedBorderColor: =MyPeersLogo_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =35
+                              HoverBorderColor: =ColorFade(MyPeersLogo_1.BorderColor, 20%)
+                              HoverFill: =ColorFade(MyPeersLogo_1.Fill, 20%)
+                              Image: =If(IsBlank(ThisItem.Photo), profile, ThisItem.Photo)
+                              ImagePosition: =LayoutAlignItems.Stretch
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =ColorFade(MyPeersLogo_1.BorderColor, -20%)
+                              PressedFill: =ColorFade(MyPeersLogo_1.Fill, -20%)
+                              Width: =35
+                              X: =50
+                              Y: =14
+                        - MyPeersJobTitle_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyPeersJobTitle_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =45
+                              HoverBorderColor: =MyPeersJobTitle_1.BorderColor
+                              HoverColor: =MyPeersJobTitle_1.Color
+                              HoverFill: =MyPeersJobTitle_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyPeersJobTitle_1.BorderColor
+                              PressedColor: =MyPeersJobTitle_1.Color
+                              PressedFill: =MyPeersJobTitle_1.Fill
+                              Size: =12
+                              Text: =ThisItem.JobTitle
+                              Width: =600
+                              Wrap: =false
+                              X: =329
+                              Y: =10
+                        - MyPeersDisplayName_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyPeersDisplayName_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =45
+                              HoverBorderColor: =MyPeersDisplayName_1.BorderColor
+                              HoverColor: =MyPeersDisplayName_1.Color
+                              HoverFill: =MyPeersDisplayName_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyPeersDisplayName_1.BorderColor
+                              PressedColor: =MyPeersDisplayName_1.Color
+                              PressedFill: =MyPeersDisplayName_1.Fill
+                              Size: =12
+                              Text: =ThisItem.DisplayName
+                              Width: =220
+                              Wrap: =false
+                              X: =103
+                              Y: =10
+                        - MyPeersCity_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyPeersCity_1.BorderColor
+                              HoverBorderColor: =MyPeersCity_1.BorderColor
+                              HoverColor: =MyPeersCity_1.Color
+                              HoverFill: =MyPeersCity_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =MyPeersCity_1.BorderColor
+                              PressedColor: =MyPeersCity_1.Color
+                              PressedFill: =MyPeersCity_1.Fill
+                              Size: =12
+                              Text: =ThisItem.City
+                              X: =671
+                              Y: =14
+                  - MyReportsLabel_1:
+                      Control: Label@2.5.1
+                      Group: MyReportsGroup_1
+                      Properties:
+                        FocusedBorderColor: =MyReportsLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =19
+                        HoverBorderColor: =MyReportsLabel_1.BorderColor
+                        HoverColor: =MyReportsLabel_1.Color
+                        HoverFill: =MyReportsLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyReportsLabel_1.BorderColor
+                        PressedColor: =MyReportsLabel_1.Color
+                        PressedFill: =MyReportsLabel_1.Fill
+                        Size: =10.5
+                        Text: ="My reports (" & CountRows(MyReportList) & ")"
+                        Width: =900
+                        X: =51
+                        Y: =MyPeers_1.Y + MyPeers_1.Height + 19
+                  - MyReports_1:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Group: MyReportsGroup_1
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =CountRows(MyReportList) * MyReports_1.TemplateHeight
+                        Items: =MyReportList
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =MyReports_1.BorderColor
+                        OnSelect: |-
+                          =Set(SelectedUser,ThisItem.Id);
+                          Set(SelectedUserProfile,ThisItem);
+                          Set(KickOffTimer,true);
+                          Set(ShowLess,false);
+                          ClearCollect(FrequentContactsList,ForAll(Office365Users.RelevantPeople(ThisItem.Id).value,{DisplayName:displayName,JobTitle:jobTitle,UserPrincipalName:userPrincipalName,GivenName:givenName,Mail:userPrincipalName,Id:id, Photo: If(Not(id in UserPhotoCache.UserId),Collect(UserPhotoCache,{UserId:id, Photo:(If(Office365Users.UserPhotoMetadata(id).HasPhoto,Office365Users.UserPhoto(id),'default-profile')),Time:Now()});LookUp(UserPhotoCache,UserId = id).Photo,LookUp(UserPhotoCache,UserId = id).Photo)}));
+                          Set(KickOffTimer,false)
+                        ShowScrollbar: =false
+                        TemplateSize: =63
+                        Width: =970
+                        X: =1
+                        Y: =MyReportsLabel_1.Y + MyReportsLabel_1.Height + 19
+                      Children:
+                        - RectangleForSelection3_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =RectangleForSelection3_1.Fill
+                              Fill: =If(ThisItem.Id=SelectedUser,RGBA(245, 247, 249, 1),RGBA(0,0,0,0))
+                              FocusedBorderColor: =RectangleForSelection3_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =63
+                              HoverFill: =RectangleForSelection3_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =RectangleForSelection3_1.Fill
+                              Width: =970
+                        - MyReportsUserLogo_1:
+                            Control: Image@2.2.3
+                            Properties:
+                              ApplyEXIFOrientation: =false
+                              FocusedBorderColor: =MyReportsUserLogo_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =35
+                              HoverBorderColor: =ColorFade(MyReportsUserLogo_1.BorderColor, 20%)
+                              HoverFill: =ColorFade(MyReportsUserLogo_1.Fill, 20%)
+                              Image: '=If(IsBlank(ThisItem.Photo), profile, ThisItem.Photo) '
+                              ImagePosition: =LayoutAlignItems.Stretch
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =ColorFade(MyReportsUserLogo_1.BorderColor, -20%)
+                              PressedFill: =ColorFade(MyReportsUserLogo_1.Fill, -20%)
+                              Width: =35
+                              X: =50
+                              Y: =14
+                        - MyReportsJobTitle_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyReportsJobTitle_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =45
+                              HoverBorderColor: =MyReportsJobTitle_1.BorderColor
+                              HoverColor: =MyReportsJobTitle_1.Color
+                              HoverFill: =MyReportsJobTitle_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyReportsJobTitle_1.BorderColor
+                              PressedColor: =MyReportsJobTitle_1.Color
+                              PressedFill: =MyReportsJobTitle_1.Fill
+                              Size: =12
+                              Text: =ThisItem.JobTitle
+                              Width: =600
+                              Wrap: =false
+                              X: =329
+                              Y: =10
+                        - MyReportsDisplayName_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyReportsDisplayName_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =45
+                              HoverBorderColor: =MyReportsDisplayName_1.BorderColor
+                              HoverColor: =MyReportsDisplayName_1.Color
+                              HoverFill: =MyReportsDisplayName_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyReportsDisplayName_1.BorderColor
+                              PressedColor: =MyReportsDisplayName_1.Color
+                              PressedFill: =MyReportsDisplayName_1.Fill
+                              Size: =12
+                              Text: =ThisItem.DisplayName
+                              Width: =220
+                              Wrap: =false
+                              X: =103
+                              Y: =10
+                        - MyReportsSeparator_1:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =MyReportsSeparator_1.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =MyReportsSeparator_1.BorderColor
+                              Height: =1
+                              HoverFill: =MyReportsSeparator_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =MyReportsSeparator_1.Fill
+                              Width: =Parent.TemplateWidth
+                              Y: =Parent.TemplateHeight - 1
+                        - MyReportsCity_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(26, 26, 84, 1)
+                              FocusedBorderColor: =MyReportsCity_1.BorderColor
+                              HoverBorderColor: =MyReportsCity_1.BorderColor
+                              HoverColor: =MyReportsCity_1.Color
+                              HoverFill: =MyReportsCity_1.Fill
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =MyReportsCity_1.BorderColor
+                              PressedColor: =MyReportsCity_1.Color
+                              PressedFill: =MyReportsCity_1.Fill
+                              Size: =12
+                              Text: =ThisItem.City
+                              X: =671
+                              Y: =14
+                  - FrequentContacts_1:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =46*CountRows(FrequentContacts_1.AllItems)
+                        Items: =If(ShowLess,FrequentContactsList,FirstN(FrequentContactsList,4))
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =FrequentContacts_1.BorderColor
+                        OnSelect: =Set(SelectedUserId,ThisItem.Id)
+                        ShowScrollbar: =false
+                        TemplateSize: =46
+                        Width: =307
+                        X: =1016
+                        Y: =WorksCloselyWithLabel_1.Y + 38
+                      Children:
+                        - FreqContLogo_1:
+                            Control: Image@2.2.3
+                            Properties:
+                              ApplyEXIFOrientation: =false
+                              FocusedBorderColor: =FreqContLogo_1.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =35
+                              HoverBorderColor: =ColorFade(FreqContLogo_1.BorderColor, 20%)
+                              HoverFill: =ColorFade(FreqContLogo_1.Fill, 20%)
+                              Image: =If(IsBlank(ThisItem.Photo), profile, ThisItem.Photo)
+                              ImagePosition: =ImagePosition.Stretch
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =ColorFade(FreqContLogo_1.BorderColor, -20%)
+                              PressedFill: =ColorFade(FreqContLogo_1.Fill, -20%)
+                              Width: =35
+                              X: =7
+                              Y: =2
+                        - FreqContJobTitle_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =FreqContJobTitle_1.BorderColor
+                              Height: =19
+                              HoverBorderColor: =FreqContJobTitle_1.BorderColor
+                              HoverColor: =FreqContJobTitle_1.Color
+                              HoverFill: =FreqContJobTitle_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =FreqContJobTitle_1.BorderColor
+                              PressedColor: =FreqContJobTitle_1.Color
+                              PressedFill: =FreqContJobTitle_1.Fill
+                              Size: =10.5
+                              Text: =ThisItem.JobTitle
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =231
+                              X: =48
+                              Y: =20
+                        - FreqContDisplayName_1:
+                            Control: Label@2.5.1
+                            Properties:
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =FreqContDisplayName_1.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =21
+                              HoverBorderColor: =FreqContDisplayName_1.BorderColor
+                              HoverColor: =FreqContDisplayName_1.Color
+                              HoverFill: =FreqContDisplayName_1.Fill
+                              OnSelect: =Select(Parent)
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =FreqContDisplayName_1.BorderColor
+                              PressedColor: =FreqContDisplayName_1.Color
+                              PressedFill: =FreqContDisplayName_1.Fill
+                              Size: =10.5
+                              Text: =ThisItem.DisplayName
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =196
+                              Wrap: =false
+                              X: =48
+                              Y: =5
+                  - MobilePhoneDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =MobilePhoneDataLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =MobilePhoneDataLabel_1.BorderColor
+                        HoverColor: =MobilePhoneDataLabel_1.Color
+                        HoverFill: =MobilePhoneDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MobilePhoneDataLabel_1.BorderColor
+                        PressedColor: =MobilePhoneDataLabel_1.Color
+                        PressedFill: =MobilePhoneDataLabel_1.Fill
+                        Size: =10.5
+                        Text: =SelectedUserProfile.Mobile
+                        Width: =210
+                        Wrap: =false
+                        X: =1135
+                        Y: =MobilePhoneTextLabel_1.Y
+                  - OfficePhoneDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =OfficePhoneDataLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =OfficePhoneDataLabel_1.BorderColor
+                        HoverColor: =OfficePhoneDataLabel_1.Color
+                        HoverFill: =OfficePhoneDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =OfficePhoneDataLabel_1.BorderColor
+                        PressedColor: =OfficePhoneDataLabel_1.Color
+                        PressedFill: =OfficePhoneDataLabel_1.Fill
+                        Size: =10.5
+                        Text: =SelectedUserProfile.OfficePhone
+                        Width: =210
+                        Wrap: =false
+                        X: =1135
+                        Y: =OfficePhoneTextLabel_1.Y
+                  - EmailDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =EmailDataLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =19
+                        HoverBorderColor: =EmailDataLabel_1.BorderColor
+                        HoverColor: =EmailDataLabel_1.Color
+                        HoverFill: =EmailDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EmailDataLabel_1.BorderColor
+                        PressedColor: =EmailDataLabel_1.Color
+                        PressedFill: =EmailDataLabel_1.Fill
+                        Size: =10.5
+                        Text: =SelectedUserProfile.Mail
+                        Width: =210
+                        Wrap: =false
+                        X: =1135
+                        Y: =EmailTextLabel_1.Y
+                  - DepartmentDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =DepartmentDataLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =DepartmentDataLabel_1.BorderColor
+                        HoverColor: =DepartmentDataLabel_1.Color
+                        HoverFill: =DepartmentDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =DepartmentDataLabel_1.BorderColor
+                        PressedColor: =DepartmentDataLabel_1.Color
+                        PressedFill: =DepartmentDataLabel_1.Fill
+                        Size: =10.5
+                        Text: =SelectedUserProfile.Department
+                        Width: =210
+                        Wrap: =false
+                        X: =1135
+                        Y: =DepartmentTextLabel_1.Y
+                  - ReportsToDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =ReportsToDataLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =ReportsToDataLabel_1.BorderColor
+                        HoverColor: =ReportsToDataLabel_1.Color
+                        HoverFill: =ReportsToDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =ReportsToDataLabel_1.BorderColor
+                        PressedColor: =ReportsToDataLabel_1.Color
+                        PressedFill: =ReportsToDataLabel_1.Fill
+                        Size: =10.5
+                        Text: =If(SelectedUser in MyPeersList.Id, First(MyManagerList).DisplayName,SelectedUser in MyReportList.Id, MyProfile.DisplayName,Office365Users.Manager(SelectedUser).DisplayName)
+                        Width: =210
+                        Wrap: =false
+                        X: =1135
+                        Y: =ReportsToTextLabel_1.Y
+                  - OfficeLocationDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =OfficeLocationDataLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =OfficeLocationDataLabel_1.BorderColor
+                        HoverColor: =OfficeLocationDataLabel_1.Color
+                        HoverFill: =OfficeLocationDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =OfficeLocationDataLabel_1.BorderColor
+                        PressedColor: =OfficeLocationDataLabel_1.Color
+                        PressedFill: =OfficeLocationDataLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: =SelectedUserProfile.OfficeLocation
+                        Width: =210
+                        X: =1135
+                        Y: =OfficeLocationTextLabel_1.Y
+                  - WorksCloselyWithLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Center
+                        FocusedBorderColor: =WorksCloselyWithLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =22
+                        HoverBorderColor: =WorksCloselyWithLabel_1.BorderColor
+                        HoverColor: =WorksCloselyWithLabel_1.Color
+                        HoverFill: =WorksCloselyWithLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =WorksCloselyWithLabel_1.BorderColor
+                        PressedColor: =WorksCloselyWithLabel_1.Color
+                        PressedFill: =WorksCloselyWithLabel_1.Fill
+                        Size: |+
+                          =12
+                        Text: ="Works closely with"
+                        Width: =395
+                        X: =971
+                        Y: =GeneralSeparatorWorks_1.Y + 17
+                  - GeneralSeparatorWorks_1:
+                      Control: Rectangle@2.3.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        DisabledFill: =GeneralSeparatorWorks_1.Fill
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =GeneralSeparatorWorks_1.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =2
+                        HoverFill: =GeneralSeparatorWorks_1.Fill
+                        OnSelect: =
+                        PressedFill: =GeneralSeparatorWorks_1.Fill
+                        Width: =292
+                        X: =1025
+                        Y: =OfficeLocationTextLabel_1.Y + 34
+                  - WorksSeparatorPersonal_1:
+                      Control: Rectangle@2.3.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        DisabledFill: =WorksSeparatorPersonal_1.Fill
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =WorksSeparatorPersonal_1.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =1
+                        HoverFill: =WorksSeparatorPersonal_1.Fill
+                        OnSelect: =
+                        PressedFill: =WorksSeparatorPersonal_1.Fill
+                        Width: =288
+                        X: =1025
+                        Y: =FrequentContacts_1.Y+FrequentContacts_1.Height + 35
+                  - PersonalInformationLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Center
+                        FocusedBorderColor: =PersonalInformationLabel_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =22
+                        HoverBorderColor: =PersonalInformationLabel_1.BorderColor
+                        HoverColor: =PersonalInformationLabel_1.Color
+                        HoverFill: =PersonalInformationLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =PersonalInformationLabel_1.BorderColor
+                        PressedColor: =PersonalInformationLabel_1.Color
+                        PressedFill: =PersonalInformationLabel_1.Fill
+                        Size: |+
+                          =12
+                        Text: ="Personal information"
+                        Width: =395
+                        X: =971
+                        Y: =WorksSeparatorPersonal_1.Y + 15
+                  - BirthdayTextLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BirthdayTextLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =BirthdayTextLabel_1.BorderColor
+                        HoverColor: =BirthdayTextLabel_1.Color
+                        HoverFill: =BirthdayTextLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BirthdayTextLabel_1.BorderColor
+                        PressedColor: =BirthdayTextLabel_1.Color
+                        PressedFill: =BirthdayTextLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="Birthday:"
+                        Width: =124
+                        Wrap: =false
+                        X: =971
+                        Y: =PersonalInformationLabel_1.Y + 16 + PersonalInformationLabel_1.Height
+                  - BirthdayDataLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =BirthdayDataLabel_1.BorderColor
+                        Height: =19
+                        HoverBorderColor: =BirthdayDataLabel_1.BorderColor
+                        HoverColor: =BirthdayDataLabel_1.Color
+                        HoverFill: =BirthdayDataLabel_1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =BirthdayDataLabel_1.BorderColor
+                        PressedColor: =BirthdayDataLabel_1.Color
+                        PressedFill: =BirthdayDataLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: =Text(DateAdd(Office365Users.UserProfileV2(SelectedUser).birthday, TimeZoneOffset(Office365Users.UserProfileV2(SelectedUser).birthday), TimeUnit.Minutes ),"[$-en-US]mmm d")
+                        Width: =Parent.Width - BirthdayDataLabel_1.X - 20
+                        Wrap: =false
+                        X: =971 + 144
+                        Y: =PersonalInformationLabel_1.Y + 16 + PersonalInformationLabel_1.Height
+                  - AboutDataLabel_1:
+                      Control: HtmlViewer@2.1.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        AutoHeight: =true
+                        Color: =RGBA(41, 40, 55, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =0
+                        HoverBorderColor: =AboutDataLabel_1.BorderColor
+                        HtmlText: |-
+                          ="<div style=""width: 38.7%;text-align:right;"">
+                              <div style=""display:inline-block;position:relative;color:transparent;"">Birthday:
+                                  <div style=""position:absolute;top:0;left:0;right:-12.6vw;height:auto;color:black;text-align:left;padding-right:20px;"">
+                                  " & Office365Users.UserProfileV2(SelectedUser).aboutMe & "
+                                  </div>
+                              </div>
+                          </div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =10.5
+                        Visible: =false
+                        Width: =395
+                        X: =BirthdayTextLabel_1.X
+                        Y: =BirthdayTextLabel_1.Y + BirthdayTextLabel_1.Height + 3
+                  - SeeLessArrow_1:
+                      Control: Classic/Icon@2.5.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =SeeLessArrow_1.Fill
+                        FocusedBorderColor: =SeeLessArrow_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =17
+                        HoverBorderColor: =ColorFade(SeeLessArrow_1.BorderColor, 20%)
+                        HoverColor: =ColorFade(SeeLessArrow_1.Color, 20%)
+                        HoverFill: =SeeLessArrow_1.Fill
+                        Icon: =Icon.ChevronUp
+                        OnSelect: =Set(ShowLess,false)
+                        PressedBorderColor: =ColorFade(SeeLessArrow_1.BorderColor, -20%)
+                        PressedColor: =ColorFade(SeeLessArrow_1.Color, -20%)
+                        PressedFill: =SeeLessArrow_1.Fill
+                        Visible: =ShowLess
+                        Width: =17
+                        X: =SeeLessLabel_1.X + SeeLessLabel_1.Width + 10
+                        Y: =FrequentContacts_1.Y+FrequentContacts_1.Height + 5
+                  - SeeLessLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =SeeLessLabel_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =19
+                        HoverBorderColor: =SeeLessLabel_1.BorderColor
+                        HoverColor: =SeeLessLabel_1.Color
+                        HoverFill: =SeeLessLabel_1.Fill
+                        OnSelect: =Set(ShowLess,false)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =SeeLessLabel_1.BorderColor
+                        PressedColor: =SeeLessLabel_1.Color
+                        PressedFill: =SeeLessLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="See less"
+                        Visible: =ShowLess
+                        Width: =54
+                        X: =1129
+                        Y: =FrequentContacts_1.Y+FrequentContacts_1.Height + 5
+                  - SeeMoreLabel_1:
+                      Control: Label@2.5.1
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =SeeMoreLabel_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =17
+                        HoverBorderColor: =SeeMoreLabel_1.BorderColor
+                        HoverColor: =SeeMoreLabel_1.Color
+                        HoverFill: =SeeMoreLabel_1.Fill
+                        OnSelect: =Set(ShowLess,true)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =SeeMoreLabel_1.BorderColor
+                        PressedColor: =SeeMoreLabel_1.Color
+                        PressedFill: =SeeMoreLabel_1.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="See more"
+                        Visible: =Not(ShowLess)
+                        Width: =200
+                        X: =993
+                        Y: =FrequentContacts_1.Y+FrequentContacts_1.Height + 5
+                  - SeeMoreArrow_1:
+                      Control: Classic/Icon@2.5.0
+                      Group: UserInfoGroup_1
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =SeeMoreArrow_1.Fill
+                        FocusedBorderColor: =SeeMoreArrow_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =17
+                        HoverBorderColor: =ColorFade(SeeMoreArrow_1.BorderColor, 20%)
+                        HoverColor: =ColorFade(SeeMoreArrow_1.Color, 20%)
+                        HoverFill: =SeeMoreArrow_1.Fill
+                        Icon: =Icon.ChevronDown
+                        OnSelect: =Set(ShowLess,true)
+                        PressedBorderColor: =ColorFade(SeeMoreArrow_1.BorderColor, -20%)
+                        PressedColor: =ColorFade(SeeMoreArrow_1.Color, -20%)
+                        PressedFill: =SeeMoreArrow_1.Fill
+                        Visible: =Not(ShowLess)
+                        Width: =17
+                        X: =SeeLessLabel_1.X + SeeLessLabel_1.Width + 10
+                        Y: =FrequentContacts_1.Y+FrequentContacts_1.Height + 5
+                  - Label6:
+                      Control: Label@2.5.1
+                      Properties:
+                        AutoHeight: =true
+                        FocusedBorderColor: =Label6.BorderColor
+                        Height: =14
+                        HoverBorderColor: =Label6.BorderColor
+                        HoverColor: =Label6.Color
+                        HoverFill: =Label6.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =75
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label6.BorderColor
+                        PressedColor: =Label6.Color
+                        PressedFill: =Label6.Fill
+                        Size: =10.5
+                        Text: =PlainText(Office365Users.UserProfileV2(SelectedUser).aboutMe)
+                        Width: =322
+                        X: =971
+                        Y: =BirthdayDataLabel_1.Y + 30
+                  - TeamAboutMeLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Right
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =TeamAboutMeLabel.BorderColor
+                        Height: =19
+                        HoverBorderColor: =TeamAboutMeLabel.BorderColor
+                        HoverColor: =TeamAboutMeLabel.Color
+                        HoverFill: =TeamAboutMeLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =TeamAboutMeLabel.BorderColor
+                        PressedColor: =TeamAboutMeLabel.Color
+                        PressedFill: =TeamAboutMeLabel.Fill
+                        Size: |+
+                          =10.5
+                        Text: ="About:"
+                        Visible: =false
+                        Width: =124
+                        Wrap: =false
+                        X: =971
+                        Y: =BirthdayTextLabel_1.Y + BirthdayTextLabel_1.Height + 3
+                  - TeamEnd:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =TeamEnd.Fill
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =TeamEnd.BorderColor
+                        Height: =1
+                        HoverFill: =TeamEnd.Fill
+                        PressedFill: =TeamEnd.Fill
+                        Width: =Parent.Width
+                        Y: =Max(MyReports_1.Y + MyReports_1.Height, Label6.Y + Label6.Height + 30)

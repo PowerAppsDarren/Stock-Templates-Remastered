@@ -1,0 +1,50 @@
+{
+  "37a5ec9e-a1ba-27e5-3d4e-73ffa46c2543": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Outlook Tasks",
+      "iconUri": "https://connectoricons-prod.azureedge.net/outlooktasks/icon_1.0.1306.1889.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_outlooktasks",
+      "parameterHints": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "OutlookTasks"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "37a5ec9e-a1ba-27e5-3d4e-73ffa46c2543"
+  },
+  "9de17116-98f2-8e4f-f89b-97730c16f0d5": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Outlook",
+      "iconUri": "https://connectoricons-prod.azureedge.net/office365/icon_1.0.1324.1936.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365",
+      "parameterHints": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "9de17116-98f2-8e4f-f89b-97730c16f0d5"
+  },
+  "f537feec-0c98-5a55-7e93-32b7072534ed": {
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/office365users/icon_1.0.1309.1901.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "f537feec-0c98-5a55-7e93-32b7072534ed"
+  }
+}

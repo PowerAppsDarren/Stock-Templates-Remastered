@@ -1,0 +1,106 @@
+CollectionsVariables As screen:
+    Height: =Max(App.Height, App.DesignHeight)
+    Orientation: =If(CollectionsVariables.Width < CollectionsVariables.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= CollectionsVariables.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    Label4 As label:
+        Align: =LayoutAlignItems.Center
+        Fill: =RGBA(240, 240, 240, 1)
+        FocusedBorderColor: =Label4.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        HoverBorderColor: =Label4.BorderColor
+        HoverColor: =Label4.Color
+        HoverFill: =Label4.Fill
+        PressedBorderColor: =Label4.BorderColor
+        PressedColor: =Label4.Color
+        PressedFill: =Label4.Fill
+        Size: =28
+        Text: ="Collections"
+        Width: =Parent.Width/2 - 20
+        ZIndex: =1
+
+    Label4_1 As label:
+        Align: =LayoutAlignItems.Center
+        Fill: =RGBA(240, 240, 240, 1)
+        FocusedBorderColor: =Label4_1.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =70
+        HoverBorderColor: =Label4_1.BorderColor
+        HoverColor: =Label4_1.Color
+        HoverFill: =Label4_1.Fill
+        PressedBorderColor: =Label4_1.BorderColor
+        PressedColor: =Label4_1.Color
+        PressedFill: =Label4_1.Fill
+        Size: =28
+        Text: ="Variables"
+        Width: =Parent.Width/2 - 20
+        X: =703
+        ZIndex: =2
+
+    HtmlText1 As htmlViewer:
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =698
+        HoverBorderColor: =HtmlText1.BorderColor
+        HtmlText: |-
+            ="<p><strong>Times - </strong>List of all possible times in half hour chunks from 12:00 AM to 11:30 PM. Also stores each time's minutes from midnight to use in calculating meeting durations</p>" &
+            "<p><strong>AllRooms - </strong>List of all available room aliases in your tenant. If tenant has a rooms list, this is all rooms in that list. Max of 20 collected / API call.</p>" &
+            "<p><strong>AvailableRooms - </strong>Unprocessed and complex list of the available rooms. For more information on this structure visit: <a href=""https://developer.microsoft.com/en-us/graph/docs/api-reference/beta/api/user_findmeetingtimes"">MS Graph documentation</a></p>" &
+            "<p><strong>AvailableRoomsSorted - </strong>One nesting deep into AvailableRooms. If AvailableRooms returns more than one suggestion, sorts these by confidence level (how many rooms are available)</p>" &
+            "<p><strong>AvailableRoomsConcat - </strong>All the available rooms for a booking time concatenated into one string of emails</p>" &
+            "<p><strong>AvailableRoomEmails - </strong>List of available rooms for booking time by their email address</p>" &
+            "<p><strong>AvailableRoomEmailName - </strong>List of available rooms for booking time by their email address & name</p>" &
+            "<p><strong>Durations - </strong>List of meeting durations (text) users can instantly click on and their corresponding minute count (number)</p>" &
+            "<p><strong>LastDaysOfMonths - </strong>List of the last day of each month (not accounting leap years)</p>" &
+            "<p><strong>FutureCalendarEvents - </strong>List of the user's future calendar events for the day selected</p>" &
+            "<p><strong>RoomsLists - </strong>List of the RoomsList aliases in a user's tenant (this could be empty)</p>" &
+            "<p><strong>RequiredAttendeesNoRoom - </strong>List of required attendees for a meeting, not including the room. Used for properly removing a room for a selected meeting and adding another</p>"
+        PressedBorderColor: =HtmlText1.BorderColor
+        Size: =16
+        Width: =663
+        Y: =70
+        ZIndex: =3
+
+    HtmlText1_1 As htmlViewer:
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =698
+        HoverBorderColor: =HtmlText1_1.BorderColor
+        HtmlText: |-
+            ="<p><strong>NoRoomsList - </strong>Boolean. Whether a user's tenant has rooms lists</p>" &
+            "<p><strong>MyCalendar - </strong>Text. The signed in user's calendar ID.</p>" &
+            "<p><strong>MyName - </strong>Text. The signed in user's O365 account DisplayName. (This may be different from the User().Name value)</p>" &
+            "<p><strong>DateSelected - </strong>DateTime. The date the user has selected for their booking. Defaults to today on app load.</p>" &
+            "<p><strong>AvailableRoomsCounter - </strong>Number. If not using a rooms list and tenant has more than 20 rooms (the max the API returns in a call), this counter keeps track of how many sets of 20 have been collected.</p>" &
+            "<p><strong>BookForMeeting - </strong>Boolean. Whether a user is on the 'Book For Meeting' flow or not. Visibility of certain controls determined by this value</p>" &
+            "<p><strong>StartDateTime - </strong>DateTime. The start date of the booking</p>" &
+            "<p><strong>EndDateTime - </strong>DateTime. The end date of the booking. Note: This app only allows bookings of 8 hours or less, but in any time frame, so start/end dates may be different</p>" &
+            "<p><strong>StartDateTimeUTC - </strong>Text. The start date of the booking adhering to ISO8601 format. Necessary for connector call.</p>" &
+            "<p><strong>EndDateTimeUTC - </strong>Text. The end date of the booking adhering to ISO8601 format. Necessary for connector call.</p>" &
+            "<p><strong>StartTimeMinutes - </strong>Number. The minutes from midnight of the start date the start time is.</p>" &
+            "<p><strong>EndTimeMinutes - </strong>Number. The minutes from midnight of the start date the end time is.</p>" &
+            "<p><strong>CalendarFromSelectMeeting - </strong>Boolean. Whether the user arrived at the calendar screen from the 'Select Meeting' screen or not.</p>" &
+            "<p><strong>ChosenMeeting - </strong>Record. The currently selected meeting</p>" &
+            "<p><strong>ShowCalendar - </strong>Boolean. Whether calendar should be viewable</p>" &
+            "<p><strong>ChosenTime - </strong>Boolean. Whether time picker should be viewable</p>" &
+            "<p><strong>OnlineMeeting - </strong>Boolean. Whether the scheduled booking is an online booking or not.</p>" &
+            "<p><strong>SkypeMeeting - </strong>Record. Relevant info about the set up Skype call</p>" &
+            "<p><strong>DurationSelection - </strong>Record. The selected duration of the meeting the user chose from the AdjustTimeScreen. A row in the Durations Collection.</p>" &
+            "<p><strong>UserChosenStart - </strong>Record. The selected start time of the meeting the user chose from the AdjustTimeScreen. A row in the Times Collection</p>" &
+            "<p><strong>ResetTrue - </strong>Context. Boolean. Whether the user selected the reset button on the AdjustTimeScreen.</p>" &
+            "<p><strong>firstDayOfMonth - </strong>DateTime. The first day of the month currently visible in the calendar screen.</p>" &
+            "<p><strong>firstDayInView - </strong>DateTime. The first day in view on the calendar screen. May not be the first day of the month currently visible.</p>" &
+            "<p><strong>LastDayOfMonth - </strong>Context. DateTime. The last day of the month currently visible in the calendar screen.</p>" &
+            "<p><strong>ResetDateStore - </strong>Context. DateTime. Placeholder to recall the date the user had previously selected if they press 'Reset' on the DateAdjustScreen</p>" &
+            "<p><strong>ResetFirstDayOfMonth - </strong>DateTime. Placeholder to recall the first day of the month of the month associated to ResetDateStore if they press 'Reset' on the DateAdjustScreen</p>" &
+            "<p><strong>RequiredAttendeesFinal - </strong>Text. A string of emails of attendees required to attend a meeting. Used as part of the operation to successfully swap out rooms for a meeting with a room already booked</p>" &
+            "<p><strong>RequiredAttendeesTrue - </strong>Text. A string of emails of attendees required to attend a meeting. This string is used to create / update the meeting from the app</p>" &
+            "<p><strong>ShowWarning - </strong>Boolean. Whether the warning message about changing the date / time of a meeting should be shown</p>" &
+            "<p><strong>NavTo - </strong>Text. Which screen, date or time, clicking ""Yes, continue"" on the warning message the user will be navigated to</p>"
+        PressedBorderColor: =HtmlText1_1.BorderColor
+        Size: =16
+        Width: =663
+        X: =703
+        Y: =70
+        ZIndex: =4
+

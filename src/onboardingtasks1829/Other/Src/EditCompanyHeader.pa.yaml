@@ -1,0 +1,473 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  EditCompanyHeader:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |-
+        =Clear(Indexes);
+        Clear(DataToCompanyLink);
+        ForAll(CompanyLinks,
+            Collect(Indexes, { Value: If(And(CountRows(Indexes) > 0, Not(IsBlank(Indexes))), Last(Indexes).Value + 1, 1) });
+            Collect(DataToCompanyLink, { Index: Last(Indexes).Value, Name:Name,URL:URL,Valid:And(Not(Or(IsBlank(Name),IsBlank(URL))),IsMatch(URL,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))})
+        )
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - EditCompanyHeaderLayer:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height
+            Width: =Parent.Width
+          Children:
+            - EditCompanyHeaderSection:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =EditCompanyHeaderAddLinkButton.Y + EditCompanyHeaderAddLinkButton.Height + 70
+                  Width: =Parent.Width
+                Children:
+                  - EditCompanyHeaderNameLabel:
+                      Control: Label@2.5.1
+                      Group: EditCompanyHeaderName
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditCompanyHeaderNameLabel.BorderColor
+                        Height: =19
+                        HoverBorderColor: =EditCompanyHeaderNameLabel.BorderColor
+                        HoverColor: =EditCompanyHeaderNameLabel.Color
+                        HoverFill: =EditCompanyHeaderNameLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditCompanyHeaderNameLabel.BorderColor
+                        PressedColor: =EditCompanyHeaderNameLabel.Color
+                        PressedFill: =EditCompanyHeaderNameLabel.Fill
+                        Size: |+
+                          =10.5
+
+                        Text: ="Company name"
+                        Width: =900
+                        X: =236
+                        Y: =245
+                  - EditCompanyHeaderNameInput:
+                      Control: Classic/TextInput@2.3.2
+                      Group: EditCompanyHeaderName
+                      Properties:
+                        BorderColor: =RGBA(202, 202, 202, 1)
+                        BorderThickness: =1
+                        Default: =First(Company).Name
+                        FocusedBorderColor: =EditCompanyHeaderNameInput.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        PaddingBottom: =0
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =0
+                        PressedBorderColor: =EditCompanyHeaderNameInput.HoverBorderColor
+                        PressedColor: =EditCompanyHeaderNameInput.Color
+                        PressedFill: =EditCompanyHeaderNameInput.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =13.5
+                        TabIndex: =1
+                        Width: =893
+                        X: =236
+                        Y: =273
+                  - EditCompanyHeaderTitle:
+                      Control: Label@2.5.1
+                      Group: EditCompanyHeaderArea
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditCompanyHeaderTitle.BorderColor
+                        Height: =50
+                        HoverBorderColor: =EditCompanyHeaderTitle.BorderColor
+                        HoverColor: =EditCompanyHeaderTitle.Color
+                        HoverFill: =EditCompanyHeaderTitle.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditCompanyHeaderTitle.BorderColor
+                        PressedColor: =EditCompanyHeaderTitle.Color
+                        PressedFill: =EditCompanyHeaderTitle.Fill
+                        Size: |+
+                          =27
+                        Text: ="Edit Company header"
+                        Width: =900
+                        X: =236
+                        Y: =120
+                  - EditCompanyHeaderSubtitle:
+                      Control: Label@2.5.1
+                      Group: EditCompanyHeaderArea
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditCompanyHeaderSubtitle.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =30
+                        HoverBorderColor: =EditCompanyHeaderSubtitle.BorderColor
+                        HoverColor: =EditCompanyHeaderSubtitle.Color
+                        HoverFill: =EditCompanyHeaderSubtitle.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditCompanyHeaderSubtitle.BorderColor
+                        PressedColor: =EditCompanyHeaderSubtitle.Color
+                        PressedFill: =EditCompanyHeaderSubtitle.Fill
+                        Size: =13.5
+                        Text: ="Add company name and important company links."
+                        Width: =900
+                        X: =236
+                        Y: =170
+                  - EditCompanyHeaderClose:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        DisabledFill: =EditCompanyHeaderClose.Fill
+                        FocusedBorderColor: =EditCompanyHeaderClose.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =34
+                        HoverBorderColor: =ColorFade(EditCompanyHeaderClose.BorderColor, 20%)
+                        HoverColor: =ColorFade(EditCompanyHeaderClose.Color, 20%)
+                        HoverFill: =EditCompanyHeaderClose.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Navigate(CompanyScreen,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(EditCompanyHeaderClose.BorderColor, -20%)
+                        PressedColor: =ColorFade(EditCompanyHeaderClose.Color, -20%)
+                        PressedFill: =EditCompanyHeaderClose.Fill
+                        Width: =34
+                        X: =1302
+                        Y: =30
+                  - EditCompanyHeaderSeperator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =EditCompanyHeaderSeperator.Fill
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =EditCompanyHeaderSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =3
+                        HoverFill: =EditCompanyHeaderSeperator.Fill
+                        PressedFill: =EditCompanyHeaderSeperator.Fill
+                        Width: =1059
+                        X: =154
+                        Y: =340
+                  - EditCompanyHeaderLinkLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditCompanyHeaderLinkLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =22
+                        HoverBorderColor: =EditCompanyHeaderLinkLabel.BorderColor
+                        HoverColor: =EditCompanyHeaderLinkLabel.Color
+                        HoverFill: =EditCompanyHeaderLinkLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditCompanyHeaderLinkLabel.BorderColor
+                        PressedColor: =EditCompanyHeaderLinkLabel.Color
+                        PressedFill: =EditCompanyHeaderLinkLabel.Fill
+                        Size: =13.5
+                        Text: ="Company links"
+                        Width: =900
+                        X: =236
+                        Y: =363
+                  - EditCompanyHeaderLinkGallery:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =CountRows(DataToCompanyLink) * EditCompanyHeaderLinkGallery.TemplateHeight
+                        Items: =Indexes
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =EditCompanyHeaderLinkGallery.BorderColor
+                        TemplateSize: =109
+                        Width: =960
+                        X: =236
+                        Y: =390
+                      Children:
+                        - EditCompanyHeaderLinkSeperator:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =EditCompanyHeaderLinkSeperator.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =EditCompanyHeaderLinkSeperator.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =EditCompanyHeaderLinkSeperator.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =EditCompanyHeaderLinkSeperator.Fill
+                              Width: =893
+                              Y: =Parent.TemplateHeight - EditCompanyHeaderLinkSeperator.Height
+                        - EditCompanyHeaderLinkNameLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =EditCompanyHeaderLinkNameLabel.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EditCompanyHeaderLinkNameLabel.BorderColor
+                              HoverColor: =EditCompanyHeaderLinkNameLabel.Color
+                              HoverFill: =EditCompanyHeaderLinkNameLabel.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditCompanyHeaderLinkNameLabel.BorderColor
+                              PressedColor: =EditCompanyHeaderLinkNameLabel.Color
+                              PressedFill: =EditCompanyHeaderLinkNameLabel.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="Company link name"
+                              Width: =400
+                              X: =1
+                              Y: =15
+                        - EditCompanyHeaderLinkUrlLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =EditCompanyHeaderLinkUrlLabel.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EditCompanyHeaderLinkUrlLabel.BorderColor
+                              HoverColor: =EditCompanyHeaderLinkUrlLabel.Color
+                              HoverFill: =EditCompanyHeaderLinkUrlLabel.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditCompanyHeaderLinkUrlLabel.BorderColor
+                              PressedColor: =EditCompanyHeaderLinkUrlLabel.Color
+                              PressedFill: =EditCompanyHeaderLinkUrlLabel.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="Link url"
+                              Width: =400
+                              X: =436
+                              Y: =15
+                        - EditCompanyHeaderLinkNameInput:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =If(IsBlank(EditCompanyHeaderLinkNameInput.Text),RGBA(255, 0, 0, 1),RGBA(202, 202, 202, 1))
+                              BorderThickness: =1
+                              Default: =LookUp(DataToCompanyLink,Index = ThisItem.Value).Name
+                              FocusedBorderColor: =EditCompanyHeaderLinkNameInput.BorderColor
+                              FocusedBorderThickness: =1
+                              Height: =44
+                              OnChange: =Patch(DataToCompanyLink,LookUp(DataToCompanyLink,Index = ThisItem.Value),{Name:EditCompanyHeaderLinkNameInput.Text,Valid:And(Not(IsBlank(EditCompanyHeaderLinkNameInput.Text)) && Not(IsBlank(EditCompanyHeaderLinkUrlInput.Text)),IsMatch(EditCompanyHeaderLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))})
+                              PaddingBottom: =0
+                              PaddingLeft: =15
+                              PaddingRight: =15
+                              PaddingTop: =0
+                              PressedBorderColor: =EditCompanyHeaderLinkNameInput.HoverBorderColor
+                              PressedColor: =EditCompanyHeaderLinkNameInput.Color
+                              PressedFill: =EditCompanyHeaderLinkNameInput.Fill
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =13.5
+                              TabIndex: =ThisItem.Value * 2
+                              Width: =415
+                              X: =1
+                              Y: =43
+                        - EditCompanyHeaderLinkUrlInput:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =If(IsBlank(EditCompanyHeaderLinkUrlInput.Text),RGBA(255, 0, 0, 1),RGBA(202, 202, 202, 1))
+                              BorderThickness: =1
+                              Default: =LookUp(DataToCompanyLink,Index = ThisItem.Value).URL
+                              FocusedBorderColor: =EditCompanyHeaderLinkUrlInput.BorderColor
+                              FocusedBorderThickness: =1
+                              Height: =44
+                              OnChange: =Patch(DataToCompanyLink,LookUp(DataToCompanyLink,Index = ThisItem.Value),{URL:EditCompanyHeaderLinkUrlInput.Text,Valid:And(Not(IsBlank(EditCompanyHeaderLinkNameInput.Text)) && Not(IsBlank(EditCompanyHeaderLinkUrlInput.Text)),IsMatch(EditCompanyHeaderLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))})
+                              PaddingBottom: =0
+                              PaddingLeft: =15
+                              PaddingRight: =15
+                              PaddingTop: =0
+                              PressedBorderColor: =EditCompanyHeaderLinkUrlInput.HoverBorderColor
+                              PressedColor: =EditCompanyHeaderLinkUrlInput.Color
+                              PressedFill: =EditCompanyHeaderLinkUrlInput.Fill
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =13.5
+                              TabIndex: =ThisItem.Value * 2 + 1
+                              Width: =415
+                              X: =434
+                              Y: =43
+                        - EditCompanyHeaderLinkClose:
+                            Control: Circle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(26, 26, 84, 1)
+                              BorderThickness: =2
+                              DisabledFill: =EditCompanyHeaderLinkClose.Fill
+                              Fill: =RGBA(0, 0, 0, 0)
+                              FocusedBorderColor: =EditCompanyHeaderLinkClose.BorderColor
+                              Height: =24
+                              HoverFill: =EditCompanyHeaderLinkClose.Fill
+                              PressedFill: =EditCompanyHeaderLinkClose.Fill
+                              Width: =24
+                              X: =870
+                              Y: =53
+                        - EditCompanyHeaderLinkCloseLogo:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              DisabledFill: =EditCompanyHeaderLinkCloseLogo.Fill
+                              FocusedBorderColor: =EditCompanyHeaderLinkCloseLogo.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =48
+                              HoverBorderColor: =ColorFade(EditCompanyHeaderLinkCloseLogo.BorderColor, 20%)
+                              HoverColor: =ColorFade(EditCompanyHeaderLinkCloseLogo.Color, 20%)
+                              HoverFill: =EditCompanyHeaderLinkCloseLogo.Fill
+                              Icon: =Icon.Cancel
+                              OnSelect: |-
+                                =RemoveIf(DataToCompanyLink,Index = ThisItem.Value);
+                                Remove(Indexes,ThisItem)
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PressedBorderColor: =ColorFade(EditCompanyHeaderLinkCloseLogo.BorderColor, -20%)
+                              PressedColor: =ColorFade(EditCompanyHeaderLinkCloseLogo.Color, -20%)
+                              PressedFill: =EditCompanyHeaderLinkCloseLogo.Fill
+                              Width: =48
+                              X: =EditCompanyHeaderLinkClose.X - 12
+                              Y: =EditCompanyHeaderLinkClose.Y - 12
+                        - EditCompanyHeaderErrorMessage:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(208, 2, 27, 0.95)
+                              FocusedBorderColor: =EditCompanyHeaderErrorMessage.BorderColor
+                              Height: =38
+                              HoverBorderColor: =EditCompanyHeaderErrorMessage.BorderColor
+                              HoverColor: =EditCompanyHeaderErrorMessage.Color
+                              HoverFill: =EditCompanyHeaderErrorMessage.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditCompanyHeaderErrorMessage.BorderColor
+                              PressedColor: =EditCompanyHeaderErrorMessage.Color
+                              PressedFill: =EditCompanyHeaderErrorMessage.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="(Company link must be a valid URL with the http:// or https:// prefix.)"
+                              Visible: =Not(IsBlank(EditCompanyHeaderLinkUrlInput.Text) || IsMatch(EditCompanyHeaderLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))
+                              Width: =450
+                              X: =488
+                              Y: =5
+                  - EditCompanyHeaderAddLinkButton:
+                      Control: Classic/Button@2.2.0
+                      Group: EditCompanyHeaderAddLink
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(EditCompanyHeaderAddLinkButton.BorderColor, 70%)
+                        DisplayMode: =If(false in DataToCompanyLink.Valid,DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =EditCompanyHeaderAddLinkButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        HoverBorderColor: =ColorFade(EditCompanyHeaderAddLinkButton.BorderColor, 20%)
+                        HoverColor: =EditCompanyHeaderAddLinkButton.Color
+                        HoverFill: =ColorFade(EditCompanyHeaderAddLinkButton.Fill, 20%)
+                        OnSelect: |-
+                          =Collect(Indexes, { Value: Max(Indexes, Value) + 1 });
+                          Collect(DataToCompanyLink,{Index: Last(Indexes).Value, Name:Blank(),URL:Blank(),Valid:false})
+                        PaddingBottom: =0
+                        PaddingLeft: =32
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditCompanyHeaderAddLinkButton.Fill
+                        PressedColor: =EditCompanyHeaderAddLinkButton.Fill
+                        PressedFill: =EditCompanyHeaderAddLinkButton.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =12
+                        Text: ="Add link"
+                        Width: =131
+                        X: =236
+                        Y: =EditCompanyHeaderLinkGallery.Y + EditCompanyHeaderLinkGallery.Height + 8
+                  - EditCompanyHeaderAddLinkLogo:
+                      Control: Classic/Icon@2.5.0
+                      Group: EditCompanyHeaderAddLink
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =EditCompanyHeaderAddLinkLogo.Fill
+                        DisplayMode: =EditCompanyHeaderAddLinkButton.DisplayMode
+                        FocusedBorderColor: =EditCompanyHeaderAddLinkLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =24
+                        HoverBorderColor: =ColorFade(EditCompanyHeaderAddLinkLogo.BorderColor, 20%)
+                        HoverColor: =ColorFade(EditCompanyHeaderAddLinkLogo.Color, 20%)
+                        HoverFill: =EditCompanyHeaderAddLinkLogo.Fill
+                        Icon: =Icon.Add
+                        OnSelect: =Select(EditCompanyHeaderAddLinkButton)
+                        PressedBorderColor: =ColorFade(EditCompanyHeaderAddLinkLogo.BorderColor, -20%)
+                        PressedColor: =ColorFade(EditCompanyHeaderAddLinkLogo.Color, -20%)
+                        PressedFill: =EditCompanyHeaderAddLinkLogo.Fill
+                        Width: =24
+                        X: =249
+                        Y: =EditCompanyHeaderAddLinkButton.Y + 10
+                  - EditCompanyHeaderMask:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =EditCompanyHeaderMask.Fill
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =EditCompanyHeaderMask.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =10
+                        HoverFill: =EditCompanyHeaderMask.Fill
+                        PressedFill: =EditCompanyHeaderMask.Fill
+                        Width: =900
+                        X: =230
+                        Y: =EditCompanyHeaderLinkGallery.Y + EditCompanyHeaderLinkGallery.Height - 5
+                  - EditCompanyHeaderSave:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(EditCompanyHeaderSave.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(EditCompanyHeaderSave.BorderColor, 70%)
+                        DisplayMode: =If(Or(IsBlank(EditCompanyHeaderNameInput.Text),Not(IsBlank(LookUp(DataToCompanyLink,Not(Valid))))), DisplayMode.Disabled, DisplayMode.Edit)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =EditCompanyHeaderSave.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        HoverBorderColor: =ColorFade(EditCompanyHeaderSave.BorderColor, 20%)
+                        HoverColor: =EditCompanyHeaderSave.Color
+                        HoverFill: =ColorFade(EditCompanyHeaderSave.Fill, 20%)
+                        OnSelect: |-
+                          =Patch(Company,First(Company),{Name:EditCompanyHeaderNameInput.Text});
+                          RemoveIf(CompanyLinks,true);
+                          ForAll(DataToCompanyLink, Patch(CompanyLinks, Defaults(CompanyLinks), {Name: Name, URL: URL}));
+                          Navigate(CompanyScreen,BorderStyle.None)
+                        PressedBorderColor: =EditCompanyHeaderSave.Fill
+                        PressedColor: =EditCompanyHeaderSave.Fill
+                        PressedFill: =EditCompanyHeaderSave.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Save"
+                        Width: =85
+                        X: =387
+                        Y: =EditCompanyHeaderAddLinkButton.Y

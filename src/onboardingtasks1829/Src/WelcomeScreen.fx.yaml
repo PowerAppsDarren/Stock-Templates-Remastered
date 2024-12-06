@@ -1,0 +1,208 @@
+WelcomeScreen As screen:
+    Height: =Max(App.Height, App.DesignHeight)
+    OnVisible: |-
+        =ClearCollect(TeamMemberImages,ForAll(MyManagerList,{Image:If(IsBlank(Photo),'default-profile-icon',Photo)}));
+        Collect(TeamMemberImages,ForAll(MyPeersList,{Image:If(IsBlank(Photo),'default-profile-icon',Photo)}));
+        Collect(TeamMemberImages,ForAll(MyReportList,{Image:If(IsBlank(Photo),'default-profile-icon',Photo)}))
+    Orientation: =If(WelcomeScreen.Width < WelcomeScreen.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= WelcomeScreen.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    WelcomeBackground As rectangle:
+        DisabledFill: =WelcomeBackground.Fill
+        Fill: =RGBA(237, 240, 245, 1)
+        FocusedBorderColor: =WelcomeBackground.BorderColor
+        Height: =664
+        HoverFill: =WelcomeBackground.Fill
+        PressedFill: =WelcomeBackground.Fill
+        Width: =1366
+        Y: =104
+        ZIndex: =1
+
+    WelcomeDetailsBackground As button:
+        BorderColor: =RGBA(221, 224, 227, 1)
+        DisabledBorderColor: =WelcomeDetailsBackground.BorderColor
+        DisabledFill: =WelcomeDetailsBackground.Fill
+        DisplayMode: =DisplayMode.Disabled
+        Fill: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =WelcomeDetailsBackground.BorderColor
+        FocusedBorderThickness: =2
+        Height: =515
+        HoverBorderColor: =ColorFade(WelcomeDetailsBackground.BorderColor, 20%)
+        HoverColor: =WelcomeDetailsBackground.Color
+        HoverFill: =ColorFade(WelcomeDetailsBackground.Fill, 20%)
+        PressedBorderColor: =WelcomeDetailsBackground.Fill
+        PressedColor: =WelcomeDetailsBackground.Fill
+        PressedFill: =WelcomeDetailsBackground.Color
+        RadiusBottomLeft: =4
+        RadiusBottomRight: =4
+        RadiusTopLeft: =4
+        RadiusTopRight: =4
+        Text: =""
+        Width: =829
+        X: =270
+        Y: =179
+        ZIndex: =2
+
+    WelcomeGetStart As button:
+        BorderColor: =ColorFade(WelcomeGetStart.Fill, -15%)
+        BorderThickness: =0
+        Color: =RGBA(255, 255, 255, 1)
+        DisabledBorderColor: =ColorFade(WelcomeGetStart.BorderColor, 70%)
+        Fill: =RGBA(26, 26, 84, 1)
+        FocusedBorderColor: =WelcomeGetStart.BorderColor
+        FocusedBorderThickness: =0
+        FontWeight: =FontWeight.Normal
+        Height: =50
+        HoverBorderColor: =ColorFade(WelcomeGetStart.BorderColor, 20%)
+        HoverColor: =WelcomeGetStart.Color
+        HoverFill: =ColorFade(WelcomeGetStart.Fill, 20%)
+        OnSelect: =Navigate(MyProfileScreen,BorderStyle.None)
+        PaddingBottom: =0
+        PaddingLeft: =0
+        PaddingRight: =0
+        PaddingTop: =0
+        PressedBorderColor: =WelcomeGetStart.Fill
+        PressedColor: =WelcomeGetStart.Fill
+        PressedFill: =WelcomeGetStart.Color
+        RadiusBottomLeft: =4
+        RadiusBottomRight: =4
+        RadiusTopLeft: =4
+        RadiusTopRight: =4
+        Text: ="Get started"
+        Width: =210
+        X: =580
+        Y: =593
+        ZIndex: =3
+
+    WelcomeBottomSeperator As rectangle:
+        DisabledFill: =WelcomeBottomSeperator.Fill
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(221, 224, 227, 1)
+        FocusedBorderColor: =WelcomeBottomSeperator.BorderColor
+        FocusedBorderThickness: =0
+        Height: =1
+        HoverFill: =WelcomeBottomSeperator.Fill
+        PressedFill: =WelcomeBottomSeperator.Fill
+        Width: =661
+        X: =360
+        Y: =545
+        ZIndex: =4
+
+    "WelcomeTeamMembers As gallery.'BrowseLayout_Horizontal_TwoTextOneImageVariant_ver4.0'":
+        '#CopilotOverlayLabel': ="Filtered"
+        DisabledBorderColor: =WelcomeTeamMembers.BorderColor
+        DisabledFill: =WelcomeTeamMembers.Fill
+        Height: =57
+        HoverBorderColor: =WelcomeTeamMembers.BorderColor
+        HoverFill: =WelcomeTeamMembers.Fill
+        Items: =TeamMemberImages
+        LoadingSpinnerColor: =WelcomeTeamMembers.BorderColor
+        PressedBorderColor: =WelcomeTeamMembers.BorderColor
+        PressedFill: =WelcomeTeamMembers.Fill
+        ShowScrollbar: =false
+        TemplatePadding: =0
+        TemplateSize: =67
+        Width: =WelcomeDetailsBackground.Width - 357
+        X: =456
+        Y: =330
+        ZIndex: =5
+
+        WelcomeTeamMemberImage As image:
+            ApplyEXIFOrientation: =false
+            DisplayMode: =DisplayMode.View
+            FocusedBorderColor: =WelcomeTeamMemberImage.BorderColor
+            FocusedBorderThickness: =0
+            Height: =57
+            HoverBorderColor: =ColorFade(WelcomeTeamMemberImage.BorderColor, 20%)
+            HoverFill: =ColorFade(WelcomeTeamMemberImage.Fill, 20%)
+            Image: =ThisItem.Image
+            ImagePosition: =LayoutAlignItems.Stretch
+            OnSelect: =Select(Parent)
+            PressedBorderColor: =ColorFade(WelcomeTeamMemberImage.BorderColor, -20%)
+            PressedFill: =ColorFade(WelcomeTeamMemberImage.Fill, -20%)
+            TabIndex: =0
+            Width: =WelcomeTeamMemberImage.Height
+            ZIndex: =1
+
+    WelcomeLogoSeperator As rectangle:
+        DisabledFill: =WelcomeLogoSeperator.Fill
+        DisplayMode: =DisplayMode.View
+        Fill: =RGBA(221, 224, 227, 1)
+        FocusedBorderColor: =WelcomeLogoSeperator.BorderColor
+        FocusedBorderThickness: =0
+        Height: =1
+        HoverFill: =WelcomeLogoSeperator.Fill
+        PressedFill: =WelcomeLogoSeperator.Fill
+        Width: =661
+        X: =360
+        Y: =297
+        ZIndex: =6
+
+    WelcomeCompanyLogo As image:
+        ApplyEXIFOrientation: =false
+        FocusedBorderColor: =WelcomeCompanyLogo.BorderColor
+        Height: =21
+        HoverBorderColor: =ColorFade(WelcomeCompanyLogo.BorderColor, 20%)
+        HoverFill: =ColorFade(WelcomeCompanyLogo.Fill, 20%)
+        Image: ='company-logo'
+        PressedBorderColor: =ColorFade(WelcomeCompanyLogo.BorderColor, -20%)
+        PressedFill: =ColorFade(WelcomeCompanyLogo.Fill, -20%)
+        Width: =193
+        X: =588
+        Y: =231
+        ZIndex: =7
+
+    WelcomeLogo As image:
+        ApplyEXIFOrientation: =false
+        DisplayMode: =DisplayMode.View
+        FocusedBorderColor: =WelcomeLogo.BorderColor
+        Height: =20
+        HoverBorderColor: =ColorFade(WelcomeLogo.BorderColor, 20%)
+        HoverFill: =ColorFade(WelcomeLogo.Fill, 20%)
+        Image: ='get-onboard-logo-large'
+        PressedBorderColor: =ColorFade(WelcomeLogo.BorderColor, -20%)
+        PressedFill: =ColorFade(WelcomeLogo.Fill, -20%)
+        Width: =157
+        X: =58
+        Y: =28
+        ZIndex: =8
+
+    WelcomeTitle As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(26, 26, 84, 1)
+        FocusedBorderColor: =WelcomeTitle.BorderColor
+        FontWeight: =FontWeight.Lighter
+        Height: =54
+        HoverBorderColor: =WelcomeTitle.BorderColor
+        HoverColor: =WelcomeTitle.Color
+        HoverFill: =WelcomeTitle.Fill
+        PressedBorderColor: =WelcomeTitle.BorderColor
+        PressedColor: =WelcomeTitle.Color
+        PressedFill: =WelcomeTitle.Fill
+        Size: =24
+        Text: ="Welcome to the team, "&MyUserDisplayName&"!"
+        Width: =763
+        X: =303
+        Y: =407
+        ZIndex: =9
+
+    WelcomeIntro As label:
+        Align: =LayoutAlignItems.Center
+        Color: =RGBA(26, 26, 84, 1)
+        FocusedBorderColor: =WelcomeIntro.BorderColor
+        FontWeight: =FontWeight.Lighter
+        Height: =86
+        HoverBorderColor: =WelcomeIntro.BorderColor
+        HoverColor: =WelcomeIntro.Color
+        HoverFill: =WelcomeIntro.Fill
+        PressedBorderColor: =WelcomeIntro.BorderColor
+        PressedColor: =WelcomeIntro.Color
+        PressedFill: =WelcomeIntro.Fill
+        Size: =14
+        Text: ="Get Onboard helps you stay on top of your onboarding tasks. You’ll also find team insights and helpful company resources. "
+        Width: =663
+        X: =367
+        Y: =446
+        ZIndex: =10
+

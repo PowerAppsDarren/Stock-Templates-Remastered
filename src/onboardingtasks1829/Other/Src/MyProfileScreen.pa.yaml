@@ -1,0 +1,2170 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  MyProfileScreen:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |-
+        =ClearCollect(MyFolders, OutlookTasks.GetTaskFolders(MyOutlookGroupId));
+
+        Set(MyOutlookFolderId, LookUp(MyFolders,Name = ProfileTaskFolder).Id);
+        Set(MyOutlookTaskFolderId, LookUp(MyFolders,Name = ToDoTaskFolder).Id);
+        Set(MyOutlookTipsFolderId, LookUp(MyFolders,Name = TipsTaskFolder).Id);
+
+        ClearCollect(MyOutlookTasks, OutlookTasks.GetTasksByFolder(MyOutlookTaskFolderId,MyOutlookGroupId));
+        ClearCollect(MyTasksFull,ForAll(Tasks,{Name:Name,Description:Description,URL:URL,inOutlook:Name in MyOutlookTasks.Subject}));
+        ForAll(MyTasksFull,If(Not(inOutlook),Collect(MyOutlookTasks,OutlookTasks.CreateTask(Name,{folderId:MyOutlookTaskFolderId}))));
+        Set(NumberOfCompletedTasks, CountRows(Filter(MyOutlookTasks,"Completed" = Status)));
+        Set(NumberOfTasks, CountRows(MyOutlookTasks));
+
+        ClearCollect(MyProfileOutlookTasks, OutlookTasks.GetTasksByFolder(MyOutlookFolderId,MyOutlookGroupId));
+        ClearCollect(MyProfileTasksFull,ForAll(ProfileStatus,{Name:Name,inOutlook:Name in MyProfileOutlookTasks.Subject}));
+        ForAll(MyProfileTasksFull,If(Not(inOutlook),Collect(MyProfileOutlookTasks,OutlookTasks.CreateTask(Name,{folderId:MyOutlookFolderId}))));
+        Set(NumberOfCompletedProfileTasks, CountRows(Filter(MyProfileOutlookTasks,"Completed" = Status)));
+        ClearCollect(MyOutlookTasks, OutlookTasks.GetTasksByFolder(MyOutlookTaskFolderId,MyOutlookGroupId))
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - MyProfileCanvas:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Height: =768
+            Width: =1366
+          Children:
+            - MyProfileDataCard:
+                Control: DataCard@1.0.2
+                Variant: BlankCard
+                Properties:
+                  Height: =Button3_2.Y+Button3_2.Height +120
+                  Width: =1366
+                Children:
+                  - Image1:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image1.BorderColor
+                        Height: =20
+                        HoverBorderColor: =ColorFade(Image1.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image1.Fill, 20%)
+                        Image: ='get-onboard-logo-large'
+                        PressedBorderColor: =ColorFade(Image1.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image1.Fill, -20%)
+                        Width: =157
+                        X: =58
+                        Y: =28
+                  - Label1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =Label1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        HoverBorderColor: =Label1.BorderColor
+                        HoverColor: =Label1.Color
+                        HoverFill: =Label1.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label1.BorderColor
+                        PressedColor: =Label1.Color
+                        PressedFill: =Label1.Fill
+                        Size: =12
+                        Text: ="My profile"
+                        Width: =120
+                        X: =70
+                        Y: =63
+                  - Label1_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =Label1_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        HoverBorderColor: =Label1_1.BorderColor
+                        HoverColor: =Label1_1.Color
+                        HoverFill: =Label1_1.Fill
+                        OnSelect: =Navigate(TeamScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label1_1.BorderColor
+                        PressedColor: =Label1_1.Color
+                        PressedFill: =Label1_1.Fill
+                        Size: =12
+                        Text: ="Team"
+                        Width: =120
+                        X: =210
+                        Y: =63
+                  - Label1_2:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =Align.Center
+                        Color: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =Label1_2.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        HoverBorderColor: =Label1_2.BorderColor
+                        HoverColor: =Label1_2.Color
+                        HoverFill: =Label1_2.Fill
+                        OnSelect: =Navigate(CompanyScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label1_2.BorderColor
+                        PressedColor: =Label1_2.Color
+                        PressedFill: =Label1_2.Fill
+                        Size: =12
+                        Text: ="Company"
+                        Width: =120
+                        X: =344
+                        Y: =63
+                  - Rectangle1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =Rectangle1.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(236, 240, 244, 1)
+                        FocusedBorderColor: =Rectangle1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =If(Button3_2.Height > Button3_3.Height, If(Button3_2.Height > ProfileButton.Y +10,Button3_2.Height + 90, ProfileButton.Y),If(Button3_3.Height > ProfileButton.Y,Button3_3.Height +90,ProfileButton.Y))
+                        HoverFill: =Rectangle1.Fill
+                        PressedFill: =Rectangle1.Fill
+                        Width: =1366
+                        Y: =104
+                  - Button3_1:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        DisabledBorderColor: =ColorFade(Button3_1.BorderColor, 70%)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button3_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =513
+                        HoverBorderColor: =ColorFade(Button3_1.BorderColor, 20%)
+                        HoverColor: =Button3_1.Color
+                        HoverFill: =ColorFade(Button3_1.Fill, 20%)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Button3_1.Fill
+                        PressedColor: =Button3_1.Fill
+                        PressedFill: =Button3_1.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: =""
+                        Width: =399
+                        X: =75
+                        Y: =159
+                  - Button2_1:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Button2_1.Fill, -15%)
+                        DisabledBorderColor: =ColorFade(Button2_1.BorderColor, 70%)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =Button2_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =76
+                        HoverBorderColor: =ColorFade(Button2_1.BorderColor, 20%)
+                        HoverColor: =Button2_1.Color
+                        HoverFill: =ColorFade(Button2_1.Fill, 20%)
+                        PressedBorderColor: =Button2_1.Fill
+                        PressedColor: =Button2_1.Fill
+                        PressedFill: =Button2_1.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: =""
+                        Width: =399
+                        X: =75
+                        Y: =159
+                  - Label1_5:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label1_5.BorderColor
+                        Height: =43
+                        HoverBorderColor: =Label1_5.BorderColor
+                        HoverColor: =Label1_5.Color
+                        HoverFill: =Label1_5.Fill
+                        PressedBorderColor: =Label1_5.BorderColor
+                        PressedColor: =Label1_5.Color
+                        PressedFill: =Label1_5.Fill
+                        Size: =18
+                        Text: ="My profile"
+                        Width: =350
+                        X: =Button3_1.X + 25
+                        Y: =Button3_1.Y + 17
+                  - CompanyLogo_1:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =CompanyLogo_1.BorderColor
+                        Height: =16
+                        HoverBorderColor: =ColorFade(CompanyLogo_1.BorderColor, 20%)
+                        HoverFill: =ColorFade(CompanyLogo_1.Fill, 20%)
+                        Image: ='company-logo'
+                        PressedBorderColor: =ColorFade(CompanyLogo_1.BorderColor, -20%)
+                        PressedFill: =ColorFade(CompanyLogo_1.Fill, -20%)
+                        Width: =147
+                        X: =593
+                        Y: =Rectangle1.Y + Rectangle1.Height + 27
+                  - Button3_2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        DisabledBorderColor: =ColorFade(Button3_2.BorderColor, 70%)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button3_2.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =MyProfileTasks.Height + MyProfileTasks.Y - Button3_2.Y + 30
+                        HoverBorderColor: =ColorFade(Button3_2.BorderColor, 20%)
+                        HoverColor: =Button3_2.Color
+                        HoverFill: =ColorFade(Button3_2.Fill, 20%)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Button3_2.Fill
+                        PressedColor: =Button3_2.Fill
+                        PressedFill: =Button3_2.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: =""
+                        Width: =399
+                        X: =484
+                        Y: =159
+                  - Button2_2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Button2_2.Fill, -15%)
+                        DisabledBorderColor: =ColorFade(Button2_2.BorderColor, 70%)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =Button2_2.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =76
+                        HoverBorderColor: =ColorFade(Button2_2.BorderColor, 20%)
+                        HoverColor: =Button2_2.Color
+                        HoverFill: =ColorFade(Button2_2.Fill, 20%)
+                        PressedBorderColor: =Button2_2.Fill
+                        PressedColor: =Button2_2.Fill
+                        PressedFill: =Button2_2.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: =""
+                        Width: =399
+                        X: =484
+                        Y: =159
+                  - Label1_6:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label1_6.BorderColor
+                        Height: =33
+                        HoverBorderColor: =Label1_6.BorderColor
+                        HoverColor: =Label1_6.Color
+                        HoverFill: =Label1_6.Fill
+                        PressedBorderColor: =Label1_6.BorderColor
+                        PressedColor: =Label1_6.Color
+                        PressedFill: =Label1_6.Fill
+                        Size: =18
+                        Text: ="To-do list"
+                        Width: =350
+                        X: '=Button3_2.X + 25 '
+                        Y: =Button3_2.Y + 17
+                  - Button3_3:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        DisabledBorderColor: =ColorFade(Button3_3.BorderColor, 70%)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button3_3.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =MyProfileResources.Height + MyProfileResources.Y - Button3_3.Y + 30
+                        HoverBorderColor: =ColorFade(Button3_3.BorderColor, 20%)
+                        HoverColor: =Button3_3.Color
+                        HoverFill: =ColorFade(Button3_3.Fill, 20%)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Button3_3.Fill
+                        PressedColor: =Button3_3.Fill
+                        PressedFill: =Button3_3.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: =""
+                        Width: =399
+                        X: =893
+                        Y: =159
+                  - Button2_3:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(Button2_3.Fill, -15%)
+                        DisabledBorderColor: =ColorFade(Button2_3.BorderColor, 70%)
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(245, 247, 249, 1)
+                        FocusedBorderColor: =Button2_3.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =76
+                        HoverBorderColor: =ColorFade(Button2_3.BorderColor, 20%)
+                        HoverColor: =Button2_3.Color
+                        HoverFill: =ColorFade(Button2_3.Fill, 20%)
+                        PressedBorderColor: =Button2_3.Fill
+                        PressedColor: =Button2_3.Fill
+                        PressedFill: =Button2_3.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Text: =""
+                        Width: =399
+                        X: =893
+                        Y: =159
+                  - Label1_7:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label1_7.BorderColor
+                        Height: =43
+                        HoverBorderColor: =Label1_7.BorderColor
+                        HoverColor: =Label1_7.Color
+                        HoverFill: =Label1_7.Fill
+                        PressedBorderColor: =Label1_7.BorderColor
+                        PressedColor: =Label1_7.Color
+                        PressedFill: =Label1_7.Fill
+                        Size: =18
+                        Text: ="Quick resources"
+                        Width: =350
+                        X: =Button3_3.X + 25
+                        Y: =Button3_3.Y + 17
+                  - Label1_8:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label1_8.BorderColor
+                        FontWeight: =FontWeight.Lighter
+                        Height: =33
+                        HoverBorderColor: =Label1_8.BorderColor
+                        HoverColor: =Label1_8.Color
+                        HoverFill: =Label1_8.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label1_8.BorderColor
+                        PressedColor: =Label1_8.Color
+                        PressedFill: =Label1_8.Fill
+                        Size: =18
+                        Text: =User().FullName
+                        Width: =271
+                        X: =185
+                        Y: =272
+                  - Label1_9:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label1_9.BorderColor
+                        Height: =45
+                        HoverBorderColor: =Label1_9.BorderColor
+                        HoverColor: =Label1_9.Color
+                        HoverFill: =Label1_9.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label1_9.BorderColor
+                        PressedColor: =Label1_9.Color
+                        PressedFill: =Label1_9.Fill
+                        Size: =14
+                        Text: =Office365Users.UserProfile(MyUserId).JobTitle
+                        Width: =271
+                        X: =185
+                        Y: =296
+                  - Image2_1:
+                      Control: Image@2.2.3
+                      Properties:
+                        AutoDisableOnSelect: =false
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Image2_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =60
+                        HoverBorderColor: =ColorFade(Image2_1.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image2_1.Fill, 20%)
+                        Image: =LookUp(UserPhotoCache,UserId = MyUserId).Photo
+                        ImagePosition: =ImagePosition.Stretch
+                        PressedBorderColor: =ColorFade(Image2_1.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image2_1.Fill, -20%)
+                        Width: =60
+                        X: =105
+                        Y: =268
+                  - MyProfileTasks:
+                      Control: Gallery@2.15.0
+                      Variant: VariableHeight
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =Sum(MyProfileTasks.AllItems, MyProfileTaskHeight.Text)
+                        Items: =SortByColumns(MyOutlookTasks,"Status",SortOrder.Descending)
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =MyProfileTasks.BorderColor
+                        ShowScrollbar: =false
+                        TemplatePadding: =0
+                        TemplateSize: =36
+                        Width: =Button3_2.Width - 45
+                        X: =Button3_2.X + 20
+                        Y: =336
+                      Children:
+                        - MyProfileTaskName:
+                            Control: Label@2.5.1
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =If(ThisItem.Status = "Completed",RGBA(129, 129, 129, 1), RGBA(26, 26, 84, 1))
+                              FocusedBorderColor: =MyProfileTaskName.BorderColor
+                              FontWeight: =If(ThisItem.Status = "Completed",FontWeight.Normal,FontWeight.Semibold)
+                              Height: =19
+                              HoverBorderColor: =MyProfileTaskName.BorderColor
+                              HoverColor: =MyProfileTaskName.Color
+                              HoverFill: =MyProfileTaskName.Fill
+                              LineHeight: =1.4
+                              OnSelect: |-
+                                =Set(UpdateTaskName,ThisItem.Subject);
+                                Set(UpdateTaskId,ThisItem.Id);
+                                If(ThisItem.Status = "Completed",Set(ShowMarkAsInComplete,true),Set(ShowMarkAsComplete,true))
+                              PaddingBottom: =8
+                              PaddingLeft: =10
+                              PaddingRight: =0
+                              PaddingTop: =8
+                              PressedBorderColor: =MyProfileTaskName.BorderColor
+                              PressedColor: =MyProfileTaskName.Color
+                              PressedFill: =MyProfileTaskName.Fill
+                              Size: =10.5
+                              Text: =ThisItem.Subject
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.TemplateWidth - MyProfileTaskName.X - 40
+                              X: =If(ThisItem.Status = "Completed",35,0)
+                        - MyProfileTaskSeperator:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(221, 224, 227, 1)
+                              DisabledFill: =MyProfileTaskSeperator.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =MyProfileTaskSeperator.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =MyProfileTaskSeperator.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =MyProfileTaskSeperator.Fill
+                              Width: =Parent.TemplateWidth - 20
+                              X: =10
+                              Y: =MyProfileTaskName.Y + MyProfileTaskName.Height - 1
+                        - MyProfileTaskMark:
+                            Control: Image@2.2.3
+                            Properties:
+                              ApplyEXIFOrientation: =false
+                              FocusedBorderColor: =MyProfileTaskMark.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =20
+                              HoverBorderColor: =ColorFade(MyProfileTaskMark.BorderColor, 20%)
+                              HoverFill: =ColorFade(MyProfileTaskMark.Fill, 20%)
+                              Image: ='mark-as-complete'
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =ColorFade(MyProfileTaskMark.BorderColor, -20%)
+                              PressedFill: =ColorFade(MyProfileTaskMark.Fill, -20%)
+                              Visible: =If(ThisItem.Status = "Completed",true,false)
+                              Width: =20
+                              X: =10
+                              Y: =8
+                        - MyProfileTaskLink:
+                            Control: Label@2.5.1
+                            Properties:
+                              FocusedBorderColor: =MyProfileTaskLink.BorderColor
+                              Height: =35
+                              HoverBorderColor: =MyProfileTaskLink.BorderColor
+                              HoverColor: =MyProfileTaskLink.Color
+                              HoverFill: =MyProfileTaskLink.Fill
+                              OnSelect: |+
+                                =Set(UpdateTaskName,ThisItem.Subject);
+                                Set(UpdateTaskId,ThisItem.Id);
+                                If(ThisItem.Status = "Completed",Set(ShowMarkAsInComplete,true),Set(ShowMarkAsComplete,true))
+                              PaddingBottom: =15
+                              PaddingLeft: =10
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyProfileTaskLink.BorderColor
+                              PressedColor: =MyProfileTaskLink.Color
+                              PressedFill: =MyProfileTaskLink.Fill
+                              Size: =20
+                              Text: ="..."
+                              Width: =40
+                              X: =314
+                        - MyProfileTaskHeight:
+                            Control: Label@2.5.1
+                            Properties:
+                              FocusedBorderColor: =MyProfileTaskHeight.BorderColor
+                              Height: =0
+                              HoverBorderColor: =MyProfileTaskHeight.BorderColor
+                              HoverColor: =MyProfileTaskHeight.Color
+                              HoverFill: =MyProfileTaskHeight.Fill
+                              OnSelect: |+
+                                =Set(UpdateTaskDescription,ThisItem.Subject);
+                                Set(UpdateTaskId,ThisItem.Id);
+                                If(ThisItem.Status = "Completed",Set(ShowMarkAsInComplete,true),Set(ShowMarkAsComplete,true))
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =MyProfileTaskHeight.BorderColor
+                              PressedColor: =MyProfileTaskHeight.Color
+                              PressedFill: =MyProfileTaskHeight.Fill
+                              Size: =20
+                              Text: =MyProfileTaskSeperator.Y + MyProfileTaskSeperator.Height
+                              Width: =0
+                  - MyProfileResources:
+                      Control: Gallery@2.15.0
+                      Variant: VariableHeight
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =Sum(MyProfileResources.AllItems,MyProfileResourceHeight.Text)
+                        Items: =Resources
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =MyProfileResources.BorderColor
+                        ShowScrollbar: =false
+                        TemplatePadding: =0
+                        TemplateSize: =36
+                        Width: =Button3_3.Width - 45
+                        X: =Button3_3.X + 20
+                        Y: =Button2_3.Y + Button2_3.Height + 36
+                      Children:
+                        - MyProfileResourceName:
+                            Control: Label@2.5.1
+                            Properties:
+                              AutoHeight: =true
+                              BorderColor: =RGBA(0, 0, 0, 1)
+                              Color: =RGBA(26, 26, 84, 1)
+                              DisplayMode: =DisplayMode.View
+                              FocusedBorderColor: =MyProfileResourceName.BorderColor
+                              FontWeight: =FontWeight.Semibold
+                              Height: =19
+                              HoverBorderColor: =MyProfileResourceName.BorderColor
+                              HoverColor: =MyProfileResourceName.Color
+                              HoverFill: =MyProfileResourceName.Fill
+                              LineHeight: =1.4
+                              OnSelect: =Launch(ThisItem.URL)
+                              PaddingBottom: =8
+                              PaddingLeft: =10
+                              PaddingRight: =0
+                              PaddingTop: =8
+                              PressedBorderColor: =MyProfileResourceName.BorderColor
+                              PressedColor: =MyProfileResourceName.Color
+                              PressedFill: =MyProfileResourceName.Fill
+                              Size: =10.5
+                              Text: =ThisItem.Name
+                              VerticalAlign: =VerticalAlign.Top
+                              Width: =Parent.TemplateWidth - 35
+                        - MyProfileResourceSeperator:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =MyProfileResourceSeperator.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =MyProfileResourceSeperator.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =MyProfileResourceSeperator.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =MyProfileResourceSeperator.Fill
+                              Width: =Parent.TemplateWidth - 20
+                              X: =10
+                              Y: =MyProfileResourceName.Y + MyProfileResourceName.Height - 1
+                        - MyProfileResourceLink:
+                            Control: Image@2.2.3
+                            Properties:
+                              ApplyEXIFOrientation: =false
+                              FocusedBorderColor: =MyProfileResourceLink.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =35
+                              HoverBorderColor: =ColorFade(MyProfileResourceLink.BorderColor, 20%)
+                              HoverFill: =ColorFade(MyProfileResourceLink.Fill, 20%)
+                              Image: ='link-arrow'
+                              OnSelect: =Launch(ThisItem.URL)
+                              PaddingBottom: =9
+                              PaddingLeft: =9
+                              PaddingRight: =9
+                              PaddingTop: =9
+                              PressedBorderColor: =ColorFade(MyProfileResourceLink.BorderColor, -20%)
+                              PressedFill: =ColorFade(MyProfileResourceLink.Fill, -20%)
+                              Width: =35
+                              X: =319
+                        - MyProfileResourceHeight:
+                            Control: Label@2.5.1
+                            Properties:
+                              FocusedBorderColor: =MyProfileResourceHeight.BorderColor
+                              Height: =0
+                              HoverBorderColor: =MyProfileResourceHeight.BorderColor
+                              HoverColor: =MyProfileResourceHeight.Color
+                              HoverFill: =MyProfileResourceHeight.Fill
+                              OnSelect: =Select(Parent)
+                              PressedBorderColor: =MyProfileResourceHeight.BorderColor
+                              PressedColor: =MyProfileResourceHeight.Color
+                              PressedFill: =MyProfileResourceHeight.Fill
+                              Text: =MyProfileResourceSeperator.Y + MyProfileResourceSeperator.Height
+                              Visible: =false
+                              Width: =0
+                  - ToDoProgressBar:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =65
+                        HoverBorderColor: =ToDoProgressBar.BorderColor
+                        HtmlText: |-
+                          ="<div style=""height:13px;position:relative;border-radius:6.5px;border:1px solid #edf0f5;margin:23px 20px 3px 20px;overflow:visible;box-sizing:border-box;"">
+                          <div style=""position:absolute;top:-3px;left:" & If(And(NumberOfCompletedTasks>NumberOfTasks,NumberOfTasks > 0),100,Round(If(NumberOfTasks>0,NumberOfCompletedTasks * 100.0 / NumberOfTasks,0),0)) & "%;"">
+                              <div style=""position:relative;width:34px;height:14px;background-color:#292837;border-radius:3px;margin:-18px 0 0 -17px;text-align:center;color:white;font-size: 10px;padding-top: 1px;box-sizing: border-box;border-bottom:1px solid #292837;"">" & If(And(NumberOfCompletedTasks>NumberOfTasks,NumberOfTasks > 0),100,Round(If(NumberOfTasks>0,NumberOfCompletedTasks * 100.0 / NumberOfTasks,0),0)) & "%
+                              <div style=""position:absolute;width:0;height:0;top:14px;left:1.5px;border-left:15.5px solid transparent;border-right:15.5px solid transparent;border-top:4px solid #292837;""></div></div>
+                          </div>
+                          <div style=""height:13px;position:absolute;border-radius:6.5px;background-color:#41e17f;top:-1px;left:-1px;width:" & If(NumberOfTasks>0,NumberOfCompletedTasks * 100.0 / NumberOfTasks,0) & "%;""></div></div>"
+                        Width: =Button3_2.Width - 15
+                        X: =Button3_2.X + 5
+                        Y: =268
+                  - ProfileButtonIcon:
+                      Control: Image@2.2.3
+                      Group: BuildEmployeeProfileGroup
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =ProfileButtonIcon.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =15
+                        HoverBorderColor: =ColorFade(ProfileButtonIcon.BorderColor, 20%)
+                        HoverFill: =ColorFade(ProfileButtonIcon.Fill, 20%)
+                        Image: ='employee-profile'
+                        OnSelect: =Navigate(BuildEmployeeProfileScreen,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(ProfileButtonIcon.BorderColor, -20%)
+                        PressedFill: =ColorFade(ProfileButtonIcon.Fill, -20%)
+                        Width: =27
+                        X: =123
+                        Y: =605
+                  - EmailButtonIcon:
+                      Control: Image@2.2.3
+                      Group: EmailButtonControls
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =EmailButtonIcon.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =20
+                        HoverBorderColor: =ColorFade(EmailButtonIcon.BorderColor, 20%)
+                        HoverFill: =ColorFade(EmailButtonIcon.Fill, 20%)
+                        Image: ='about-me-icon'
+                        OnSelect: =Navigate(AboutMeEmailScreen,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(EmailButtonIcon.BorderColor, -20%)
+                        PressedFill: =ColorFade(EmailButtonIcon.Fill, -20%)
+                        Width: =25
+                        X: =125
+                        Y: =533
+                  - ProfilePhotoButtonIcon:
+                      Control: Image@2.2.3
+                      Group: ProfilePhotoButtonControls
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =ProfilePhotoButtonIcon.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =20
+                        HoverBorderColor: =ColorFade(ProfilePhotoButtonIcon.BorderColor, 20%)
+                        HoverFill: =ColorFade(ProfilePhotoButtonIcon.Fill, 20%)
+                        Image: ='profile-photo-icon'
+                        PressedBorderColor: =ColorFade(ProfilePhotoButtonIcon.BorderColor, -20%)
+                        PressedFill: =ColorFade(ProfilePhotoButtonIcon.Fill, -20%)
+                        Width: =25
+                        X: =125
+                        Y: =464
+                  - ToDoProgressBar_1:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        Height: =65
+                        HoverBorderColor: =ToDoProgressBar_1.BorderColor
+                        HtmlText: |-
+                          ="<div style=""height:13px;position:relative;border-radius:6.5px;border:1px solid #edf0f5;margin:23px 20px 3px 20px;overflow:visible;box-sizing:border-box;"">
+                          <div style=""position:absolute;top:-3px;left:" & If(And(NumberOfCompletedProfileTasks>3,3 > 0),100,Round(If(3>0,NumberOfCompletedProfileTasks * 100.0 / 3,0),0)) & "%;"">
+                              <div style=""position:relative;width:34px;height:14px;background-color:#292837;border-radius:3px;margin:-18px 0 0 -17px;text-align:center;color:white;font-size: 10px;padding-top: 1px;box-sizing: border-box;border-bottom:1px solid #292837;"">" & If(And(NumberOfCompletedProfileTasks>3,3 > 0),100,Round(If(3>0,NumberOfCompletedProfileTasks * 100.0 / 3,0),0)) & "%
+                              <div style=""position:absolute;width:0;height:0;top:14px;left:1.5px;border-left:15.5px solid transparent;border-right:15.5px solid transparent;border-top:4px solid #292837;""></div></div>
+                          </div>
+                          <div style=""height:13px;position:absolute;border-radius:6.5px;background-color:#41e17f;top:-1px;left:-1px;width:" & If(3>0,NumberOfCompletedProfileTasks * 100.0 / 3,0) & "%;""></div></div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =379
+                        X: =85
+                        Y: =380
+                  - Label5:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label5.BorderColor
+                        Height: =17
+                        HoverBorderColor: =Label5.BorderColor
+                        HoverColor: =Label5.Color
+                        HoverFill: =Label5.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label5.BorderColor
+                        PressedColor: =Label5.Color
+                        PressedFill: =Label5.Fill
+                        Size: =10
+                        Text: ="Profile completeness"
+                        Width: =350
+                        X: =105
+                        Y: =356
+                  - Rectangle2:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =Rectangle2.Fill
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =Rectangle2.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =1
+                        HoverFill: =Rectangle2.Fill
+                        PressedFill: =Rectangle2.Fill
+                        Width: =339
+                        X: =105
+                        Y: =343
+                  - Label3:
+                      Control: Label@2.5.1
+                      Properties:
+                        FocusedBorderColor: =Label3.BorderColor
+                        HoverBorderColor: =Label3.BorderColor
+                        HoverColor: =Label3.Color
+                        HoverFill: =Label3.Fill
+                        PressedBorderColor: =Label3.BorderColor
+                        PressedColor: =Label3.Color
+                        PressedFill: =Label3.Fill
+                        Size: =11
+                        Text: ="Progress"
+                        X: =Button3_2.X + 25
+                        Y: =240
+                  - TeamSelectedRectangle_1:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =TeamSelectedRectangle_1.Fill
+                        Fill: =RGBA(65, 225, 127, 1)
+                        FocusedBorderColor: =TeamSelectedRectangle_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =5
+                        HoverFill: =TeamSelectedRectangle_1.Fill
+                        PressedFill: =TeamSelectedRectangle_1.Fill
+                        Width: =Label1.Width - 20
+                        X: =Label1.X + 10
+                        Y: =104
+                  - Button3_4:
+                      Control: Classic/Button@2.2.0
+                      Group: EditButton_1
+                      Properties:
+                        BorderColor: =ColorFade(Button3_4.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(Button3_4.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =Button3_4.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(Button3_4.BorderColor, 20%)
+                        HoverColor: =Button3_4.Color
+                        HoverFill: =ColorFade(Button3_4.Fill, 20%)
+                        OnSelect: =Navigate(EditResources,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =15
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Button3_4.Fill
+                        PressedColor: =Button3_4.Fill
+                        PressedFill: =Button3_4.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =9
+                        Text: ="Edit"
+                        Visible: =isAdmin
+                        Width: =70
+                        X: =1192
+                        Y: =183
+                  - icon1_7:
+                      Control: Classic/Icon@2.5.0
+                      Group: EditButton_1
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =icon1_7.Fill
+                        FocusedBorderColor: =icon1_7.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(icon1_7.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon1_7.Color, 20%)
+                        HoverFill: =icon1_7.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Navigate(EditResources,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(icon1_7.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon1_7.Color, -20%)
+                        PressedFill: =icon1_7.Fill
+                        Width: =15
+                        X: =1200
+                        Y: =181
+                  - Button3_5:
+                      Control: Classic/Button@2.2.0
+                      Group: EditButton_2
+                      Properties:
+                        BorderColor: =ColorFade(Button3_5.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(Button3_5.BorderColor, 70%)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =Button3_5.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =30
+                        HoverBorderColor: =ColorFade(Button3_5.BorderColor, 20%)
+                        HoverColor: =Button3_5.Color
+                        HoverFill: =ColorFade(Button3_5.Fill, 20%)
+                        OnSelect: =Navigate(EditTasks,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =15
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Button3_5.Fill
+                        PressedColor: =Button3_5.Fill
+                        PressedFill: =Button3_5.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =9
+                        Text: ="Edit"
+                        Visible: =isAdmin
+                        Width: =70
+                        X: =783
+                        Y: =181
+                  - icon1_8:
+                      Control: Classic/Icon@2.5.0
+                      Group: EditButton_2
+                      Properties:
+                        Color: =RGBA(255, 255, 255, 1)
+                        DisabledFill: =icon1_8.Fill
+                        FocusedBorderColor: =icon1_8.BorderColor
+                        Height: =35
+                        HoverBorderColor: =ColorFade(icon1_8.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon1_8.Color, 20%)
+                        HoverFill: =icon1_8.Fill
+                        Icon: =Icon.Edit
+                        OnSelect: =Navigate(EditTasks,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(icon1_8.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon1_8.Color, -20%)
+                        PressedFill: =icon1_8.Fill
+                        Width: =15
+                        X: =790
+                        Y: =178
+                  - ProfileButton:
+                      Control: Classic/Button@2.2.0
+                      Group: BuildEmployeeProfileGroup
+                      Properties:
+                        Align: =TextPosition.Left
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(ProfileButton.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =ProfileButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =59
+                        HoverBorderColor: =ColorFade(ProfileButton.BorderColor, 20%)
+                        HoverColor: =ProfileButton.Color
+                        HoverFill: =ColorFade(ProfileButton.Fill, 20%)
+                        OnSelect: =Navigate(BuildEmployeeProfileScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =65
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =ProfileButton.BorderColor
+                        PressedColor: =ProfileButton.Color
+                        PressedFill: =ProfileButton.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =13
+                        Text: ="Build your employee profile"
+                        Width: =339
+                        X: =105
+                        Y: =583
+                  - EmailButton:
+                      Control: Classic/Button@2.2.0
+                      Group: EmailButtonControls
+                      Properties:
+                        Align: =TextPosition.Left
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(EmailButton.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =EmailButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =59
+                        HoverBorderColor: =ColorFade(EmailButton.BorderColor, 20%)
+                        HoverColor: =EmailButton.Color
+                        HoverFill: =ColorFade(EmailButton.Fill, 20%)
+                        OnSelect: =Navigate(AboutMeEmailScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =65
+                        PaddingTop: =0
+                        PressedBorderColor: =EmailButton.BorderColor
+                        PressedColor: =EmailButton.Color
+                        PressedFill: =EmailButton.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =13
+                        Text: ="Write ‘About Me’ email"
+                        Width: =339
+                        X: =105
+                        Y: =514
+                  - ProfilePhotoButton:
+                      Control: Classic/Button@2.2.0
+                      Group: ProfilePhotoButtonControls
+                      Properties:
+                        Align: =TextPosition.Left
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(ProfilePhotoButton.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =ProfilePhotoButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =59
+                        HoverBorderColor: =ColorFade(ProfilePhotoButton.BorderColor, 20%)
+                        HoverColor: =ProfilePhotoButton.Color
+                        HoverFill: =ColorFade(ProfilePhotoButton.Fill, 20%)
+                        OnSelect: =Navigate(SetProfilePhotoScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =65
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =ProfilePhotoButton.BorderColor
+                        PressedColor: =ProfilePhotoButton.Color
+                        PressedFill: =ProfilePhotoButton.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =13
+                        Text: ="Set company profile photo"
+                        Width: =339
+                        X: =105
+                        Y: =445
+                  - QuickResourcesTopSeperator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =QuickResourcesTopSeperator.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =QuickResourcesTopSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =2
+                        HoverFill: =QuickResourcesTopSeperator.Fill
+                        PressedFill: =QuickResourcesTopSeperator.Fill
+                        Width: =MyProfileResources.Width - 20
+                        X: =Button3_3.X + 30
+                        Y: =MyProfileResources.Y - 1
+                  - TasksTopSeperator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =TasksTopSeperator.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =TasksTopSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =2
+                        HoverFill: =TasksTopSeperator.Fill
+                        PressedFill: =TasksTopSeperator.Fill
+                        Width: =MyProfileResources.Width - 20
+                        X: =Button3_2.X + 30
+                        Y: =MyProfileTasks.Y - 1
+      - InComplete:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(237, 240, 245, 0.85)
+            Height: =768
+            Visible: =ShowMarkAsInComplete
+            Width: =1366
+          Children:
+            - DataCard4:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =Max(Parent.Height,HtmlText2_2.Height + 40)
+                  Width: =1366
+                  WidthFit: =true
+                  X: =500
+                  Y: =500
+                Children:
+                  - HtmlText2_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderThickness: =1
+                        Default: =""
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0.2)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        FocusedBorderColor: =HtmlText2_2.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =MyProfileGreyBackground_2.Height + 138
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =HtmlText2_2.HoverBorderColor
+                        PressedColor: =HtmlText2_2.Color
+                        PressedFill: =HtmlText2_2.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Width: =600
+                        X: =383
+                        Y: =205
+                  - MyProfileGreyBackground_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderThickness: =0
+                        Default: =""
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0.2)
+                        DisabledFill: =RGBA(245, 247, 249, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        FocusedBorderColor: =MyProfileGreyBackground_2.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =Label13_2.Y + Label13_2.Height + 35 - MyProfileGreyBackground_2.Y
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyProfileGreyBackground_2.HoverBorderColor
+                        PressedColor: =MyProfileGreyBackground_2.Color
+                        PressedFill: =MyProfileGreyBackground_2.Fill
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Width: =HtmlText2_2.Width - 2
+                        X: =HtmlText2_2.X + 1
+                        Y: =HtmlText2_2.Y + 1
+                  - Image6_1:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image6_1.BorderColor
+                        Height: =52
+                        HoverBorderColor: =ColorFade(Image6_1.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image6_1.Fill, 20%)
+                        Image: ='task-icon-large@3x'
+                        PaddingBottom: =2
+                        PaddingTop: =2
+                        PressedBorderColor: =ColorFade(Image6_1.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image6_1.Fill, -20%)
+                        Width: =43
+                        X: |+
+                          =HtmlText2_2.X + 278
+                        Y: =HtmlText2_2.Y + 58
+                  - Label13_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        AutoHeight: =true
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Label13_1.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =48
+                        HoverBorderColor: =Label13_1.BorderColor
+                        HoverColor: =Label13_1.Color
+                        HoverFill: =Label13_1.Fill
+                        PressedBorderColor: =Label13_1.BorderColor
+                        PressedColor: =Label13_1.Color
+                        PressedFill: =Label13_1.Fill
+                        Size: =18
+                        Text: =UpdateTaskName
+                        Width: =HtmlText2_2.Width - 60
+                        Wrap: =false
+                        X: =HtmlText2_2.X + 30
+                        Y: =HtmlText2_2.Y + 123.5
+                  - Button2_4:
+                      Control: Classic/Button@2.2.0
+                      Group: MarkAsIncompleteGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(Button2_4.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button2_4.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =67
+                        HoverBorderColor: =ColorFade(Button2_4.BorderColor, 20%)
+                        HoverColor: =Button2_4.Color
+                        HoverFill: =ColorFade(Button2_4.Fill, 20%)
+                        OnSelect: |-
+                          =OutlookTasks.IncompleteTask(UpdateTaskId);
+                          Patch(MyOutlookTasks,LookUp(MyOutlookTasks,Id = UpdateTaskId),{Status:"NotStarted"});
+                          Set(NumberOfCompletedTasks, CountRows(Filter(MyOutlookTasks,Status = "Completed")));
+                          Set(ShowMarkAsInComplete,false)
+                        PaddingLeft: =40
+                        PressedBorderColor: =Button2_4.Fill
+                        PressedColor: =Button2_4.Fill
+                        PressedFill: =Button2_4.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =13.5
+                        Text: ="Mark as incomplete"
+                        Width: =244
+                        X: =If(IsBlank(First(Filter(Tasks,Name = UpdateTaskName)).URL),580,430)
+                        Y: =HtmlText2_2.Y + HtmlText2_2.Height - Button2_4.Height - 35
+                  - Button2_8:
+                      Control: Classic/Button@2.2.0
+                      Group: GetStartedIncomplete
+                      Properties:
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(Button2_8.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button2_8.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =67
+                        HoverBorderColor: =ColorFade(Button2_8.BorderColor, 20%)
+                        HoverColor: =Button2_8.Color
+                        HoverFill: =ColorFade(Button2_8.Fill, 20%)
+                        OnSelect: =Launch(First(Filter(Tasks,Name = UpdateTaskName)).URL)
+                        PaddingRight: =46
+                        PressedBorderColor: =Button2_8.Fill
+                        PressedColor: =Button2_8.Fill
+                        PressedFill: =Button2_8.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =13.5
+                        Text: ="Get started"
+                        Visible: =If(IsBlank(First(Filter(Tasks,Name = UpdateTaskName)).URL),false,true)
+                        Width: =244
+                        X: =HtmlText2_2.X + 315
+                        Y: =HtmlText2_2.Y + HtmlText2_2.Height - Button2_8.Height - 35
+                  - icon1_1:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =icon1_1.Fill
+                        FocusedBorderColor: =icon1_1.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(icon1_1.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon1_1.Color, 20%)
+                        HoverFill: =icon1_1.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Set(ShowMarkAsInComplete,false)
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(icon1_1.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon1_1.Color, -20%)
+                        PressedFill: =icon1_1.Fill
+                        X: =HtmlText2_2.X + HtmlText2_2.Width - 20 - icon1_1.Width
+                        Y: =HtmlText2_2.Y + 20
+                  - icon2_1:
+                      Control: Classic/Icon@2.5.0
+                      Group: GetStartedIncomplete
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =icon2_1.Fill
+                        FocusedBorderColor: =icon2_1.BorderColor
+                        Height: =31
+                        HoverBorderColor: =ColorFade(icon2_1.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon2_1.Color, 20%)
+                        HoverFill: =icon2_1.Fill
+                        Icon: =Icon.ArrowRight
+                        PressedBorderColor: =ColorFade(icon2_1.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon2_1.Color, -20%)
+                        PressedFill: =icon2_1.Fill
+                        Visible: =If(IsBlank(First(Filter(Tasks,Name = UpdateTaskName)).URL),false,true)
+                        Width: =31
+                        X: =Button2_8.X + 161
+                        Y: =Button2_8.Y + 20
+                  - icon3_1:
+                      Control: Classic/Icon@2.5.0
+                      Group: MarkAsIncompleteGroup
+                      Properties:
+                        Color: =RGBA(65, 225, 127, 1)
+                        DisabledFill: =icon3_1.Fill
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =icon3_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =24
+                        HoverBorderColor: =ColorFade(icon3_1.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon3_1.Color, 20%)
+                        HoverFill: =icon3_1.Fill
+                        Icon: =Icon.Cancel
+                        PressedBorderColor: =ColorFade(icon3_1.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon3_1.Color, -20%)
+                        PressedFill: =icon3_1.Fill
+                        Width: =24
+                        X: =Button2_4.X + 20
+                        Y: |+
+                          =Button2_4.Y + 20
+                  - Label13_2:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        AutoHeight: =true
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Label13_2.BorderColor
+                        Height: =48
+                        HoverBorderColor: =Label13_2.BorderColor
+                        HoverColor: =Label13_2.Color
+                        HoverFill: =Label13_2.Fill
+                        PressedBorderColor: =Label13_2.BorderColor
+                        PressedColor: =Label13_2.Color
+                        PressedFill: =Label13_2.Fill
+                        Size: =12
+                        Text: =First(Filter(Tasks,Name = UpdateTaskName)).Description
+                        Width: =HtmlText2_2.Width - 60
+                        Wrap: =false
+                        X: =HtmlText2_2.X + 30
+                        Y: =Label13_1.Y + Label13_1.Height + 10
+      - AboutMeEmail:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(237, 240, 245, 0.85)
+            Height: =768
+            Visible: =ShowAboutMeEmail
+            Width: =1366
+          Children:
+            - DataCard2_1:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =HtmlText2.Height + 80
+                  Width: =1366
+                Children:
+                  - HtmlText2:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =Button1_3.Y + Button1_3.Height + 6
+                        HoverBorderColor: =HtmlText2.BorderColor
+                        HtmlText: |-
+                          ="<div style=""margin:10px 0 0 10px;width: 931px;height: " & (HtmlText2.Height - 20) & "px;border-radius:5px;background-color: #ffffff;box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);"">
+                            <div style=""height:524px;border-top-left-radius:5px;border-top-right-radius:5px;background-color:#f5f7f9;""></div>
+                          </div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =951
+                        X: =207
+                        Y: =40
+                  - TextInput1_2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        Default: =""
+                        FocusedBorderColor: =TextInput1_2.BorderColor
+                        Height: =922
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =TextInput1_2.HoverBorderColor
+                        PressedColor: =TextInput1_2.Color
+                        PressedFill: =TextInput1_2.Fill
+                        Visible: =false
+                        Width: =931
+                        X: =217
+                        Y: =50
+                  - icon1_2:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =icon1_2.Fill
+                        FocusedBorderColor: =icon1_2.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(icon1_2.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon1_2.Color, 20%)
+                        HoverFill: =icon1_2.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Set(ShowAboutMeEmail,false)
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(icon1_2.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon1_2.Color, -20%)
+                        PressedFill: =icon1_2.Fill
+                        X: =1074
+                        Y: =51
+                  - Label15:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label15.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =50
+                        HoverBorderColor: =Label15.BorderColor
+                        HoverColor: =Label15.Color
+                        HoverFill: =Label15.Fill
+                        PressedBorderColor: =Label15.BorderColor
+                        PressedColor: =Label15.Color
+                        PressedFill: =Label15.Fill
+                        Size: =18
+                        Text: ="Write your “About Me” email"
+                        Width: =356
+                        X: =507
+                        Y: =169
+                  - Label16:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label16.BorderColor
+                        Height: =30
+                        HoverBorderColor: =Label16.BorderColor
+                        HoverColor: =Label16.Color
+                        HoverFill: =Label16.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label16.BorderColor
+                        PressedColor: =Label16.Color
+                        PressedFill: =Label16.Fill
+                        Size: =12
+                        Text: ="Write a brief introduction for your manager to share with the team."
+                        Width: =622
+                        X: =372
+                        Y: =234
+                  - TextInput2:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderColor: =RGBA(221, 224, 227, 1)
+                        BorderThickness: =1
+                        Default: =""
+                        FocusedBorderColor: =TextInput2.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =218
+                        Mode: =TextMode.MultiLine
+                        PaddingBottom: =20
+                        PaddingLeft: =20
+                        PaddingRight: =20
+                        PaddingTop: =20
+                        PressedBorderColor: =TextInput2.HoverBorderColor
+                        PressedColor: =TextInput2.Color
+                        PressedFill: =TextInput2.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Width: =503
+                        X: =318
+                        Y: =321
+                  - HtmlText2_1:
+                      Control: HtmlViewer@2.1.0
+                      Properties:
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        Height: =219
+                        HoverBorderColor: =HtmlText2_1.BorderColor
+                        HtmlText: |-
+                          ="<div style=""font-size:14px;padding:3px 5px;font-weight:600;"">Example</div>
+                          <div style=""font-size:12px;width:267px;padding:5px;line-height:17px;"">My name is Cindy Sharp and I’m the newest addition to the team as your Procurement Buyer. I received a B.A. from Contoso College, interned with Fabrikam, and most recently held the position of Assistant Buyer at Acme.</div>
+                          <div style=""font-size:12px;width:267px;padding:5px;line-height:17px;"">In my free time, I love to bike, cook, and spend time with my family of four. </div>
+                          <div style=""font-size:12px;width:267px;padding:7px 5px;line-height:17px;"">I look forward to getting to know each of you! </div>"
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Width: =267
+                        X: =832
+                        Y: =317
+                  - Label17_1:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label17_1.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =24
+                        HoverBorderColor: =Label17_1.BorderColor
+                        HoverColor: =Label17_1.Color
+                        HoverFill: =Label17_1.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label17_1.BorderColor
+                        PressedColor: =Label17_1.Color
+                        PressedFill: =Label17_1.Fill
+                        Size: =13.5
+                        Text: ="About Me"
+                        Width: =100
+                        X: =312
+                        Y: =287
+                  - Label17_2:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =Label17_2.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =24
+                        HoverBorderColor: =Label17_2.BorderColor
+                        HoverColor: =Label17_2.Color
+                        HoverFill: =Label17_2.Fill
+                        PaddingBottom: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =Label17_2.BorderColor
+                        PressedColor: =Label17_2.Color
+                        PressedFill: =Label17_2.Fill
+                        Size: =13.5
+                        Text: ="Attach a photo of yourself"
+                        Width: =351
+                        X: =312
+                        Y: =609
+                  - Image8:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image8.BorderColor
+                        Height: =54
+                        HoverBorderColor: =ColorFade(Image8.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image8.Fill, 20%)
+                        Image: ='about-me-green'
+                        PressedBorderColor: =ColorFade(Image8.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image8.Fill, -20%)
+                        Width: =67
+                        X: =650
+                        Y: =98
+                  - Image5_2:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image5_2.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =25
+                        HoverBorderColor: =ColorFade(Image5_2.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image5_2.Fill, 20%)
+                        Image: =gallery
+                        PressedBorderColor: =ColorFade(Image5_2.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image5_2.Fill, -20%)
+                        Width: =25
+                        X: =Button1_2.X + 23
+                        Y: =Button1_2.Y + 10
+                  - Button1_2:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =Button1_2.BorderColor
+                        DisabledBorderColor: =ColorFade(Button1_2.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =Button1_2.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =45
+                        HoverBorderColor: =Button1_2.BorderColor
+                        HoverColor: =Button1_2.Color
+                        HoverFill: =Button1_2.Fill
+                        PaddingLeft: =36
+                        PaddingRight: =0
+                        PressedBorderColor: =Button1_2.BorderColor
+                        PressedColor: =Button1_2.Color
+                        PressedFill: =Button1_2.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Select from gallery"
+                        Width: =227
+                        X: =319
+                        Y: =652
+                  - UploadedImage1:
+                      Control: Image@2.2.3
+                      Group: AddMediaWithImage1
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        CalculateOriginalDimensions: =true
+                        FocusedBorderColor: =UploadedImage1.BorderColor
+                        Height: =If(Or(IsBlank(UploadedImage1.Image),DeleteImage),0,UploadedImage1.OriginalWidth = 0, 210,UploadedImage1.Width * UploadedImage1.OriginalHeight / UploadedImage1.OriginalWidth)
+                        HoverBorderColor: =ColorFade(UploadedImage1.BorderColor, 20%)
+                        HoverFill: =ColorFade(UploadedImage1.Fill, 20%)
+                        Image: =If(And(Not(IsBlank(AddMediaButton1.Media)),Not(DeleteImage)), AddMediaButton1.Media)
+                        ImagePosition: =ImagePosition.Fill
+                        PressedBorderColor: =ColorFade(UploadedImage1.BorderColor, -20%)
+                        PressedFill: =ColorFade(UploadedImage1.Fill, -20%)
+                        Width: =316
+                        X: =688
+                        Y: =609
+                  - AddMediaButton1:
+                      Control: AddMedia@2.2.1
+                      Group: AddMediaWithImage1
+                      Properties:
+                        BorderColor: =ColorFade(AddMediaButton1.Fill, -15%)
+                        ChangePictureText: =""
+                        FocusedBorderColor: =AddMediaButton1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =Button1_2.Height
+                        HoverBorderColor: =ColorFade(AddMediaButton1.BorderColor, 20%)
+                        HoverColor: =AddMediaButton1.Color
+                        HoverFill: =ColorFade(AddMediaButton1.Fill, 20%)
+                        OnChange: =Set(DeleteImage,false)
+                        PressedBorderColor: =ColorFade(AddMediaButton1.BorderColor, -20%)
+                        PressedColor: =AddMediaButton1.Color
+                        PressedFill: =ColorFade(AddMediaButton1.Fill, -20%)
+                        Size: =25
+                        Text: =""
+                        Width: =Button1_2.Width
+                        X: =Button1_2.X
+                        Y: =Button1_2.Y
+                  - icon5:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =Circle1.BorderColor
+                        DisabledFill: =icon5.Fill
+                        FocusedBorderColor: =icon5.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =23
+                        HoverBorderColor: =ColorFade(icon5.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon5.Color, 20%)
+                        HoverFill: =icon5.Fill
+                        Icon: =Icon.Cancel
+                        PaddingLeft: =5
+                        PaddingRight: =5
+                        PressedBorderColor: =ColorFade(icon5.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon5.Color, -20%)
+                        PressedFill: =icon5.Fill
+                        Visible: =Circle1.Visible
+                        Width: =23
+                        X: =Circle1.X
+                        Y: =Circle1.Y
+                  - Circle1:
+                      Control: Circle@2.3.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =2
+                        DisabledFill: =Circle1.Fill
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =Circle1.BorderColor
+                        Height: =23
+                        HoverFill: =Circle1.Fill
+                        OnSelect: =Set(DeleteImage,true)
+                        PressedFill: =Circle1.Fill
+                        Visible: =Not(IsBlank(UploadedImage1.Image))
+                        Width: =23
+                        X: =1024
+                        Y: =610
+                  - Rectangle3:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =Rectangle3.Fill
+                        DisplayMode: =DisplayMode.View
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =Rectangle3.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =2
+                        HoverFill: =Rectangle3.Fill
+                        PressedFill: =Rectangle3.Fill
+                        Width: =730
+                        X: =318
+                        Y: =Max(UploadedImage1.Y + UploadedImage1.Height,Button1_2.Y + Button1_2.Height) + 35
+                  - Image5_3:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image5_3.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =25
+                        HoverBorderColor: =ColorFade(Image5_3.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image5_3.Fill, 20%)
+                        Image: =gallery
+                        PressedBorderColor: =ColorFade(Image5_3.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image5_3.Fill, -20%)
+                        Width: =25
+                        X: =Button1_3.X + 23
+                        Y: =Button1_3.Y + 10
+                  - Button1_3:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =Button1_3.BorderColor
+                        DisabledBorderColor: =ColorFade(Button1_3.BorderColor, 70%)
+                        Fill: =RGBA(0, 0, 0, 0)
+                        FocusedBorderColor: =Button1_3.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =45
+                        HoverBorderColor: =Button1_3.BorderColor
+                        HoverColor: =Button1_3.Color
+                        HoverFill: =Button1_3.Fill
+                        PaddingLeft: =36
+                        PaddingRight: =0
+                        PressedBorderColor: =Button1_3.BorderColor
+                        PressedColor: =Button1_3.Color
+                        PressedFill: =Button1_3.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Select from gallery"
+                        Width: =295
+                        X: =544
+                        Y: =Rectangle3.Y + Rectangle3.Height + 35
+      - Complete:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(237, 240, 245, 0.85)
+            Height: =768
+            Visible: =ShowMarkAsComplete
+            Width: =1366
+          Children:
+            - DataCard4_1:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =Max(Parent.Height,MyProfileBackground.Height + 40)
+                  Width: =1366
+                  WidthFit: =true
+                  X: =500
+                  Y: =500
+                Children:
+                  - MyProfileBackground:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderThickness: =1
+                        Default: =""
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0.2)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        FocusedBorderColor: =MyProfileBackground.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =Label13_4.Y + Label13_4.Height + 35 - MyProfileBackground.Y + 138
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyProfileBackground.HoverBorderColor
+                        PressedColor: =MyProfileBackground.Color
+                        PressedFill: =MyProfileBackground.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Width: =600
+                        X: =383
+                        Y: =204
+                  - MyProfileGreyBackground:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderThickness: =0
+                        Default: =""
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0.2)
+                        DisabledFill: =RGBA(245, 247, 249, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        FocusedBorderColor: =MyProfileGreyBackground.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =Label13_4.Y + Label13_4.Height + 35 - MyProfileGreyBackground.Y
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyProfileGreyBackground.HoverBorderColor
+                        PressedColor: =MyProfileGreyBackground.Color
+                        PressedFill: =MyProfileGreyBackground.Fill
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Width: =MyProfileBackground.Width - 2
+                        X: =MyProfileBackground.X + 1
+                        Y: =MyProfileBackground.Y + 1
+                  - Image6_2:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image6_2.BorderColor
+                        Height: =52
+                        HoverBorderColor: =ColorFade(Image6_2.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image6_2.Fill, 20%)
+                        Image: ='task-icon-large@3x'
+                        PaddingBottom: =2
+                        PaddingTop: =2
+                        PressedBorderColor: =ColorFade(Image6_2.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image6_2.Fill, -20%)
+                        Width: =43
+                        X: =MyProfileBackground.X + 280
+                        Y: =MyProfileBackground.Y + 50
+                  - Label13_3:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        AutoHeight: =true
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Label13_3.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =48
+                        HoverBorderColor: =Label13_3.BorderColor
+                        HoverColor: =Label13_3.Color
+                        HoverFill: =Label13_3.Fill
+                        PressedBorderColor: =Label13_3.BorderColor
+                        PressedColor: =Label13_3.Color
+                        PressedFill: =Label13_3.Fill
+                        Size: =18
+                        Text: =UpdateTaskName
+                        Width: =MyProfileBackground.Width - 60
+                        Wrap: =false
+                        X: =MyProfileBackground.X + 30
+                        Y: =MyProfileBackground.Y + 123.5
+                  - Button2_5:
+                      Control: Classic/Button@2.2.0
+                      Group: MarkAsCompletedGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(Button2_5.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button2_5.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =67
+                        HoverBorderColor: =ColorFade(Button2_5.BorderColor, 20%)
+                        HoverColor: =Button2_5.Color
+                        HoverFill: =ColorFade(Button2_5.Fill, 20%)
+                        OnSelect: |-
+                          =OutlookTasks.CompleteTask(UpdateTaskId);
+                          Patch(MyOutlookTasks,LookUp(MyOutlookTasks,Id = UpdateTaskId),{Status:"Completed"});
+                          Set(NumberOfCompletedTasks, CountRows(Filter(MyOutlookTasks,Status = "Completed")));
+                          Set(ShowMarkAsComplete,false)
+                        PaddingLeft: =40
+                        PressedBorderColor: =Button2_5.Fill
+                        PressedColor: =Button2_5.Fill
+                        PressedFill: =Button2_5.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =13.5
+                        Text: ="Mark as complete"
+                        Width: =244
+                        X: =If(IsBlank(First(Filter(Tasks,Name = UpdateTaskName)).URL),580,430)
+                        Y: =MyProfileBackground.Y + MyProfileBackground.Height - Button2_5.Height - 35
+                  - Button2_9:
+                      Control: Classic/Button@2.2.0
+                      Group: GetStartedButtonGroup
+                      Properties:
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(Button2_9.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button2_9.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =67
+                        HoverBorderColor: =ColorFade(Button2_9.BorderColor, 20%)
+                        HoverColor: =Button2_9.Color
+                        HoverFill: =ColorFade(Button2_9.Fill, 20%)
+                        OnSelect: =Launch(First(Filter(Tasks,Name = UpdateTaskName)).URL)
+                        PaddingRight: =46
+                        PressedBorderColor: =Button2_9.Fill
+                        PressedColor: =Button2_9.Fill
+                        PressedFill: =Button2_9.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =13.5
+                        Text: ="Get started"
+                        Visible: =If(IsBlank(First(Filter(Tasks,Name = UpdateTaskName)).URL),false,true)
+                        Width: =244
+                        X: =MyProfileBackground.X + 315
+                        Y: =MyProfileBackground.Y + MyProfileBackground.Height - Button2_9.Height - 35
+                  - icon1_3:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =RGBA(0, 0, 0, 1)
+                        DisabledFill: =icon1_3.Fill
+                        FocusedBorderColor: =icon1_3.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(icon1_3.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon1_3.Color, 20%)
+                        HoverFill: =icon1_3.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Set(ShowMarkAsComplete,false)
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(icon1_3.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon1_3.Color, -20%)
+                        PressedFill: =icon1_3.Fill
+                        X: =MyProfileBackground.X + MyProfileBackground.Width - 20 - icon1_3.Width
+                        Y: =MyProfileBackground.Y + 20
+                  - icon2_2:
+                      Control: Classic/Icon@2.5.0
+                      Group: GetStartedButtonGroup
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =icon2_2.Fill
+                        FocusedBorderColor: =icon2_2.BorderColor
+                        Height: =31
+                        HoverBorderColor: =ColorFade(icon2_2.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon2_2.Color, 20%)
+                        HoverFill: =icon2_2.Fill
+                        Icon: =Icon.ArrowRight
+                        PressedBorderColor: =ColorFade(icon2_2.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon2_2.Color, -20%)
+                        PressedFill: =icon2_2.Fill
+                        Visible: =If(IsBlank(First(Filter(Tasks,Name = UpdateTaskName)).URL),false,true)
+                        Width: =31
+                        X: =Button2_9.X + 161
+                        Y: =Button2_9.Y + 20
+                  - Label13_4:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        AutoHeight: =true
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Label13_4.BorderColor
+                        Height: =48
+                        HoverBorderColor: =Label13_4.BorderColor
+                        HoverColor: =Label13_4.Color
+                        HoverFill: =Label13_4.Fill
+                        PressedBorderColor: =Label13_4.BorderColor
+                        PressedColor: =Label13_4.Color
+                        PressedFill: =Label13_4.Fill
+                        Size: =12
+                        Text: =First(Filter(Tasks,Name = UpdateTaskName)).Description
+                        Width: =MyProfileBackground.Width - 60
+                        Wrap: =false
+                        X: =MyProfileBackground.X + 30
+                        Y: =Label13_3.Y + Label13_3.Height + 10
+                  - Image9:
+                      Control: Image@2.2.3
+                      Group: MarkAsCompletedGroup
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image9.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =29
+                        HoverBorderColor: =ColorFade(Image9.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image9.Fill, 20%)
+                        Image: ='mark-as-complete'
+                        PressedBorderColor: =ColorFade(Image9.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image9.Fill, -20%)
+                        Width: =29
+                        X: =Button2_5.X+20
+                        Y: =Button2_5.Y+20
+      - Complete_1:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(237, 240, 245, 0.85)
+            Height: =768
+            Visible: =ShowMarkAsComplete2
+            Width: =1366
+          Children:
+            - DataCard4_2:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =Max(Parent.Height,HtmlText2_5.Height + 40)
+                  Width: =1366
+                  WidthFit: =true
+                  X: =500
+                  Y: =500
+                Children:
+                  - HtmlText2_5:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderThickness: =1
+                        Default: =""
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0.2)
+                        DisabledFill: =RGBA(255, 255, 255, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        FocusedBorderColor: =HtmlText2_5.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =Label13_4.Y + Label13_4.Height + 35 - HtmlText2_5.Y + 138
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =HtmlText2_5.HoverBorderColor
+                        PressedColor: =HtmlText2_5.Color
+                        PressedFill: =HtmlText2_5.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Width: =600
+                        X: =383
+                        Y: =204
+                  - MyProfileGreyBackground_1:
+                      Control: Classic/TextInput@2.3.2
+                      Properties:
+                        BorderThickness: =0
+                        Default: =""
+                        DisabledBorderColor: =RGBA(0, 0, 0, 0.2)
+                        DisabledFill: =RGBA(245, 247, 249, 1)
+                        DisplayMode: =DisplayMode.Disabled
+                        FocusedBorderColor: =MyProfileGreyBackground_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =Label13_4.Y + Label13_4.Height + 35 - MyProfileGreyBackground_1.Y
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =MyProfileGreyBackground_1.HoverBorderColor
+                        PressedColor: =MyProfileGreyBackground_1.Color
+                        PressedFill: =MyProfileGreyBackground_1.Fill
+                        RadiusBottomLeft: =0
+                        RadiusBottomRight: =0
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Width: =HtmlText2_5.Width - 2
+                        X: =HtmlText2_5.X + 1
+                        Y: =HtmlText2_5.Y + 1
+                  - Image6_3:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image6_3.BorderColor
+                        Height: =52
+                        HoverBorderColor: =ColorFade(Image6_3.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image6_3.Fill, 20%)
+                        Image: ='task-icon-large@3x'
+                        PaddingBottom: =2
+                        PaddingTop: =2
+                        PressedBorderColor: =ColorFade(Image6_3.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image6_3.Fill, -20%)
+                        Width: =43
+                        X: =HtmlText2_5.X + 278
+                        Y: =HtmlText2_5.Y + 58
+                  - Label13_5:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Label13_5.BorderColor
+                        FontWeight: =FontWeight.Bold
+                        Height: =48
+                        HoverBorderColor: =Label13_5.BorderColor
+                        HoverColor: =Label13_5.Color
+                        HoverFill: =Label13_5.Fill
+                        PressedBorderColor: =Label13_5.BorderColor
+                        PressedColor: =Label13_5.Color
+                        PressedFill: =Label13_5.Fill
+                        Size: =18
+                        Text: =UpdateTaskDescription
+                        Width: =HtmlText2_5.Width - 60
+                        X: =HtmlText2_5.X + 30
+                        Y: =HtmlText2_5.Y + 123.5
+                  - Button2_6:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =RGBA(26,26,84,1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(Button2_6.BorderColor, 70%)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =Button2_6.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =67
+                        HoverBorderColor: =ColorFade(Button2_6.BorderColor, 20%)
+                        HoverColor: =Button2_6.Color
+                        HoverFill: =ColorFade(Button2_6.Fill, 20%)
+                        OnSelect: |-
+                          =OutlookTasks.CompleteTask(UpdateTaskId);
+                          Patch(MyOutlookTasks,LookUp(MyOutlookTasks,Id = UpdateTaskId),{Status:"Completed"});
+                          Set(NumberOfCompletedTasks, CountRows(Filter(MyOutlookTasks,Status = "Completed")));
+                          Set(ShowMarkAsComplete2,false)
+                        PaddingLeft: =40
+                        PressedBorderColor: =Button2_6.Fill
+                        PressedColor: =Button2_6.Fill
+                        PressedFill: =Button2_6.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =13.5
+                        Text: ="Mark as complete"
+                        Width: =244
+                        X: =HtmlText2_5.X + 188
+                        Y: =HtmlText2_5.Y + HtmlText2_5.Height - Button2_6.Height - 35
+                  - icon1_4:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =icon1_4.Fill
+                        FocusedBorderColor: =icon1_4.BorderColor
+                        FocusedBorderThickness: =0
+                        HoverBorderColor: =ColorFade(icon1_4.BorderColor, 20%)
+                        HoverColor: =ColorFade(icon1_4.Color, 20%)
+                        HoverFill: =icon1_4.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Set(ShowMarkAsComplete2,false)
+                        PaddingBottom: =15
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =15
+                        PressedBorderColor: =ColorFade(icon1_4.BorderColor, -20%)
+                        PressedColor: =ColorFade(icon1_4.Color, -20%)
+                        PressedFill: =icon1_4.Fill
+                        X: =HtmlText2_5.X + HtmlText2_5.Width - 20 - icon1_4.Width
+                        Y: =HtmlText2_5.Y + 20
+                  - Label13_6:
+                      Control: Label@2.5.1
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        AutoHeight: =true
+                        DisplayMode: =DisplayMode.View
+                        FocusedBorderColor: =Label13_6.BorderColor
+                        Height: =48
+                        HoverBorderColor: =Label13_6.BorderColor
+                        HoverColor: =Label13_6.Color
+                        HoverFill: =Label13_6.Fill
+                        PressedBorderColor: =Label13_6.BorderColor
+                        PressedColor: =Label13_6.Color
+                        PressedFill: =Label13_6.Fill
+                        Size: =12
+                        Text: ="Lorem ipsum dolor sit amet lorem ipsum dolor sit."
+                        Width: =HtmlText2_5.Width - 60
+                        X: =HtmlText2_5.X + 30
+                        Y: =HtmlText2_5.Y + 169.5
+                  - Image9_1:
+                      Control: Image@2.2.3
+                      Properties:
+                        ApplyEXIFOrientation: =false
+                        FocusedBorderColor: =Image9_1.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =29
+                        HoverBorderColor: =ColorFade(Image9_1.BorderColor, 20%)
+                        HoverFill: =ColorFade(Image9_1.Fill, 20%)
+                        Image: ='mark-as-complete'
+                        PressedBorderColor: =ColorFade(Image9_1.BorderColor, -20%)
+                        PressedFill: =ColorFade(Image9_1.Fill, -20%)
+                        Width: =29
+                        X: =Button2_6.X + 25
+                        Y: =Button2_6.Y + 20
+      - MyProfilePopUpBackground:
+          Control: Rectangle@2.3.0
+          Group: MyProfilePopUpGroup
+          Properties:
+            DisabledFill: =MyProfilePopUpBackground.Fill
+            Fill: =RGBA(65, 225, 127, 0.25)
+            FocusedBorderColor: =MyProfilePopUpBackground.BorderColor
+            FocusedBorderThickness: =4
+            Height: =119
+            HoverFill: =MyProfilePopUpBackground.Fill
+            PressedFill: =MyProfilePopUpBackground.Fill
+            Visible: =ShowProfilePageTip
+            Width: =509
+            X: =783
+            Y: =20
+      - MyProfilePopUpOutlookFolders:
+          Control: Image@2.2.3
+          Group: MyProfilePopUpGroup
+          Properties:
+            ApplyEXIFOrientation: =false
+            FocusedBorderColor: =MyProfilePopUpOutlookFolders.BorderColor
+            Height: =90
+            HoverBorderColor: =ColorFade(MyProfilePopUpOutlookFolders.BorderColor, 20%)
+            HoverFill: =ColorFade(MyProfilePopUpOutlookFolders.Fill, 20%)
+            Image: ='tip-example'
+            PressedBorderColor: =ColorFade(MyProfilePopUpOutlookFolders.BorderColor, -20%)
+            PressedFill: =ColorFade(MyProfilePopUpOutlookFolders.Fill, -20%)
+            Visible: =ShowProfilePageTip
+            Width: =155
+            X: =1071
+            Y: =35
+      - MyProfilePopUpText:
+          Control: Label@2.5.1
+          Group: MyProfilePopUpGroup
+          Properties:
+            FocusedBorderColor: =MyProfilePopUpText.BorderColor
+            Height: =65
+            HoverBorderColor: =MyProfilePopUpText.BorderColor
+            HoverColor: =MyProfilePopUpText.Color
+            HoverFill: =MyProfilePopUpText.Fill
+            PressedBorderColor: =MyProfilePopUpText.BorderColor
+            PressedColor: =MyProfilePopUpText.Color
+            PressedFill: =MyProfilePopUpText.Fill
+            Size: =10.5
+            Text: ="Your onboarding to-do list has been automatically added to your tasks in Outlook. Look for them, here:"
+            Visible: =ShowProfilePageTip
+            Width: =276
+            X: =795
+            Y: =60
+      - MyProfilePopUpTitle:
+          Control: Label@2.5.1
+          Group: MyProfilePopUpGroup
+          Properties:
+            FocusedBorderColor: =MyProfilePopUpTitle.BorderColor
+            FontWeight: =FontWeight.Bold
+            HoverBorderColor: =MyProfilePopUpTitle.BorderColor
+            HoverColor: =MyProfilePopUpTitle.Color
+            HoverFill: =MyProfilePopUpTitle.Fill
+            PressedBorderColor: =MyProfilePopUpTitle.BorderColor
+            PressedColor: =MyProfilePopUpTitle.Color
+            PressedFill: =MyProfilePopUpTitle.Fill
+            Size: =10.5
+            Text: ="Keep track of your tasks!"
+            Visible: =ShowProfilePageTip
+            Width: =234
+            X: =795
+            Y: =27
+      - MyProfilePopUpicon1:
+          Control: Classic/Icon@2.5.0
+          Group: MyProfilePopUpGroup
+          Properties:
+            DisabledFill: =MyProfilePopUpicon1.Fill
+            FocusedBorderColor: =MyProfilePopUpicon1.BorderColor
+            Height: =15
+            HoverBorderColor: =ColorFade(MyProfilePopUpicon1.BorderColor, 20%)
+            HoverColor: =ColorFade(MyProfilePopUpicon1.Color, 20%)
+            HoverFill: =MyProfilePopUpicon1.Fill
+            Icon: =Icon.Cancel
+            OnSelect: =Set(ShowProfilePageTip,false)
+            PressedBorderColor: =ColorFade(MyProfilePopUpicon1.BorderColor, -20%)
+            PressedColor: =ColorFade(MyProfilePopUpicon1.Color, -20%)
+            PressedFill: =MyProfilePopUpicon1.Fill
+            Visible: =ShowProfilePageTip
+            Width: =15
+            X: =1267
+            Y: =35

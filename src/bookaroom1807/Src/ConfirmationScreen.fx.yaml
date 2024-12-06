@@ -1,0 +1,215 @@
+ConfirmationScreen As screen:
+    Height: =Max(App.Height, App.DesignHeight)
+    OnVisible: |
+        =If(IsBooking,
+            UpdateContext({ShowLoading: true});
+                If(!BookForMeeting,
+                    Office365.V2CalendarPostItem(MyCalendar, User().FullName & "'s Booking", StartDateTimeUTC, EndDateTimeUTC, 
+                    {RequiredAttendees:RoomsGallery.Selected.Email, Location: RoomsGallery.Selected.Name, Importance: "Normal", ShowAs: "Busy"}),
+                    
+                    ClearCollect(RequiredAttendeesNoRoom, ForAll(Split(MeetingsGallery.Selected.RequiredAttendees, ";"), {Result: ThisRecord.Value}));
+                    ForAll(AllRooms, RemoveIf(RequiredAttendeesNoRoom, Address = Result));
+                    ClearCollect(RequiredAttendeesNoRoom, Concat(RequiredAttendeesNoRoom, Result & ";"));
+                    ClearCollect(RequiredAttendeesNoRoom, ForAll(Split(First(RequiredAttendeesNoRoom).Value, ";;"), {Result: ThisRecord.Value}));
+                    Set(RequiredAttendeesFinal, First(RequiredAttendeesNoRoom).Result);
+                    Set(RequiredAttendeesTrue, RoomsGallery.Selected.Email & ";" & RequiredAttendeesFinal);
+                    Office365.V2CalendarPatchItem(MyCalendar, MeetingsGallery.Selected.Id, If(MeetingsGallery.Selected.Subject = User().FullName & "'s Skype Meeting", User().FullName & "'s Booking", MeetingsGallery.Selected.Subject), StartDateTimeUTC, EndDateTimeUTC, {RequiredAttendees: RequiredAttendeesTrue, OptionalAttendees: MeetingsGallery.Selected.OptionalAttendees, Body: "Room has been updated to " & RoomsGallery.Selected.Name, Location: RoomsGallery.Selected.Name, Importance: "Normal", ShowAs: "Busy"})
+                    );
+        
+            UpdateContext({ShowLoading: false})
+        );
+        Set(IsBooking, false)
+    Orientation: =If(ConfirmationScreen.Width < ConfirmationScreen.Height, Layout.Vertical, Layout.Horizontal)
+    Size: =1 + CountRows(App.SizeBreakpoints) - CountIf(App.SizeBreakpoints, Value >= ConfirmationScreen.Width)
+    Width: =Max(App.Width, App.DesignWidth)
+
+    Image3 As image:
+        FocusedBorderColor: =Image3.BorderColor
+        Height: =768
+        HoverBorderColor: =ColorFade(Image3.BorderColor, 20%)
+        HoverFill: =ColorFade(Image3.Fill, 20%)
+        Image: ='confirm-bg-copy-2@3x'
+        ImagePosition: =ImagePosition.Fill
+        PressedBorderColor: =ColorFade(Image3.BorderColor, -20%)
+        PressedFill: =ColorFade(Image3.Fill, -20%)
+        Width: =856
+        ZIndex: =1
+
+    icon7 As icon.EmojiSmile:
+        Color: =Color.White
+        DisabledFill: =icon7.Fill
+        DisplayMode: =DisplayMode.View
+        FocusedBorderColor: =icon7.BorderColor
+        Height: =80
+        HoverBorderColor: =ColorFade(icon7.BorderColor, 20%)
+        HoverColor: =ColorFade(icon7.Color, 20%)
+        HoverFill: =icon7.Fill
+        Icon: =Icon.EmojiSmile
+        PressedBorderColor: =ColorFade(icon7.BorderColor, -20%)
+        PressedColor: =ColorFade(icon7.Color, -20%)
+        PressedFill: =icon7.Fill
+        Visible: =!ShowLoading
+        Width: =80
+        X: =Image3.X + Image3.Width/2 - icon7.Width/2
+        Y: =Image3.Y + Image3.Height/2 - icon7.Height/2 - Label18.Height/2 - 5
+        ZIndex: =2
+
+    Label18 As label:
+        Align: =LayoutAlignItems.Center
+        AutoHeight: =true
+        Color: =RGBA(255, 255, 255, 1)
+        FocusedBorderColor: =Label18.BorderColor
+        Height: =78
+        HoverBorderColor: =Label18.BorderColor
+        HoverColor: =Label18.Color
+        HoverFill: =Label18.Fill
+        PressedBorderColor: =Label18.BorderColor
+        PressedColor: =Label18.Color
+        PressedFill: =Label18.Fill
+        Size: =35
+        Text: =If(ShowLoading, "Setting up your meeting...", "Booked!")
+        Width: =350
+        X: =Image3.X + Image3.Width/2 - Label18.Width/2
+        Y: =Image3.Y + Image3.Height/2 - Label18.Height/2 + icon7.Height/2 + 5
+        ZIndex: =3
+
+    LabelTextRoomList As label:
+        Align: =LayoutAlignItems.Center
+        FocusedBorderColor: =LabelTextRoomList.BorderColor
+        FontWeight: =FontWeight.Semibold
+        Height: =46
+        HoverBorderColor: =LabelTextRoomList.BorderColor
+        HoverColor: =LabelTextRoomList.Color
+        HoverFill: =LabelTextRoomList.Fill
+        PressedBorderColor: =LabelTextRoomList.BorderColor
+        PressedColor: =LabelTextRoomList.Color
+        PressedFill: =LabelTextRoomList.Fill
+        Size: =20
+        Text: =RoomsListsGallery.Selected.Name
+        Visible: =!ShowLoading
+        Width: =Parent.Width - Image3.Width
+        X: =Image3.Width
+        Y: =HtmlRoomConfirm.Y+HtmlRoomConfirm.Height
+        ZIndex: =4
+
+    HtmlRoomConfirm As htmlViewer:
+        AutoHeight: =true
+        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+        Height: =58
+        HoverBorderColor: =HtmlRoomConfirm.BorderColor
+        HtmlText: |-
+            ="<div style=""text-align:center"">" & RoomsGallery.Selected.Name & "</div>"
+        PaddingLeft: =25
+        PaddingRight: =25
+        PressedBorderColor: =HtmlRoomConfirm.BorderColor
+        Size: =24
+        Visible: =!ShowLoading
+        Width: =Parent.Width - Image3.Width
+        X: =Image3.Width
+        Y: =170
+        ZIndex: =5
+
+    LabelTimeConfirm As label:
+        Align: =LayoutAlignItems.Center
+        FocusedBorderColor: =LabelTimeConfirm.BorderColor
+        FontWeight: =FontWeight.Lighter
+        Height: =46
+        HoverBorderColor: =LabelTimeConfirm.BorderColor
+        HoverColor: =LabelTimeConfirm.Color
+        HoverFill: =LabelTimeConfirm.Fill
+        PaddingLeft: =25
+        PaddingRight: =25
+        PressedBorderColor: =LabelTimeConfirm.BorderColor
+        PressedColor: =LabelTimeConfirm.Color
+        PressedFill: =LabelTimeConfirm.Fill
+        Size: =24
+        Text: =Text(StartDateTime, DateTimeFormat.ShortTime) & " - " & Text(EndDateTime, DateTimeFormat.ShortTime)
+        Visible: =!ShowLoading
+        Width: =Parent.Width-Image3.Width
+        X: =Image3.Width
+        Y: =If(IsBlank(LabelTextRoomList.Text), HtmlRoomConfirm.Y + HtmlRoomConfirm.Height,  HtmlRoomConfirm.Y + HtmlRoomConfirm.Height) + 20
+        ZIndex: =6
+
+    Label19_2 As label:
+        Align: =LayoutAlignItems.Center
+        FocusedBorderColor: =Label19_2.BorderColor
+        Height: =46
+        HoverBorderColor: =Label19_2.BorderColor
+        HoverColor: =Label19_2.Color
+        HoverFill: =Label19_2.Fill
+        PaddingLeft: =25
+        PaddingRight: =25
+        PressedBorderColor: =Label19_2.BorderColor
+        PressedColor: =Label19_2.Color
+        PressedFill: =Label19_2.Fill
+        Size: =22
+        Text: =Text(DateSelected, "[$-en-US]mmmm dd, yyyy")
+        Visible: =!ShowLoading
+        Width: =Parent.Width - Image3.Width
+        X: =Image3.Width
+        Y: =LabelTimeConfirm.Y + LabelTimeConfirm.Height + 10
+        ZIndex: =7
+
+    Button16 As button:
+        BorderColor: =RGBA(18,107,240,1)
+        BorderThickness: =1
+        Color: =RGBA(18, 107, 240, 1)
+        DisabledBorderColor: =ColorFade(Button16.BorderColor, 70%)
+        DisplayMode: =If(ShowLoading, DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: =Color.White
+        FocusedBorderColor: =Button16.BorderColor
+        FocusedBorderThickness: =0
+        Height: =48
+        HoverBorderColor: =ColorFade(Button16.BorderColor, 20%)
+        HoverColor: =Button16.Color
+        HoverFill: =ColorFade(Button16.Fill, 20%)
+        OnSelect: |-
+            =Set(ChosenMeeting, Blank());
+            Set(StartDateTime, Blank());
+            Set(StartDateTimeUTC, Blank());
+            Set(EndDateTime, Blank());
+            Set(EndDateTimeUTC, Blank());
+            Navigate(LandingScreen, ScreenTransition.Cover)
+        PressedBorderColor: =Button16.Fill
+        PressedColor: =Button16.Fill
+        PressedFill: =Button16.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =16
+        Text: ="Book another room"
+        Width: =274
+        X: =Image3.Width + (Parent.Width - Image3.Width)/2 - Button16.Width/2
+        Y: =545
+        ZIndex: =8
+
+    Button16_1 As button:
+        BorderColor: =ColorFade(Button16_1.Fill, -15%)
+        BorderThickness: =0
+        Color: =Color.White
+        DisabledBorderColor: =ColorFade(Button16_1.BorderColor, 70%)
+        DisplayMode: =If(ShowLoading, DisplayMode.Disabled, DisplayMode.Edit)
+        Fill: =RGBA(18,107,240,1)
+        FocusedBorderColor: =Button16_1.BorderColor
+        FocusedBorderThickness: =0
+        FontWeight: =FontWeight.Normal
+        Height: =48
+        HoverBorderColor: =ColorFade(Button16_1.BorderColor, 20%)
+        HoverColor: =Button16_1.Color
+        HoverFill: =ColorFade(Button16_1.Fill, 20%)
+        OnSelect: =Exit(false)
+        PressedBorderColor: =Button16_1.Fill
+        PressedColor: =Button16_1.Fill
+        PressedFill: =Button16_1.Color
+        RadiusBottomLeft: =5
+        RadiusBottomRight: =5
+        RadiusTopLeft: =5
+        RadiusTopRight: =5
+        Size: =16
+        Text: ="DONE"
+        Width: =274
+        X: =Image3.Width + (Parent.Width - Image3.Width)/2 - Button16_1.Width/2
+        Y: =640
+        ZIndex: =9
+

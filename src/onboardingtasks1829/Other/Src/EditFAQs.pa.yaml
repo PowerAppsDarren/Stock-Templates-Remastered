@@ -1,0 +1,362 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  EditFAQs:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |+
+        =Clear(Indexes);
+        Clear(DataToFAQ);
+        ForAll(FAQs,
+            Collect(Indexes, { Value: If(And(CountRows(Indexes) > 0, Not(IsBlank(Indexes))), Last(Indexes).Value + 1, 1) });
+            Collect(DataToFAQ, { Index: Last(Indexes).Value,QuestionIndex:Last(Indexes).Value, Question:Question,Answer:Answer,Valid:Not(Or(IsBlank(Question),IsBlank(Answer)))})
+        );
+        Set(FaqGalleryItemHeight,248)
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - EditFAQ:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =768
+            Width: =Parent.Width
+          Children:
+            - EditFAQDataCard:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =EditFAQButton.Y + EditFAQButton.Height + 70
+                  Width: =Parent.Width
+                Children:
+                  - EditFAQTitleLabel:
+                      Control: Label@2.5.1
+                      Group: EditFAQTitleBarGroup
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditFAQTitleLabel.BorderColor
+                        Height: =50
+                        HoverBorderColor: =EditFAQTitleLabel.BorderColor
+                        HoverColor: =EditFAQTitleLabel.Color
+                        HoverFill: =EditFAQTitleLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditFAQTitleLabel.BorderColor
+                        PressedColor: =EditFAQTitleLabel.Color
+                        PressedFill: =EditFAQTitleLabel.Fill
+                        Size: |+
+                          =27
+                        Text: ="Edit FAQs"
+                        Width: =900
+                        X: =236
+                        Y: =120
+                  - EditFAQSubTitleText:
+                      Control: Label@2.5.1
+                      Group: EditFAQTitleBarGroup
+                      Properties:
+                        AutoHeight: =true
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditFAQSubTitleText.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =30
+                        HoverBorderColor: =EditFAQSubTitleText.BorderColor
+                        HoverColor: =EditFAQSubTitleText.Color
+                        HoverFill: =EditFAQSubTitleText.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditFAQSubTitleText.BorderColor
+                        PressedColor: =EditFAQSubTitleText.Color
+                        PressedFill: =EditFAQSubTitleText.Fill
+                        Size: =13.5
+                        Text: ="Add frequently asked questions pertaining to the company or onboarding process."
+                        Width: =900
+                        X: =236
+                        Y: =170
+                  - EditFAQCloseWindowButton:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        DisabledFill: =EditFAQCloseWindowButton.Fill
+                        FocusedBorderColor: =EditFAQCloseWindowButton.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =34
+                        HoverBorderColor: =ColorFade(EditFAQCloseWindowButton.BorderColor, 20%)
+                        HoverColor: =ColorFade(EditFAQCloseWindowButton.Color, 20%)
+                        HoverFill: =EditFAQCloseWindowButton.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Navigate(CompanyScreen,BorderStyle.None)
+                        PressedBorderColor: =ColorFade(EditFAQCloseWindowButton.BorderColor, -20%)
+                        PressedColor: =ColorFade(EditFAQCloseWindowButton.Color, -20%)
+                        PressedFill: =EditFAQCloseWindowButton.Fill
+                        Width: =34
+                        X: =1302
+                        Y: =30
+                  - EditFAQGallery:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Properties:
+                        DelayItemLoading: =false
+                        Height: =CountRows(DataToFAQ)*FaqGalleryItemHeight
+                        Items: =Indexes
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =EditFAQGallery.BorderColor
+                        ShowScrollbar: =false
+                        TemplateSize: =248
+                        Width: =974
+                        X: =236
+                        Y: =220
+                      Children:
+                        - EditFAQGallerySeparator:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =EditFAQGallerySeparator.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =EditFAQGallerySeparator.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =EditFAQGallerySeparator.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =EditFAQGallerySeparator.Fill
+                              Width: =895
+                              Y: =Parent.TemplateHeight - EditFAQGallerySeparator.Height
+                        - EditFAQQuestionLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =EditFAQQuestionLabel.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EditFAQQuestionLabel.BorderColor
+                              HoverColor: =EditFAQQuestionLabel.Color
+                              HoverFill: =EditFAQQuestionLabel.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditFAQQuestionLabel.BorderColor
+                              PressedColor: =EditFAQQuestionLabel.Color
+                              PressedFill: =EditFAQQuestionLabel.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="Question " & LookUp(DataToFAQ,Index = ThisItem.Value).QuestionIndex
+                              Width: =800
+                              X: =1
+                              Y: =21
+                        - EditFAQAnswerLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =EditFAQAnswerLabel.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EditFAQAnswerLabel.BorderColor
+                              HoverColor: =EditFAQAnswerLabel.Color
+                              HoverFill: =EditFAQAnswerLabel.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditFAQAnswerLabel.BorderColor
+                              PressedColor: =EditFAQAnswerLabel.Color
+                              PressedFill: =EditFAQAnswerLabel.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="Answer " & LookUp(DataToFAQ,Index = ThisItem.Value).QuestionIndex
+                              Width: =800
+                              X: =1
+                              Y: =113
+                        - EditFAQQuestionsInputText:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =If(IsBlank(EditFAQQuestionsInputText.Text),RGBA(255, 0, 0, 1),RGBA(202, 202, 202, 1))
+                              BorderThickness: =1
+                              Default: =LookUp(DataToFAQ,Index = ThisItem.Value).Question
+                              FocusedBorderColor: =EditFAQQuestionsInputText.BorderColor
+                              FocusedBorderThickness: =1
+                              Height: =44
+                              OnChange: =Patch(DataToFAQ,LookUp(DataToFAQ,Index = ThisItem.Value),{Question:EditFAQQuestionsInputText.Text,Valid:Not(IsBlank(EditFAQAnswerInputText.Text)) && Not(IsBlank(EditFAQQuestionsInputText.Text))})
+                              PaddingBottom: =0
+                              PaddingLeft: =15
+                              PaddingRight: =15
+                              PaddingTop: =0
+                              PressedBorderColor: =EditFAQQuestionsInputText.HoverBorderColor
+                              PressedColor: =EditFAQQuestionsInputText.Color
+                              PressedFill: =EditFAQQuestionsInputText.Fill
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =10.5
+                              TabIndex: =ThisItem.Value * 2 - 1
+                              Width: =850
+                              X: =1
+                              Y: =49
+                        - EditFAQAnswerInputText:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =If(IsBlank(EditFAQAnswerInputText.Text),RGBA(255, 0, 0, 1),RGBA(202, 202, 202, 1))
+                              BorderThickness: =1
+                              Default: =LookUp(DataToFAQ,Index = ThisItem.Value).Answer
+                              FocusedBorderColor: =EditFAQAnswerInputText.BorderColor
+                              FocusedBorderThickness: =1
+                              Height: =88
+                              Mode: =TextMode.MultiLine
+                              OnChange: =Patch(DataToFAQ,LookUp(DataToFAQ,Index = ThisItem.Value),{Answer:EditFAQAnswerInputText.Text,Valid:Not(IsBlank(EditFAQAnswerInputText.Text)) && Not(IsBlank(EditFAQQuestionsInputText.Text))})
+                              PaddingBottom: =15
+                              PaddingLeft: =15
+                              PaddingRight: =15
+                              PaddingTop: =15
+                              PressedBorderColor: =EditFAQAnswerInputText.HoverBorderColor
+                              PressedColor: =EditFAQAnswerInputText.Color
+                              PressedFill: =EditFAQAnswerInputText.Fill
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =10.5
+                              TabIndex: =ThisItem.Value * 2
+                              Width: =850
+                              X: =1
+                              Y: =141
+                        - EditFAQCloseIcon:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              DisabledFill: =EditFAQCloseIcon.Fill
+                              FocusedBorderColor: =EditFAQCloseIcon.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =24
+                              HoverBorderColor: =ColorFade(EditFAQCloseIcon.BorderColor, 20%)
+                              HoverColor: =ColorFade(EditFAQCloseIcon.Color, 20%)
+                              HoverFill: =EditFAQCloseIcon.Fill
+                              Icon: =Icon.Cancel
+                              PaddingBottom: =4
+                              PaddingLeft: =4
+                              PaddingRight: =4
+                              PaddingTop: =4
+                              PressedBorderColor: =ColorFade(EditFAQCloseIcon.BorderColor, -20%)
+                              PressedColor: =ColorFade(EditFAQCloseIcon.Color, -20%)
+                              PressedFill: =EditFAQCloseIcon.Fill
+                              Width: =24
+                              X: =863
+                              Y: =103
+                        - EditFAQCircle:
+                            Control: Circle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(26, 26, 84, 1)
+                              BorderThickness: =2
+                              DisabledFill: =EditFAQCircle.Fill
+                              Fill: =RGBA(0, 0, 0, 0)
+                              FocusedBorderColor: =EditFAQCircle.BorderColor
+                              Height: =24
+                              HoverFill: =EditFAQCircle.Fill
+                              OnSelect: |-
+                                =ForAll(ForAll(Filter(DataToFAQ,Index > ThisItem.Value),{OldIndex:Index,NewIndex:QuestionIndex - 1}),Patch(DataToFAQ,LookUp(DataToFAQ,Index = OldIndex),{QuestionIndex:NewIndex}));
+                                RemoveIf(DataToFAQ, Index = ThisItem.Value);
+                                Remove(Indexes, ThisItem)
+                              PressedFill: =EditFAQCircle.Fill
+                              Width: =24
+                              X: =863
+                              Y: =103
+                  - EditFAQButton:
+                      Control: Classic/Button@2.2.0
+                      Group: EditFAQButtonGroup
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(EditFAQButton.BorderColor, 70%)
+                        DisplayMode: =If(false in DataToFAQ.Valid,DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =EditFAQButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        HoverBorderColor: =ColorFade(EditFAQButton.BorderColor, 20%)
+                        HoverColor: =EditFAQButton.Color
+                        HoverFill: =ColorFade(EditFAQButton.Fill, 20%)
+                        OnSelect: |-
+                          =Collect(Indexes, { Value: Max(Indexes, Value) + 1 });
+                          Collect(DataToFAQ,{Index:Last(Indexes).Value,QuestionIndex:CountRows(DataToFAQ) + 1,Question:Blank(),Answer:Blank(),Valid:false})
+                        PaddingBottom: =0
+                        PaddingLeft: =32
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditFAQButton.Fill
+                        PressedColor: =EditFAQButton.Fill
+                        PressedFill: =EditFAQButton.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =12
+                        Text: ="Add FAQ"
+                        Width: =131
+                        X: =236
+                        Y: =EditFAQGallery.Height + EditFAQGallery.Y + 10
+                  - EditFAQButtonIcon:
+                      Control: Classic/Icon@2.5.0
+                      Group: EditFAQButtonGroup
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =EditFAQButtonIcon.Fill
+                        DisplayMode: =If(false in DataToFAQ.Valid,DisplayMode.Disabled,DisplayMode.Edit)
+                        FocusedBorderColor: =EditFAQButtonIcon.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =24
+                        HoverBorderColor: =ColorFade(EditFAQButtonIcon.BorderColor, 20%)
+                        HoverColor: =ColorFade(EditFAQButtonIcon.Color, 20%)
+                        HoverFill: =EditFAQButtonIcon.Fill
+                        Icon: =Icon.Add
+                        OnSelect: =Select(EditFAQButton)
+                        PressedBorderColor: =ColorFade(EditFAQButtonIcon.BorderColor, -20%)
+                        PressedColor: =ColorFade(EditFAQButtonIcon.Color, -20%)
+                        PressedFill: =EditFAQButtonIcon.Fill
+                        Width: =24
+                        X: =251
+                        Y: =EditFAQButton.Y+8
+                  - EditFAQSaveButton:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        BorderColor: =ColorFade(EditFAQSaveButton.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(EditFAQSaveButton.BorderColor, 70%)
+                        DisplayMode: =If(false in DataToFAQ.Valid,DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =EditFAQSaveButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        HoverBorderColor: =ColorFade(EditFAQSaveButton.BorderColor, 20%)
+                        HoverColor: =EditFAQSaveButton.Color
+                        HoverFill: =ColorFade(EditFAQSaveButton.Fill, 20%)
+                        OnSelect: |-
+                          =RemoveIf(FAQs,true);
+                          ForAll(DataToFAQ, Patch(FAQs,Defaults(FAQs), {Question: Question, Answer: Answer}));
+                          Navigate(CompanyScreen,BorderStyle.None)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditFAQSaveButton.Fill
+                        PressedColor: =EditFAQSaveButton.Fill
+                        PressedFill: =EditFAQSaveButton.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =12
+                        Text: ="Save"
+                        Width: =99
+                        X: =391
+                        Y: =EditFAQButton.Y

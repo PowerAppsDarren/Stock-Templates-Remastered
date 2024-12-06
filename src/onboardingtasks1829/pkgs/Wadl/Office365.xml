@@ -1,0 +1,1833 @@
+<application xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:service="https://msmanaged-na.azure-apim.net/apim/office365" xmlns:siena="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11" siena:serviceId="Office365" xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="Office365">Office 365 connector enables interaction with Office 365. For example: creating, editing, and updating contacts and calendar items.</doc>
+  <grammars>
+    <jsonTypes targetNamespace="https://msmanaged-na.azure-apim.net/apim/office365" xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+      <string name="TableMetadata_name_def" />
+      <string name="TableMetadata_title_def" />
+      <string name="TableMetadata_x-ms-permission_def" />
+      <object name="TableMetadata">
+        <property name="name" type="string" />
+        <property name="title" type="string" />
+        <property name="x-ms-permission" type="string" />
+        <property name="x-ms-capabilities" typeRef="TableCapabilitiesMetadata" />
+        <property name="schema" typeRef="Object" />
+        <property name="referencedEntities" typeRef="Object" />
+      </object>
+      <boolean name="TableCapabilitiesMetadata_isOnlyServerPagable_def" />
+      <string name="TableCapabilitiesMetadata_filterFunctionSupport_def_items_def" />
+      <array type="string" name="TableCapabilitiesMetadata_filterFunctionSupport_def" />
+      <object name="TableCapabilitiesMetadata">
+        <property name="sortRestrictions" typeRef="TableSortRestrictionsMetadata" />
+        <property name="filterRestrictions" typeRef="TableFilterRestrictionsMetadata" />
+        <property name="isOnlyServerPagable" type="boolean" />
+        <property name="filterFunctionSupport" typeRef="TableCapabilitiesMetadata_filterFunctionSupport_def" />
+      </object>
+      <object name="Object" />
+      <boolean name="TableSortRestrictionsMetadata_sortable_def" />
+      <string name="TableSortRestrictionsMetadata_unsortableProperties_def_items_def" />
+      <array type="string" name="TableSortRestrictionsMetadata_unsortableProperties_def" />
+      <string name="TableSortRestrictionsMetadata_ascendingOnlyProperties_def_items_def" />
+      <array type="string" name="TableSortRestrictionsMetadata_ascendingOnlyProperties_def" />
+      <object name="TableSortRestrictionsMetadata">
+        <property name="sortable" type="boolean" />
+        <property name="unsortableProperties" typeRef="TableSortRestrictionsMetadata_unsortableProperties_def" />
+        <property name="ascendingOnlyProperties" typeRef="TableSortRestrictionsMetadata_ascendingOnlyProperties_def" />
+      </object>
+      <boolean name="TableFilterRestrictionsMetadata_filterable_def" />
+      <string name="TableFilterRestrictionsMetadata_nonFilterableProperties_def_items_def" />
+      <array type="string" name="TableFilterRestrictionsMetadata_nonFilterableProperties_def" />
+      <string name="TableFilterRestrictionsMetadata_requiredProperties_def_items_def" />
+      <array type="string" name="TableFilterRestrictionsMetadata_requiredProperties_def" />
+      <object name="TableFilterRestrictionsMetadata">
+        <property name="filterable" type="boolean" />
+        <property name="nonFilterableProperties" typeRef="TableFilterRestrictionsMetadata_nonFilterableProperties_def" />
+        <property name="requiredProperties" typeRef="TableFilterRestrictionsMetadata_requiredProperties_def" />
+      </object>
+      <array typeRef="CalendarEventBackend" name="CalendarEventList_value_def" />
+      <object name="CalendarEventList">
+        <property name="value" typeRef="CalendarEventList_value_def" />
+      </object>
+      <string name="CalendarEventBackend_Id_def" />
+      <array typeRef="Attendee" name="CalendarEventBackend_Attendees_def" />
+      <string name="CalendarEventBackend_BodyPreview_def" />
+      <string name="CalendarEventBackend_Categories_def_items_def" />
+      <array type="string" name="CalendarEventBackend_Categories_def" />
+      <string name="CalendarEventBackend_ChangeKey_def" />
+      <dateTimeString name="CalendarEventBackend_DateTimeCreated_def" />
+      <dateTimeString name="CalendarEventBackend_DateTimeLastModified_def" />
+      <dateTimeString name="CalendarEventBackend_End_def" />
+      <string name="CalendarEventBackend_EndTimeZone_def" />
+      <boolean name="CalendarEventBackend_HasAttachments_def" />
+      <string name="CalendarEventBackend_Importance_def" />
+      <boolean name="CalendarEventBackend_IsAllDay_def" />
+      <boolean name="CalendarEventBackend_IsCancelled_def" />
+      <boolean name="CalendarEventBackend_IsOrganizer_def" />
+      <integer name="CalendarEventBackend_Reminder_def" />
+      <boolean name="CalendarEventBackend_ResponseRequested_def" />
+      <string name="CalendarEventBackend_SeriesMasterId_def" />
+      <string name="CalendarEventBackend_ShowAs_def" />
+      <dateTimeString name="CalendarEventBackend_Start_def" />
+      <string name="CalendarEventBackend_StartTimeZone_def" />
+      <string name="CalendarEventBackend_Subject_def" />
+      <string name="CalendarEventBackend_Type_def" />
+      <string name="CalendarEventBackend_WebLink_def" />
+      <object name="CalendarEventBackend">
+        <property name="Id" type="string" />
+        <property name="Attendees" typeRef="CalendarEventBackend_Attendees_def" />
+        <property name="Body" typeRef="ItemBody" />
+        <property name="BodyPreview" type="string" />
+        <property name="Categories" typeRef="CalendarEventBackend_Categories_def" />
+        <property name="ChangeKey" type="string" />
+        <property name="DateTimeCreated" typeRef="CalendarEventBackend_DateTimeCreated_def" />
+        <property name="DateTimeLastModified" typeRef="CalendarEventBackend_DateTimeLastModified_def" />
+        <property name="End" typeRef="CalendarEventBackend_End_def" />
+        <property name="EndTimeZone" type="string" />
+        <property name="HasAttachments" type="boolean" />
+        <property name="Importance" type="string" />
+        <property name="IsAllDay" type="boolean" />
+        <property name="IsCancelled" type="boolean" />
+        <property name="IsOrganizer" type="boolean" />
+        <property name="Location" typeRef="Location" />
+        <property name="Organizer" typeRef="Recipient" />
+        <property name="Recurrence" typeRef="PatternedRecurrence" />
+        <property name="Reminder" type="integer" />
+        <property name="ResponseRequested" type="boolean" />
+        <property name="ResponseStatus" typeRef="ResponseStatus" />
+        <property name="SeriesMasterId" type="string" />
+        <property name="ShowAs" type="string" />
+        <property name="Start" typeRef="CalendarEventBackend_Start_def" />
+        <property name="StartTimeZone" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Type" type="string" />
+        <property name="WebLink" type="string" />
+      </object>
+      <string name="Attendee_Type_def" />
+      <object name="Attendee">
+        <property name="Status" typeRef="ResponseStatus" />
+        <property name="Type" type="string" />
+        <property name="EmailAddress" typeRef="EmailAddress" />
+      </object>
+      <string name="ItemBody_ContentType_def" />
+      <string name="ItemBody_Content_def" />
+      <object name="ItemBody">
+        <property name="ContentType" type="string" />
+        <property name="Content" type="string" />
+      </object>
+      <string name="Location_DisplayName_def" />
+      <object name="Location">
+        <property name="DisplayName" type="string" />
+        <property name="Address" typeRef="PhysicalAddress" />
+        <property name="Coordinates" typeRef="GeoCoordinates" />
+      </object>
+      <object name="Recipient">
+        <property name="EmailAddress" typeRef="EmailAddress" />
+      </object>
+      <object name="PatternedRecurrence">
+        <property name="Pattern" typeRef="RecurrencePattern" />
+        <property name="Range" typeRef="RecurrenceRange" />
+      </object>
+      <string name="ResponseStatus_Response_def" />
+      <dateTimeString name="ResponseStatus_Time_def" />
+      <object name="ResponseStatus">
+        <property name="Response" type="string" />
+        <property name="Time" typeRef="ResponseStatus_Time_def" />
+      </object>
+      <string name="EmailAddress_Name_def" />
+      <string name="EmailAddress_Address_def" />
+      <object name="EmailAddress">
+        <property name="Name" type="string" />
+        <property name="Address" type="string" />
+      </object>
+      <string name="PhysicalAddress_Street_def" />
+      <string name="PhysicalAddress_City_def" />
+      <string name="PhysicalAddress_State_def" />
+      <string name="PhysicalAddress_CountryOrRegion_def" />
+      <string name="PhysicalAddress_PostalCode_def" />
+      <object name="PhysicalAddress">
+        <property name="Street" type="string" />
+        <property name="City" type="string" />
+        <property name="State" type="string" />
+        <property name="CountryOrRegion" type="string" />
+        <property name="PostalCode" type="string" />
+      </object>
+      <number name="GeoCoordinates_Altitude_def" />
+      <number name="GeoCoordinates_Latitude_def" />
+      <number name="GeoCoordinates_Longitude_def" />
+      <number name="GeoCoordinates_Accuracy_def" />
+      <number name="GeoCoordinates_AltitudeAccuracy_def" />
+      <object name="GeoCoordinates">
+        <property name="Altitude" type="number" />
+        <property name="Latitude" type="number" />
+        <property name="Longitude" type="number" />
+        <property name="Accuracy" type="number" />
+        <property name="AltitudeAccuracy" type="number" />
+      </object>
+      <string name="RecurrencePattern_Type_def" />
+      <integer name="RecurrencePattern_Interval_def" />
+      <integer name="RecurrencePattern_Month_def" />
+      <integer name="RecurrencePattern_DayOfMonth_def" />
+      <string name="RecurrencePattern_DaysOfWeek_def_items_def" />
+      <array type="string" name="RecurrencePattern_DaysOfWeek_def" />
+      <string name="RecurrencePattern_FirstDayOfWeek_def" />
+      <string name="RecurrencePattern_Index_def" />
+      <object name="RecurrencePattern">
+        <property name="Type" type="string" />
+        <property name="Interval" type="integer" />
+        <property name="Month" type="integer" />
+        <property name="DayOfMonth" type="integer" />
+        <property name="DaysOfWeek" typeRef="RecurrencePattern_DaysOfWeek_def" />
+        <property name="FirstDayOfWeek" type="string" />
+        <property name="Index" type="string" />
+      </object>
+      <string name="RecurrenceRange_Type_def" />
+      <dateTimeString name="RecurrenceRange_StartDate_def" />
+      <dateTimeString name="RecurrenceRange_EndDate_def" />
+      <integer name="RecurrenceRange_NumberOfOccurrences_def" />
+      <object name="RecurrenceRange">
+        <property name="Type" type="string" />
+        <property name="StartDate" typeRef="RecurrenceRange_StartDate_def" />
+        <property name="EndDate" typeRef="RecurrenceRange_EndDate_def" />
+        <property name="NumberOfOccurrences" type="integer" />
+      </object>
+      <array typeRef="CalendarEventClientReceive" name="PaginatedListResponse_CalendarEventClientReceive__Values_def" />
+      <string name="PaginatedListResponse_CalendarEventClientReceive__NextLink_def" />
+      <object name="PaginatedListResponse_CalendarEventClientReceive_">
+        <property name="Values" typeRef="PaginatedListResponse_CalendarEventClientReceive__Values_def" />
+        <property name="NextLink" type="string" />
+      </object>
+      <string name="CalendarEventClientReceive_Id_def" />
+      <dateTimeString name="CalendarEventClientReceive_DateTimeCreated_def" />
+      <dateTimeString name="CalendarEventClientReceive_DateTimeLastModified_def" />
+      <string name="CalendarEventClientReceive_TimeZone_def" />
+      <string name="CalendarEventClientReceive_Subject_def" />
+      <dateTimeString name="CalendarEventClientReceive_Start_def" />
+      <dateTimeString name="CalendarEventClientReceive_End_def" />
+      <string name="CalendarEventClientReceive_RequiredAttendees_def" />
+      <string name="CalendarEventClientReceive_OptionalAttendees_def" />
+      <string name="CalendarEventClientReceive_Body_def" />
+      <boolean name="CalendarEventClientReceive_IsHtml_def" />
+      <string name="CalendarEventClientReceive_Location_def" />
+      <string name="CalendarEventClientReceive_Importance_def" />
+      <boolean name="CalendarEventClientReceive_IsAllDay_def" />
+      <string name="CalendarEventClientReceive_Recurrence_def" />
+      <dateTimeString name="CalendarEventClientReceive_RecurrenceEnd_def" />
+      <integer name="CalendarEventClientReceive_NumberOfOccurrences_def" />
+      <integer name="CalendarEventClientReceive_Reminder_def" />
+      <string name="CalendarEventClientReceive_ShowAs_def" />
+      <boolean name="CalendarEventClientReceive_ResponseRequested_def" />
+      <object name="CalendarEventClientReceive">
+        <property name="Id" type="string" />
+        <property name="DateTimeCreated" typeRef="CalendarEventClientReceive_DateTimeCreated_def" />
+        <property name="DateTimeLastModified" typeRef="CalendarEventClientReceive_DateTimeLastModified_def" />
+        <property name="TimeZone" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Start" typeRef="CalendarEventClientReceive_Start_def" />
+        <property name="End" typeRef="CalendarEventClientReceive_End_def" />
+        <property name="RequiredAttendees" type="string" />
+        <property name="OptionalAttendees" type="string" />
+        <property name="Body" type="string" />
+        <property name="IsHtml" type="boolean" />
+        <property name="Location" type="string" />
+        <property name="Importance" type="string" />
+        <property name="IsAllDay" type="boolean" />
+        <property name="Recurrence" type="string" />
+        <property name="RecurrenceEnd" typeRef="CalendarEventClientReceive_RecurrenceEnd_def" />
+        <property name="NumberOfOccurrences" type="integer" />
+        <property name="Reminder" type="integer" />
+        <property name="ShowAs" type="string" />
+        <property name="ResponseRequested" type="boolean" />
+      </object>
+      <array typeRef="FilePickerFile" name="EntityListResponse_FilePickerFile__value_def" />
+      <string name="EntityListResponse_FilePickerFile___odata_nextLink_def" />
+      <object name="EntityListResponse_FilePickerFile_">
+        <property name="value" typeRef="EntityListResponse_FilePickerFile__value_def" />
+        <property name="@odata.nextLink" type="string" />
+      </object>
+      <string name="FilePickerFile_Id_def" />
+      <string name="FilePickerFile_DisplayName_def" />
+      <boolean name="FilePickerFile_IsFolder_def" />
+      <string name="FilePickerFile_Path_def" />
+      <object name="FilePickerFile">
+        <property name="Id" type="string" />
+        <property name="DisplayName" type="string" />
+        <property name="IsFolder" type="boolean" />
+        <property name="Path" type="string" />
+      </object>
+      <string name="ClientSendMessage_From_def" />
+      <string name="ClientSendMessage_Cc_def" />
+      <string name="ClientSendMessage_Bcc_def" />
+      <string name="ClientSendMessage_To_def" />
+      <string name="ClientSendMessage_Subject_def" />
+      <string name="ClientSendMessage_Body_def" />
+      <array typeRef="ClientSendAttachment" name="ClientSendMessage_Attachments_def" />
+      <string name="ClientSendMessage_Importance_def" />
+      <boolean name="ClientSendMessage_IsHtml_def" />
+      <object name="ClientSendMessage">
+        <property name="From" type="string" />
+        <property name="Cc" type="string" />
+        <property name="Bcc" type="string" />
+        <property name="To" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Body" type="string" />
+        <property name="Attachments" typeRef="ClientSendMessage_Attachments_def" />
+        <property name="Importance" type="string" />
+        <property name="IsHtml" type="boolean" />
+      </object>
+      <string name="ClientSendAttachment_Name_def" />
+      <base64Binary name="ClientSendAttachment_ContentBytes_def" />
+      <object name="ClientSendAttachment">
+        <property name="Name" type="string" />
+        <property name="ContentBytes" typeRef="ClientSendAttachment_ContentBytes_def" />
+      </object>
+      <string name="ClientReceiveMessage_From_def" />
+      <string name="ClientReceiveMessage_To_def" />
+      <string name="ClientReceiveMessage_Cc_def" />
+      <string name="ClientReceiveMessage_Bcc_def" />
+      <string name="ClientReceiveMessage_Subject_def" />
+      <string name="ClientReceiveMessage_Body_def" />
+      <string name="ClientReceiveMessage_Importance_def" />
+      <boolean name="ClientReceiveMessage_HasAttachment_def" />
+      <string name="ClientReceiveMessage_Id_def" />
+      <string name="ClientReceiveMessage_ConversationId_def" />
+      <dateTimeString name="ClientReceiveMessage_DateTimeReceived_def" />
+      <boolean name="ClientReceiveMessage_IsRead_def" />
+      <array typeRef="ClientReceiveFileAttachment" name="ClientReceiveMessage_Attachments_def" />
+      <boolean name="ClientReceiveMessage_IsHtml_def" />
+      <object name="ClientReceiveMessage">
+        <property name="From" type="string" />
+        <property name="To" type="string" />
+        <property name="Cc" type="string" />
+        <property name="Bcc" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Body" type="string" />
+        <property name="Importance" type="string" />
+        <property name="HasAttachment" type="boolean" />
+        <property name="Id" type="string" />
+        <property name="ConversationId" type="string" />
+        <property name="DateTimeReceived" typeRef="ClientReceiveMessage_DateTimeReceived_def" />
+        <property name="IsRead" type="boolean" />
+        <property name="Attachments" typeRef="ClientReceiveMessage_Attachments_def" />
+        <property name="IsHtml" type="boolean" />
+      </object>
+      <string name="ClientReceiveFileAttachment_Id_def" />
+      <string name="ClientReceiveFileAttachment_Name_def" />
+      <base64Binary name="ClientReceiveFileAttachment_ContentBytes_def" />
+      <string name="ClientReceiveFileAttachment_ContentType_def" />
+      <integer name="ClientReceiveFileAttachment_Size_def" />
+      <object name="ClientReceiveFileAttachment">
+        <property name="Id" type="string" />
+        <property name="Name" type="string" />
+        <property name="ContentBytes" typeRef="ClientReceiveFileAttachment_ContentBytes_def" />
+        <property name="ContentType" type="string" />
+        <property name="Size" type="integer" />
+      </object>
+      <array typeRef="ClientReceiveMessage" name="TriggerBatchResponse_ClientReceiveMessage__value_def" />
+      <object name="TriggerBatchResponse_ClientReceiveMessage_">
+        <property name="value" typeRef="TriggerBatchResponse_ClientReceiveMessage__value_def" />
+      </object>
+      <string name="AutomaticRepliesSettingClient_Status_def" />
+      <string name="AutomaticRepliesSettingClient_ExternalAudience_def" />
+      <string name="AutomaticRepliesSettingClient_ScheduledStartDateTimeOffset_def" />
+      <string name="AutomaticRepliesSettingClient_ScheduledEndDateTimeOffset_def" />
+      <string name="AutomaticRepliesSettingClient_InternalReplyMessage_def" />
+      <string name="AutomaticRepliesSettingClient_ExternalReplyMessage_def" />
+      <object name="AutomaticRepliesSettingClient">
+        <property name="Status" type="string" />
+        <property name="ExternalAudience" type="string" />
+        <property name="ScheduledStartDateTimeOffset" type="string" />
+        <property name="ScheduledEndDateTimeOffset" type="string" />
+        <property name="InternalReplyMessage" type="string" />
+        <property name="ExternalReplyMessage" type="string" />
+      </object>
+      <boolean name="MailTipsClientReceive_DeliveryRestricted_def" />
+      <integer name="MailTipsClientReceive_ExternalMemberCount_def" />
+      <boolean name="MailTipsClientReceive_IsModerated_def" />
+      <boolean name="MailTipsClientReceive_MailboxFull_def" />
+      <integer name="MailTipsClientReceive_MaxMessageSize_def" />
+      <integer name="MailTipsClientReceive_TotalMemberCount_def" />
+      <object name="MailTipsClientReceive">
+        <property name="AutomaticReplies" typeRef="MailTipsAutomaticReplies" />
+        <property name="DeliveryRestricted" type="boolean" />
+        <property name="ExternalMemberCount" type="integer" />
+        <property name="IsModerated" type="boolean" />
+        <property name="MailboxFull" type="boolean" />
+        <property name="MaxMessageSize" type="integer" />
+        <property name="TotalMemberCount" type="integer" />
+      </object>
+      <string name="MailTipsAutomaticReplies_Message_def" />
+      <object name="MailTipsAutomaticReplies">
+        <property name="Message" type="string" />
+      </object>
+      <object name="DataSetsMetadata">
+        <property name="tabular" typeRef="TabularDataSetsMetadata" />
+        <property name="blob" typeRef="BlobDataSetsMetadata" />
+      </object>
+      <string name="TabularDataSetsMetadata_source_def" />
+      <string name="TabularDataSetsMetadata_displayName_def" />
+      <string name="TabularDataSetsMetadata_urlEncoding_def" />
+      <string name="TabularDataSetsMetadata_tableDisplayName_def" />
+      <string name="TabularDataSetsMetadata_tablePluralName_def" />
+      <object name="TabularDataSetsMetadata">
+        <property name="source" type="string" />
+        <property name="displayName" type="string" />
+        <property name="urlEncoding" type="string" />
+        <property name="tableDisplayName" type="string" />
+        <property name="tablePluralName" type="string" />
+      </object>
+      <string name="BlobDataSetsMetadata_source_def" />
+      <string name="BlobDataSetsMetadata_displayName_def" />
+      <string name="BlobDataSetsMetadata_urlEncoding_def" />
+      <object name="BlobDataSetsMetadata">
+        <property name="source" type="string" />
+        <property name="displayName" type="string" />
+        <property name="urlEncoding" type="string" />
+      </object>
+      <string name="OptionsEmailSubscription_NotificationUrl_def" />
+      <object name="OptionsEmailSubscription">
+        <property name="NotificationUrl" type="string" />
+        <property name="Message" typeRef="MessageWithOptions" />
+      </object>
+      <string name="MessageWithOptions_To_def" />
+      <string name="MessageWithOptions_Subject_def" />
+      <string name="MessageWithOptions_Options_def" />
+      <string name="MessageWithOptions_Body_def" />
+      <string name="MessageWithOptions_Importance_def" />
+      <array typeRef="ClientSendAttachment" name="MessageWithOptions_Attachments_def" />
+      <object name="MessageWithOptions">
+        <property name="To" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Options" type="string" />
+        <property name="Body" type="string" />
+        <property name="Importance" type="string" />
+        <property name="Attachments" typeRef="MessageWithOptions_Attachments_def" />
+      </object>
+      <string name="SubscriptionResponse_id_def" />
+      <string name="SubscriptionResponse_resource_def" />
+      <string name="SubscriptionResponse_notificationType_def" />
+      <string name="SubscriptionResponse_notificationUrl_def" />
+      <object name="SubscriptionResponse">
+        <property name="id" type="string" />
+        <property name="resource" type="string" />
+        <property name="notificationType" type="string" />
+        <property name="notificationUrl" type="string" />
+      </object>
+      <string name="ApprovalEmailResponse_SelectedOption_def" />
+      <object name="ApprovalEmailResponse">
+        <property name="SelectedOption" type="string" />
+      </object>
+      <string name="ApprovalEmailSubscription_NotificationUrl_def" />
+      <object name="ApprovalEmailSubscription">
+        <property name="NotificationUrl" type="string" />
+        <property name="Message" typeRef="ApprovalMessage" />
+      </object>
+      <string name="ApprovalMessage_To_def" />
+      <string name="ApprovalMessage_Subject_def" />
+      <string name="ApprovalMessage_Options_def" />
+      <string name="ApprovalMessage_Body_def" />
+      <string name="ApprovalMessage_Importance_def" />
+      <array typeRef="ClientSendAttachment" name="ApprovalMessage_Attachments_def" />
+      <object name="ApprovalMessage">
+        <property name="To" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Options" type="string" />
+        <property name="Body" type="string" />
+        <property name="Importance" type="string" />
+        <property name="Attachments" typeRef="ApprovalMessage_Attachments_def" />
+      </object>
+      <string name="SharedMailboxClientSendMessage_MailboxAddress_def" />
+      <string name="SharedMailboxClientSendMessage_To_def" />
+      <string name="SharedMailboxClientSendMessage_Subject_def" />
+      <string name="SharedMailboxClientSendMessage_Body_def" />
+      <string name="SharedMailboxClientSendMessage_Cc_def" />
+      <string name="SharedMailboxClientSendMessage_Bcc_def" />
+      <array typeRef="ClientSendAttachment" name="SharedMailboxClientSendMessage_Attachments_def" />
+      <string name="SharedMailboxClientSendMessage_Importance_def" />
+      <boolean name="SharedMailboxClientSendMessage_IsHtml_def" />
+      <object name="SharedMailboxClientSendMessage">
+        <property name="MailboxAddress" type="string" />
+        <property name="To" type="string" />
+        <property name="Subject" type="string" />
+        <property name="Body" type="string" />
+        <property name="Cc" type="string" />
+        <property name="Bcc" type="string" />
+        <property name="Attachments" typeRef="SharedMailboxClientSendMessage_Attachments_def" />
+        <property name="Importance" type="string" />
+        <property name="IsHtml" type="boolean" />
+      </object>
+      <array typeRef="Table" name="EntityListResponse_Table__value_def" />
+      <string name="EntityListResponse_Table___odata_nextLink_def" />
+      <object name="EntityListResponse_Table_">
+        <property name="value" typeRef="EntityListResponse_Table__value_def" />
+        <property name="@odata.nextLink" type="string" />
+      </object>
+      <string name="Table_Name_def" />
+      <string name="Table_DisplayName_def" />
+      <object name="Table">
+        <property name="Name" type="string" />
+        <property name="DisplayName" type="string" />
+      </object>
+      <string name="Item_ItemInternalId_def" />
+      <object name="Item">
+        <property name="ItemInternalId" type="string" />
+      </object>
+      <array typeRef="CalendarEventBackend" name="EntityListResponse_CalendarEventBackend__value_def" />
+      <string name="EntityListResponse_CalendarEventBackend___odata_nextLink_def" />
+      <object name="EntityListResponse_CalendarEventBackend_">
+        <property name="value" typeRef="EntityListResponse_CalendarEventBackend__value_def" />
+        <property name="@odata.nextLink" type="string" />
+      </object>
+      <array typeRef="CalendarEventClientReceive" name="EntityListResponse_CalendarEventClientReceive__value_def" />
+      <string name="EntityListResponse_CalendarEventClientReceive___odata_nextLink_def" />
+      <object name="EntityListResponse_CalendarEventClientReceive_">
+        <property name="value" typeRef="EntityListResponse_CalendarEventClientReceive__value_def" />
+        <property name="@odata.nextLink" type="string" />
+      </object>
+      <string name="CalendarEventClient_Subject_def" />
+      <dateTimeString name="CalendarEventClient_Start_def" />
+      <dateTimeString name="CalendarEventClient_End_def" />
+      <string name="CalendarEventClient_TimeZone_def" />
+      <string name="CalendarEventClient_RequiredAttendees_def" />
+      <string name="CalendarEventClient_OptionalAttendees_def" />
+      <string name="CalendarEventClient_Body_def" />
+      <boolean name="CalendarEventClient_IsHtml_def" />
+      <string name="CalendarEventClient_Location_def" />
+      <string name="CalendarEventClient_Importance_def" />
+      <boolean name="CalendarEventClient_IsAllDay_def" />
+      <string name="CalendarEventClient_Recurrence_def" />
+      <dateTimeString name="CalendarEventClient_RecurrenceEnd_def" />
+      <integer name="CalendarEventClient_NumberOfOccurrences_def" />
+      <integer name="CalendarEventClient_Reminder_def" />
+      <string name="CalendarEventClient_ShowAs_def" />
+      <boolean name="CalendarEventClient_ResponseRequested_def" />
+      <object name="CalendarEventClient">
+        <property name="Subject" type="string" />
+        <property name="Start" typeRef="CalendarEventClient_Start_def" />
+        <property name="End" typeRef="CalendarEventClient_End_def" />
+        <property name="TimeZone" type="string" />
+        <property name="RequiredAttendees" type="string" />
+        <property name="OptionalAttendees" type="string" />
+        <property name="Body" type="string" />
+        <property name="IsHtml" type="boolean" />
+        <property name="Location" type="string" />
+        <property name="Importance" type="string" />
+        <property name="IsAllDay" type="boolean" />
+        <property name="Recurrence" type="string" />
+        <property name="RecurrenceEnd" typeRef="CalendarEventClient_RecurrenceEnd_def" />
+        <property name="NumberOfOccurrences" type="integer" />
+        <property name="Reminder" type="integer" />
+        <property name="ShowAs" type="string" />
+        <property name="ResponseRequested" type="boolean" />
+      </object>
+      <array typeRef="CalendarEventClientReceive" name="CalendarEventListClientReceive_value_def" />
+      <object name="CalendarEventListClientReceive">
+        <property name="value" typeRef="CalendarEventListClientReceive_value_def" />
+      </object>
+      <array typeRef="Item" name="ItemsList_value_def" />
+      <object name="ItemsList">
+        <property name="value" typeRef="ItemsList_value_def" />
+      </object>
+      <array typeRef="Contact" name="EntityListResponse_Contact__value_def" />
+      <string name="EntityListResponse_Contact___odata_nextLink_def" />
+      <object name="EntityListResponse_Contact_">
+        <property name="value" typeRef="EntityListResponse_Contact__value_def" />
+        <property name="@odata.nextLink" type="string" />
+      </object>
+      <string name="Contact_Id_def" />
+      <string name="Contact_ParentFolderId_def" />
+      <dateTimeString name="Contact_Birthday_def" />
+      <string name="Contact_FileAs_def" />
+      <string name="Contact_DisplayName_def" />
+      <string name="Contact_GivenName_def" />
+      <string name="Contact_Initials_def" />
+      <string name="Contact_MiddleName_def" />
+      <string name="Contact_NickName_def" />
+      <string name="Contact_Surname_def" />
+      <string name="Contact_Title_def" />
+      <string name="Contact_Generation_def" />
+      <array typeRef="EmailAddress" name="Contact_EmailAddresses_def" />
+      <string name="Contact_ImAddresses_def_items_def" />
+      <array type="string" name="Contact_ImAddresses_def" />
+      <string name="Contact_JobTitle_def" />
+      <string name="Contact_CompanyName_def" />
+      <string name="Contact_Department_def" />
+      <string name="Contact_OfficeLocation_def" />
+      <string name="Contact_Profession_def" />
+      <string name="Contact_BusinessHomePage_def" />
+      <string name="Contact_AssistantName_def" />
+      <string name="Contact_Manager_def" />
+      <string name="Contact_HomePhones_def_items_def" />
+      <array type="string" name="Contact_HomePhones_def" />
+      <string name="Contact_BusinessPhones_def_items_def" />
+      <array type="string" name="Contact_BusinessPhones_def" />
+      <string name="Contact_MobilePhone1_def" />
+      <string name="Contact_YomiCompanyName_def" />
+      <string name="Contact_YomiGivenName_def" />
+      <string name="Contact_YomiSurname_def" />
+      <string name="Contact_Categories_def_items_def" />
+      <array type="string" name="Contact_Categories_def" />
+      <string name="Contact_ChangeKey_def" />
+      <dateTimeString name="Contact_DateTimeCreated_def" />
+      <dateTimeString name="Contact_DateTimeLastModified_def" />
+      <object name="Contact">
+        <property name="Id" type="string" />
+        <property name="ParentFolderId" type="string" />
+        <property name="Birthday" typeRef="Contact_Birthday_def" />
+        <property name="FileAs" type="string" />
+        <property name="DisplayName" type="string" />
+        <property name="GivenName" type="string" />
+        <property name="Initials" type="string" />
+        <property name="MiddleName" type="string" />
+        <property name="NickName" type="string" />
+        <property name="Surname" type="string" />
+        <property name="Title" type="string" />
+        <property name="Generation" type="string" />
+        <property name="EmailAddresses" typeRef="Contact_EmailAddresses_def" />
+        <property name="ImAddresses" typeRef="Contact_ImAddresses_def" />
+        <property name="JobTitle" type="string" />
+        <property name="CompanyName" type="string" />
+        <property name="Department" type="string" />
+        <property name="OfficeLocation" type="string" />
+        <property name="Profession" type="string" />
+        <property name="BusinessHomePage" type="string" />
+        <property name="AssistantName" type="string" />
+        <property name="Manager" type="string" />
+        <property name="HomePhones" typeRef="Contact_HomePhones_def" />
+        <property name="BusinessPhones" typeRef="Contact_BusinessPhones_def" />
+        <property name="MobilePhone1" type="string" />
+        <property name="HomeAddress" typeRef="PhysicalAddress" />
+        <property name="BusinessAddress" typeRef="PhysicalAddress" />
+        <property name="OtherAddress" typeRef="PhysicalAddress" />
+        <property name="YomiCompanyName" type="string" />
+        <property name="YomiGivenName" type="string" />
+        <property name="YomiSurname" type="string" />
+        <property name="Categories" typeRef="Contact_Categories_def" />
+        <property name="ChangeKey" type="string" />
+        <property name="DateTimeCreated" typeRef="Contact_DateTimeCreated_def" />
+        <property name="DateTimeLastModified" typeRef="Contact_DateTimeLastModified_def" />
+      </object>
+      <array typeRef="DataSet" name="DataSetsList_value_def" />
+      <object name="DataSetsList">
+        <property name="value" typeRef="DataSetsList_value_def" />
+      </object>
+      <string name="DataSet_Name_def" />
+      <string name="DataSet_DisplayName_def" />
+      <object name="DataSet">
+        <property name="Name" type="string" />
+        <property name="DisplayName" type="string" />
+      </object>
+      <string name="Procedure_Name_def" />
+      <string name="Procedure_DisplayName_def" />
+      <object name="Procedure">
+        <property name="Name" type="string" />
+        <property name="DisplayName" type="string" />
+      </object>
+      <array typeRef="ClientReceiveMessage" name="GetEmails_responses_200_def" />
+      <string name="GetAttachment_responses_200_def" />
+      <string name="ReceiveResponseGet_responses_200_def" />
+      <string name="ReceiveResponsePost_responses_200_def" />
+    </jsonTypes>
+  </grammars>
+  <resources siena:authenticationProviderHref="#PowerAppAuth" base="https://msmanaged-na.azure-apim.net/apim/office365">
+    <resource path="/{connectionId}/$metadata.json/datasets/calendars/tables/{table}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="CalendarGetTable">
+        <doc title="Get calendar metadata&#xA;This operation gets metadata for a calendar." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:TableMetadata" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/$metadata.json/datasets/contacts/tables/{table}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a contacts folder" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="ContactGetTable">
+        <doc title="Get folder metadata&#xA;This operation gets metadata for a contacts folder." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:TableMetadata" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Events/CalendarView">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetEventsCalendarView">
+        <doc title="Get calendar view of events&#xA;Get calendar view of events" />
+        <request>
+          <param style="query" name="calendarId" type="xs:string" required="true">
+            <doc title="Select a calendar" />
+          </param>
+          <param style="query" name="startDateTimeOffset" type="xs:string" required="true">
+            <doc title="Start time (example: '2017-01-01T08:00:00-07:00')" />
+          </param>
+          <param style="query" name="endDateTimeOffset" type="xs:string" required="true">
+            <doc title="End time (example: '2017-02-01T08:00:00-07:00')" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:PaginatedListResponse_CalendarEventClientReceive_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/OnFilePickerOpen">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="OnFilePickerOpen">
+        <doc title="When the file picker is opened for the first time&#xA;When the file picker is opened for the first time" />
+        <request>
+          <param style="query" name="operation" type="xs:string" required="true">
+            <doc title="Name of the operation" />
+          </param>
+          <param style="query" name="top" type="xs:int">
+            <doc title="Limit on the number of results to return" />
+          </param>
+          <param style="query" name="skip" type="xs:int">
+            <doc title="Number of results to skip" />
+          </param>
+          <param style="query" name="mailboxAddress" type="xs:string">
+            <doc title="Mailbox to perform operations for" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_FilePickerFile_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/OnFilePickerBrowse">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="OnFilePickerBrowse">
+        <doc title="When the file picker is open and being browsed&#xA;When the file picker is open and being browsed" />
+        <request>
+          <param style="query" name="operation" type="xs:string" required="true">
+            <doc title="Name of the operation" />
+          </param>
+          <param style="query" name="id" type="xs:string" required="true">
+            <doc title="Id of the previously selected item" />
+          </param>
+          <param style="query" name="top" type="xs:int">
+            <doc title="Limit on the number of results to return" />
+          </param>
+          <param style="query" name="skip" type="xs:int">
+            <doc title="Number of results to skip" />
+          </param>
+          <param style="query" name="mailboxAddress" type="xs:string">
+            <doc title="Mailbox to perform operations for" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_FilePickerFile_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetEmails">
+        <doc title="Get emails&#xA;This operation gets emails from a folder." />
+        <request>
+          <param style="query" name="folderPath" type="xs:string">
+            <doc title="Mail folder to retrieve emails from (default: 'Inbox')" />
+          </param>
+          <param style="query" name="fetchOnlyUnread" type="xs:boolean">
+            <doc title="Retrieve only unread emails?" />
+          </param>
+          <param style="query" name="includeAttachments" type="xs:boolean">
+            <doc title="If set to true, attachments will also be retrieved along with the email" />
+          </param>
+          <param style="query" name="searchQuery" type="xs:string">
+            <doc title="Search query (like in the Outlook client) to filter emails" />
+          </param>
+          <param style="query" name="top" type="xs:int">
+            <doc title="Number of emails to retrieve (default: 10)" />
+          </param>
+          <param style="query" name="skip" type="xs:int">
+            <doc title="Number of emails to skip (default: 0)" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:GetEmails_responses_200_def" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="SendEmail">
+        <doc title="Send an email&#xA;This operation sends an email message." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="From" path="/From" type="xs:string" />
+            <param style="plain" name="Cc" path="/Cc" type="xs:string" />
+            <param style="plain" name="Bcc" path="/Bcc" type="xs:string" />
+            <param style="plain" name="To" path="/To" type="xs:string" required="true" />
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true" />
+            <param style="plain" name="Body" path="/Body" type="xs:string" required="true" />
+            <param style="plain" name="Attachments" path="/Attachments" type="service:ClientSendMessage_Attachments_def" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="IsHtml" path="/IsHtml" type="xs:boolean" />
+          </representation>
+        </request>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail/Move/{messageId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="messageId" type="xs:string" required="true">
+        <doc title="Id of the email to be moved" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="Move">
+        <doc title="Move email&#xA;This operation moves an email to the specified folder." />
+        <request>
+          <param style="query" name="folderPath" type="xs:string" required="true">
+            <doc title="Mail folder to move the email to" />
+          </param>
+        </request>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail/Flag/{messageId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="messageId" type="xs:string" required="true">
+        <doc title="Id of the email to be flagged" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="Flag">
+        <doc title="Flag email&#xA;This operation flags an email." />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail/{messageId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="messageId" type="xs:string" required="true">
+        <doc title="Id of the email to delete" />
+      </param>
+      <method siena:requiresAuthentication="true" name="DELETE" id="DeleteEmail">
+        <doc title="Delete email&#xA;This operation deletes an email by id." />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail/MarkAsRead/{messageId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="messageId" type="xs:string" required="true">
+        <doc title="Id of the email to be marked as read" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="MarkAsRead">
+        <doc title="Mark as read&#xA;This operation marks an email as having been read." />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail/ReplyTo/{messageId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="messageId" type="xs:string" required="true">
+        <doc title="Id of the email to reply to" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="ReplyTo">
+        <doc title="Reply to email&#xA;This operation replies to an email." />
+        <request>
+          <param style="query" name="comment" type="xs:string" required="true">
+            <doc title="Reply comment" />
+          </param>
+          <param style="query" name="replyAll" type="xs:boolean">
+            <doc title="Reply to all recipients" />
+          </param>
+        </request>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/Mail/{messageId}/Attachments/{attachmentId}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="messageId" type="xs:string" required="true">
+        <doc title="Id of the email" />
+      </param>
+      <param style="template" name="attachmentId" type="xs:string" required="true">
+        <doc title="Id of the attachment to download" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="GetAttachment">
+        <doc title="Get attachment&#xA;This operation gets an email attachment by id." />
+        <request />
+        <response>
+          <representation mediaType="application/octet-stream" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/AutomaticRepliesSetting">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="SetAutomaticRepliesSetting">
+        <doc title="Set up automatic replies&#xA;Set the automatic replies setting for your mailbox" />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Status" path="/Status" type="xs:string" required="true" default="Scheduled">
+              <option value="Disabled" />
+              <option value="AlwaysEnabled" />
+              <option value="Scheduled" />
+            </param>
+            <param style="plain" name="ExternalAudience" path="/ExternalAudience" type="xs:string" required="true" default="None">
+              <option value="None" />
+              <option value="ContactsOnly" />
+              <option value="All" />
+            </param>
+            <param style="plain" name="ScheduledStartDateTimeOffset" path="/ScheduledStartDateTimeOffset" type="xs:string" />
+            <param style="plain" name="ScheduledEndDateTimeOffset" path="/ScheduledEndDateTimeOffset" type="xs:string" />
+            <param style="plain" name="InternalReplyMessage" path="/InternalReplyMessage" type="xs:string" />
+            <param style="plain" name="ExternalReplyMessage" path="/ExternalReplyMessage" type="xs:string" />
+          </representation>
+        </request>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/MailTips">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetMailTips">
+        <doc title="Get mail tips for a mailbox&#xA;Get mail tips for a mailbox such as automatic replies / OOF message or if the mailbox is full" />
+        <request>
+          <param style="query" name="mailboxAddress" type="xs:string" required="true">
+            <doc title="Address of the mailbox to get mail tips for" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:MailTipsClientReceive" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/$metadata.json/datasets">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetDataSetsMetadata">
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:DataSetsMetadata" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/mailwithoptions/$subscriptions">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="SendMailWithOptions">
+        <doc title="Send email with options&#xA;This operation sends an email with multiple options and waits for the recipient to respond back with one of the options." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="NotificationUrl" path="/NotificationUrl" type="xs:string" />
+            <param style="plain" name="Message" path="/Message" type="service:MessageWithOptions" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:SubscriptionResponse" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/approvalmail/$subscriptions">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="SendApprovalMail">
+        <doc title="Send approval email&#xA;This operation sends an approval email and waits for a response from the recipient." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="NotificationUrl" path="/NotificationUrl" type="xs:string" />
+            <param style="plain" name="Message" path="/Message" type="service:ApprovalMessage" required="true" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:SubscriptionResponse" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/approvalmail/$subscriptions/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Id of subscription to be deleted" />
+      </param>
+      <method siena:requiresAuthentication="true" name="DELETE" id="DeleteApprovalMailSubscription">
+        <doc title="Delete approval email subscription&#xA;This operation deletes a subscription of approval email." />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/mailwithoptions/$subscriptions/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Id of subscription to be deleted" />
+      </param>
+      <method siena:requiresAuthentication="true" name="DELETE" id="DeleteOptionsMailSubscription">
+        <doc title="Delete options email subscription&#xA;This operation deletes a subscription of options email" />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/SharedMailbox/Mail">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="POST" id="SharedMailboxSendEmail">
+        <doc title="Send an email from a shared mailbox&#xA;This operation sends an email from a shared mailbox. Your account should have permission to access the mailbox for this operation to succeed." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="MailboxAddress" path="/MailboxAddress" type="xs:string" required="true" />
+            <param style="plain" name="To" path="/To" type="xs:string" required="true" />
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true" />
+            <param style="plain" name="Body" path="/Body" type="xs:string" required="true" />
+            <param style="plain" name="Cc" path="/Cc" type="xs:string" />
+            <param style="plain" name="Bcc" path="/Bcc" type="xs:string" />
+            <param style="plain" name="Attachments" path="/Attachments" type="service:SharedMailboxClientSendMessage_Attachments_def" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="IsHtml" path="/IsHtml" type="xs:boolean" />
+          </representation>
+        </request>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/testconnection">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="TestConnection">
+        <doc title="Tests the connection&#xA;Tests the connection" />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/tables">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="CalendarGetTables">
+        <doc title="Get calendars&#xA;This operation lists available calendars." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_Table_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/tables/{table}/items">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="CalendarGetItems">
+        <doc title="Get events (V1)&#xA;This operation gets events from a calendar. (V1)" />
+        <request>
+          <param style="query" name="$orderby" type="xs:string">
+            <doc title="An ODATA orderBy query for specifying the order of entries." />
+          </param>
+          <param style="query" name="$top" type="xs:int">
+            <doc title="Total number of entries to retrieve (default = all)." />
+          </param>
+          <param style="query" name="$skip" type="xs:int">
+            <doc title="The number of entries to skip (default = 0)." />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_CalendarEventBackend_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/tables/{table}/items">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="CalendarPostItem">
+        <doc title="Create event (V1)&#xA;This operation creates a new event in a calendar. (V1)" />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Id" path="/Id" type="xs:string" />
+            <param style="plain" name="Attendees" path="/Attendees" type="service:CalendarEventBackend_Attendees_def" />
+            <param style="plain" name="Body" path="/Body" type="service:ItemBody" />
+            <param style="plain" name="BodyPreview" path="/BodyPreview" type="xs:string" />
+            <param style="plain" name="Categories" path="/Categories" type="service:CalendarEventBackend_Categories_def" />
+            <param style="plain" name="ChangeKey" path="/ChangeKey" type="xs:string" />
+            <param style="plain" name="DateTimeCreated" path="/DateTimeCreated" type="service:CalendarEventBackend_DateTimeCreated_def" />
+            <param style="plain" name="DateTimeLastModified" path="/DateTimeLastModified" type="service:CalendarEventBackend_DateTimeLastModified_def" />
+            <param style="plain" name="End" path="/End" type="service:CalendarEventBackend_End_def" required="true" />
+            <param style="plain" name="EndTimeZone" path="/EndTimeZone" type="xs:string" />
+            <param style="plain" name="HasAttachments" path="/HasAttachments" type="xs:boolean" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="IsAllDay" path="/IsAllDay" type="xs:boolean" />
+            <param style="plain" name="IsCancelled" path="/IsCancelled" type="xs:boolean" />
+            <param style="plain" name="IsOrganizer" path="/IsOrganizer" type="xs:boolean" />
+            <param style="plain" name="Location" path="/Location" type="service:Location" />
+            <param style="plain" name="Organizer" path="/Organizer" type="service:Recipient" />
+            <param style="plain" name="Recurrence" path="/Recurrence" type="service:PatternedRecurrence" />
+            <param style="plain" name="Reminder" path="/Reminder" type="xs:int" />
+            <param style="plain" name="ResponseRequested" path="/ResponseRequested" type="xs:boolean" />
+            <param style="plain" name="ResponseStatus" path="/ResponseStatus" type="service:ResponseStatus" />
+            <param style="plain" name="SeriesMasterId" path="/SeriesMasterId" type="xs:string" />
+            <param style="plain" name="ShowAs" path="/ShowAs" type="xs:string">
+              <option value="Free" />
+              <option value="Tentative" />
+              <option value="Busy" />
+              <option value="Oof" />
+              <option value="WorkingElsewhere" />
+              <option value="Unknown" />
+            </param>
+            <param style="plain" name="Start" path="/Start" type="service:CalendarEventBackend_Start_def" required="true" />
+            <param style="plain" name="StartTimeZone" path="/StartTimeZone" type="xs:string" />
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true" />
+            <param style="plain" name="Type" path="/Type" type="xs:string">
+              <option value="SingleInstance" />
+              <option value="Occurrence" />
+              <option value="Exception" />
+              <option value="SeriesMaster" />
+            </param>
+            <param style="plain" name="WebLink" path="/WebLink" type="xs:string" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:CalendarEventBackend" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Select an event" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="CalendarGetItem">
+        <doc title="Get event (V1)&#xA;This operation gets a specific event from a calendar. (V1)" />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:CalendarEventBackend" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Select an event" />
+      </param>
+      <method siena:requiresAuthentication="true" name="DELETE" id="CalendarDeleteItem">
+        <doc title="Delete event&#xA;This operation deletes an event in a calendar." />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Select an event" />
+      </param>
+      <method siena:requiresAuthentication="true" name="PATCH" id="CalendarPatchItem">
+        <doc title="Update event (V1)&#xA;This operation updates an event in a calendar. (V1)" />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Id" path="/Id" type="xs:string" />
+            <param style="plain" name="Attendees" path="/Attendees" type="service:CalendarEventBackend_Attendees_def" />
+            <param style="plain" name="Body" path="/Body" type="service:ItemBody" />
+            <param style="plain" name="BodyPreview" path="/BodyPreview" type="xs:string" />
+            <param style="plain" name="Categories" path="/Categories" type="service:CalendarEventBackend_Categories_def" />
+            <param style="plain" name="ChangeKey" path="/ChangeKey" type="xs:string" />
+            <param style="plain" name="DateTimeCreated" path="/DateTimeCreated" type="service:CalendarEventBackend_DateTimeCreated_def" />
+            <param style="plain" name="DateTimeLastModified" path="/DateTimeLastModified" type="service:CalendarEventBackend_DateTimeLastModified_def" />
+            <param style="plain" name="End" path="/End" type="service:CalendarEventBackend_End_def" required="true" />
+            <param style="plain" name="EndTimeZone" path="/EndTimeZone" type="xs:string" />
+            <param style="plain" name="HasAttachments" path="/HasAttachments" type="xs:boolean" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="IsAllDay" path="/IsAllDay" type="xs:boolean" />
+            <param style="plain" name="IsCancelled" path="/IsCancelled" type="xs:boolean" />
+            <param style="plain" name="IsOrganizer" path="/IsOrganizer" type="xs:boolean" />
+            <param style="plain" name="Location" path="/Location" type="service:Location" />
+            <param style="plain" name="Organizer" path="/Organizer" type="service:Recipient" />
+            <param style="plain" name="Recurrence" path="/Recurrence" type="service:PatternedRecurrence" />
+            <param style="plain" name="Reminder" path="/Reminder" type="xs:int" />
+            <param style="plain" name="ResponseRequested" path="/ResponseRequested" type="xs:boolean" />
+            <param style="plain" name="ResponseStatus" path="/ResponseStatus" type="service:ResponseStatus" />
+            <param style="plain" name="SeriesMasterId" path="/SeriesMasterId" type="xs:string" />
+            <param style="plain" name="ShowAs" path="/ShowAs" type="xs:string">
+              <option value="Free" />
+              <option value="Tentative" />
+              <option value="Busy" />
+              <option value="Oof" />
+              <option value="WorkingElsewhere" />
+              <option value="Unknown" />
+            </param>
+            <param style="plain" name="Start" path="/Start" type="service:CalendarEventBackend_Start_def" required="true" />
+            <param style="plain" name="StartTimeZone" path="/StartTimeZone" type="xs:string" />
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true" />
+            <param style="plain" name="Type" path="/Type" type="xs:string">
+              <option value="SingleInstance" />
+              <option value="Occurrence" />
+              <option value="Exception" />
+              <option value="SeriesMaster" />
+            </param>
+            <param style="plain" name="WebLink" path="/WebLink" type="xs:string" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:CalendarEventBackend" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/v2/tables/{table}/items">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="V2CalendarGetItems">
+        <doc title="Get events (V2)&#xA;This operation gets events from a calendar. (V2)" />
+        <request>
+          <param style="query" name="$filter" type="xs:string">
+            <doc title="An ODATA filter query to restrict the entries returned." />
+          </param>
+          <param style="query" name="$orderby" type="xs:string">
+            <doc title="An ODATA orderBy query for specifying the order of entries." />
+          </param>
+          <param style="query" name="$top" type="xs:int">
+            <doc title="Total number of entries to retrieve (default = all)." />
+          </param>
+          <param style="query" name="$skip" type="xs:int">
+            <doc title="The number of entries to skip (default = 0)." />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_CalendarEventClientReceive_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/v2/tables/{table}/items">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="V2CalendarPostItem">
+        <doc title="Create event (V2)&#xA;This operation creates a new event in a calendar. (V2)" />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true" />
+            <param style="plain" name="Start" path="/Start" type="service:CalendarEventClient_Start_def" required="true" />
+            <param style="plain" name="End" path="/End" type="service:CalendarEventClient_End_def" required="true" />
+            <param style="plain" name="TimeZone" path="/TimeZone" type="xs:string">
+              <option value="" />
+              <option value="(UTC-12:00) International Date Line West" />
+              <option value="(UTC-11:00) Coordinated Universal Time-11" />
+              <option value="(UTC-10:00) Aleutian Islands" />
+              <option value="(UTC-10:00) Hawaii" />
+              <option value="(UTC-09:30) Marquesas Islands" />
+              <option value="(UTC-09:00) Alaska" />
+              <option value="(UTC-09:00) Coordinated Universal Time-09" />
+              <option value="(UTC-08:00) Baja California" />
+              <option value="(UTC-08:00) Coordinated Universal Time-08" />
+              <option value="(UTC-08:00) Pacific Time (US &amp; Canada)" />
+              <option value="(UTC-07:00) Arizona" />
+              <option value="(UTC-07:00) Chihuahua, La Paz, Mazatlan" />
+              <option value="(UTC-07:00) Mountain Time (US &amp; Canada)" />
+              <option value="(UTC-06:00) Central America" />
+              <option value="(UTC-06:00) Central Time (US &amp; Canada)" />
+              <option value="(UTC-06:00) Easter Island" />
+              <option value="(UTC-06:00) Guadalajara, Mexico City, Monterrey" />
+              <option value="(UTC-06:00) Saskatchewan" />
+              <option value="(UTC-05:00) Bogota, Lima, Quito, Rio Branco" />
+              <option value="(UTC-05:00) Chetumal" />
+              <option value="(UTC-05:00) Eastern Time (US &amp; Canada)" />
+              <option value="(UTC-05:00) Haiti" />
+              <option value="(UTC-05:00) Havana" />
+              <option value="(UTC-05:00) Indiana (East)" />
+              <option value="(UTC-04:00) Asuncion" />
+              <option value="(UTC-04:00) Atlantic Time (Canada)" />
+              <option value="(UTC-04:00) Caracas" />
+              <option value="(UTC-04:00) Cuiaba" />
+              <option value="(UTC-04:00) Georgetown, La Paz, Manaus, San Juan" />
+              <option value="(UTC-04:00) Santiago" />
+              <option value="(UTC-04:00) Turks and Caicos" />
+              <option value="(UTC-03:30) Newfoundland" />
+              <option value="(UTC-03:00) Araguaina" />
+              <option value="(UTC-03:00) Brasilia" />
+              <option value="(UTC-03:00) Cayenne, Fortaleza" />
+              <option value="(UTC-03:00) City of Buenos Aires" />
+              <option value="(UTC-03:00) Greenland" />
+              <option value="(UTC-03:00) Montevideo" />
+              <option value="(UTC-03:00) Punta Arenas" />
+              <option value="(UTC-03:00) Saint Pierre and Miquelon" />
+              <option value="(UTC-03:00) Salvador" />
+              <option value="(UTC-02:00) Coordinated Universal Time-02" />
+              <option value="(UTC-02:00) Mid-Atlantic - Old" />
+              <option value="(UTC-01:00) Azores" />
+              <option value="(UTC-01:00) Cabo Verde Is." />
+              <option value="(UTC) Coordinated Universal Time" />
+              <option value="(UTC+00:00) Casablanca" />
+              <option value="(UTC+00:00) Dublin, Edinburgh, Lisbon, London" />
+              <option value="(UTC+00:00) Monrovia, Reykjavik" />
+              <option value="(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna" />
+              <option value="(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague" />
+              <option value="(UTC+01:00) Brussels, Copenhagen, Madrid, Paris" />
+              <option value="(UTC+01:00) Sarajevo, Skopje, Warsaw, Zagreb" />
+              <option value="(UTC+01:00) West Central Africa" />
+              <option value="(UTC+01:00) Windhoek" />
+              <option value="(UTC+02:00) Amman" />
+              <option value="(UTC+02:00) Athens, Bucharest" />
+              <option value="(UTC+02:00) Beirut" />
+              <option value="(UTC+02:00) Cairo" />
+              <option value="(UTC+02:00) Chisinau" />
+              <option value="(UTC+02:00) Damascus" />
+              <option value="(UTC+02:00) Gaza, Hebron" />
+              <option value="(UTC+02:00) Harare, Pretoria" />
+              <option value="(UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius" />
+              <option value="(UTC+02:00) Jerusalem" />
+              <option value="(UTC+02:00) Kaliningrad" />
+              <option value="(UTC+02:00) Tripoli" />
+              <option value="(UTC+03:00) Baghdad" />
+              <option value="(UTC+03:00) Istanbul" />
+              <option value="(UTC+03:00) Kuwait, Riyadh" />
+              <option value="(UTC+03:00) Minsk" />
+              <option value="(UTC+03:00) Moscow, St. Petersburg, Volgograd" />
+              <option value="(UTC+03:00) Nairobi" />
+              <option value="(UTC+03:30) Tehran" />
+              <option value="(UTC+04:00) Abu Dhabi, Muscat" />
+              <option value="(UTC+04:00) Astrakhan, Ulyanovsk" />
+              <option value="(UTC+04:00) Baku" />
+              <option value="(UTC+04:00) Izhevsk, Samara" />
+              <option value="(UTC+04:00) Port Louis" />
+              <option value="(UTC+04:00) Saratov" />
+              <option value="(UTC+04:00) Tbilisi" />
+              <option value="(UTC+04:00) Yerevan" />
+              <option value="(UTC+04:30) Kabul" />
+              <option value="(UTC+05:00) Ashgabat, Tashkent" />
+              <option value="(UTC+05:00) Ekaterinburg" />
+              <option value="(UTC+05:00) Islamabad, Karachi" />
+              <option value="(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi" />
+              <option value="(UTC+05:30) Sri Jayawardenepura" />
+              <option value="(UTC+05:45) Kathmandu" />
+              <option value="(UTC+06:00) Astana" />
+              <option value="(UTC+06:00) Dhaka" />
+              <option value="(UTC+06:00) Omsk" />
+              <option value="(UTC+06:30) Yangon (Rangoon)" />
+              <option value="(UTC+07:00) Bangkok, Hanoi, Jakarta" />
+              <option value="(UTC+07:00) Barnaul, Gorno-Altaysk" />
+              <option value="(UTC+07:00) Hovd" />
+              <option value="(UTC+07:00) Krasnoyarsk" />
+              <option value="(UTC+07:00) Novosibirsk" />
+              <option value="(UTC+07:00) Tomsk" />
+              <option value="(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi" />
+              <option value="(UTC+08:00) Irkutsk" />
+              <option value="(UTC+08:00) Kuala Lumpur, Singapore" />
+              <option value="(UTC+08:00) Perth" />
+              <option value="(UTC+08:00) Taipei" />
+              <option value="(UTC+08:00) Ulaanbaatar" />
+              <option value="(UTC+08:30) Pyongyang" />
+              <option value="(UTC+08:45) Eucla" />
+              <option value="(UTC+09:00) Chita" />
+              <option value="(UTC+09:00) Osaka, Sapporo, Tokyo" />
+              <option value="(UTC+09:00) Seoul" />
+              <option value="(UTC+09:00) Yakutsk" />
+              <option value="(UTC+09:30) Adelaide" />
+              <option value="(UTC+09:30) Darwin" />
+              <option value="(UTC+10:00) Brisbane" />
+              <option value="(UTC+10:00) Canberra, Melbourne, Sydney" />
+              <option value="(UTC+10:00) Guam, Port Moresby" />
+              <option value="(UTC+10:00) Hobart" />
+              <option value="(UTC+10:00) Vladivostok" />
+              <option value="(UTC+10:30) Lord Howe Island" />
+              <option value="(UTC+11:00) Bougainville Island" />
+              <option value="(UTC+11:00) Chokurdakh" />
+              <option value="(UTC+11:00) Magadan" />
+              <option value="(UTC+11:00) Norfolk Island" />
+              <option value="(UTC+11:00) Sakhalin" />
+              <option value="(UTC+11:00) Solomon Is., New Caledonia" />
+              <option value="(UTC+12:00) Anadyr, Petropavlovsk-Kamchatsky" />
+              <option value="(UTC+12:00) Auckland, Wellington" />
+              <option value="(UTC+12:00) Coordinated Universal Time+12" />
+              <option value="(UTC+12:00) Fiji" />
+              <option value="(UTC+12:00) Petropavlovsk-Kamchatsky - Old" />
+              <option value="(UTC+12:45) Chatham Islands" />
+              <option value="(UTC+13:00) Coordinated Universal Time+13" />
+              <option value="(UTC+13:00) Nuku'alofa" />
+              <option value="(UTC+13:00) Samoa" />
+              <option value="(UTC+14:00) Kiritimati Island" />
+            </param>
+            <param style="plain" name="RequiredAttendees" path="/RequiredAttendees" type="xs:string" />
+            <param style="plain" name="OptionalAttendees" path="/OptionalAttendees" type="xs:string" />
+            <param style="plain" name="Body" path="/Body" type="xs:string" />
+            <param style="plain" name="IsHtml" path="/IsHtml" type="xs:boolean" />
+            <param style="plain" name="Location" path="/Location" type="xs:string" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="IsAllDay" path="/IsAllDay" type="xs:boolean" />
+            <param style="plain" name="Recurrence" path="/Recurrence" type="xs:string">
+              <option value="None" />
+              <option value="Daily" />
+              <option value="Weekly" />
+              <option value="Monthly" />
+              <option value="Yearly" />
+            </param>
+            <param style="plain" name="RecurrenceEnd" path="/RecurrenceEnd" type="service:CalendarEventClient_RecurrenceEnd_def" />
+            <param style="plain" name="NumberOfOccurrences" path="/NumberOfOccurrences" type="xs:int" />
+            <param style="plain" name="Reminder" path="/Reminder" type="xs:int" />
+            <param style="plain" name="ShowAs" path="/ShowAs" type="xs:string">
+              <option value="Free" />
+              <option value="Tentative" />
+              <option value="Busy" />
+              <option value="Oof" />
+              <option value="WorkingElsewhere" />
+              <option value="Unknown" />
+            </param>
+            <param style="plain" name="ResponseRequested" path="/ResponseRequested" type="xs:boolean" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:CalendarEventClientReceive" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/v2/tables/items/calendarview">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetEventsCalendarViewV2">
+        <doc title="Get calendar view of events (V2)&#xA;This operation gets all events (including instances of recurrences) in a calendar. (V2)" />
+        <request>
+          <param style="query" name="calendarId" type="xs:string" required="true">
+            <doc title="Select a calendar" />
+          </param>
+          <param style="query" name="startDateTimeOffset" type="xs:string" required="true">
+            <doc title="Start time (example: '2017-01-01T08:00:00-07:00')" />
+          </param>
+          <param style="query" name="endDateTimeOffset" type="xs:string" required="true">
+            <doc title="End time (example: '2017-02-01T08:00:00-07:00')" />
+          </param>
+          <param style="query" name="$filter" type="xs:string">
+            <doc title="An ODATA filter query to restrict the entries returned." />
+          </param>
+          <param style="query" name="$orderby" type="xs:string">
+            <doc title="An ODATA orderBy query for specifying the order of entries." />
+          </param>
+          <param style="query" name="$top" type="xs:int">
+            <doc title="Total number of entries to retrieve (default = all)." />
+          </param>
+          <param style="query" name="$skip" type="xs:int">
+            <doc title="The number of entries to skip (default = 0)." />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_CalendarEventClientReceive_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/v2/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Select an event" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="V2CalendarGetItem">
+        <doc title="Get event (V2)&#xA;This operation gets a specific event from a calendar. (V2)" />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:CalendarEventClientReceive" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/calendars/v2/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a calendar" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Select an event" />
+      </param>
+      <method siena:requiresAuthentication="true" name="PATCH" id="V2CalendarPatchItem">
+        <doc title="Update event (V2)&#xA;This operation updates an event in a calendar. (V2)" />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Subject" path="/Subject" type="xs:string" required="true" />
+            <param style="plain" name="Start" path="/Start" type="service:CalendarEventClient_Start_def" required="true" />
+            <param style="plain" name="End" path="/End" type="service:CalendarEventClient_End_def" required="true" />
+            <param style="plain" name="TimeZone" path="/TimeZone" type="xs:string">
+              <option value="" />
+              <option value="(UTC-12:00) International Date Line West" />
+              <option value="(UTC-11:00) Coordinated Universal Time-11" />
+              <option value="(UTC-10:00) Aleutian Islands" />
+              <option value="(UTC-10:00) Hawaii" />
+              <option value="(UTC-09:30) Marquesas Islands" />
+              <option value="(UTC-09:00) Alaska" />
+              <option value="(UTC-09:00) Coordinated Universal Time-09" />
+              <option value="(UTC-08:00) Baja California" />
+              <option value="(UTC-08:00) Coordinated Universal Time-08" />
+              <option value="(UTC-08:00) Pacific Time (US &amp; Canada)" />
+              <option value="(UTC-07:00) Arizona" />
+              <option value="(UTC-07:00) Chihuahua, La Paz, Mazatlan" />
+              <option value="(UTC-07:00) Mountain Time (US &amp; Canada)" />
+              <option value="(UTC-06:00) Central America" />
+              <option value="(UTC-06:00) Central Time (US &amp; Canada)" />
+              <option value="(UTC-06:00) Easter Island" />
+              <option value="(UTC-06:00) Guadalajara, Mexico City, Monterrey" />
+              <option value="(UTC-06:00) Saskatchewan" />
+              <option value="(UTC-05:00) Bogota, Lima, Quito, Rio Branco" />
+              <option value="(UTC-05:00) Chetumal" />
+              <option value="(UTC-05:00) Eastern Time (US &amp; Canada)" />
+              <option value="(UTC-05:00) Haiti" />
+              <option value="(UTC-05:00) Havana" />
+              <option value="(UTC-05:00) Indiana (East)" />
+              <option value="(UTC-04:00) Asuncion" />
+              <option value="(UTC-04:00) Atlantic Time (Canada)" />
+              <option value="(UTC-04:00) Caracas" />
+              <option value="(UTC-04:00) Cuiaba" />
+              <option value="(UTC-04:00) Georgetown, La Paz, Manaus, San Juan" />
+              <option value="(UTC-04:00) Santiago" />
+              <option value="(UTC-04:00) Turks and Caicos" />
+              <option value="(UTC-03:30) Newfoundland" />
+              <option value="(UTC-03:00) Araguaina" />
+              <option value="(UTC-03:00) Brasilia" />
+              <option value="(UTC-03:00) Cayenne, Fortaleza" />
+              <option value="(UTC-03:00) City of Buenos Aires" />
+              <option value="(UTC-03:00) Greenland" />
+              <option value="(UTC-03:00) Montevideo" />
+              <option value="(UTC-03:00) Punta Arenas" />
+              <option value="(UTC-03:00) Saint Pierre and Miquelon" />
+              <option value="(UTC-03:00) Salvador" />
+              <option value="(UTC-02:00) Coordinated Universal Time-02" />
+              <option value="(UTC-02:00) Mid-Atlantic - Old" />
+              <option value="(UTC-01:00) Azores" />
+              <option value="(UTC-01:00) Cabo Verde Is." />
+              <option value="(UTC) Coordinated Universal Time" />
+              <option value="(UTC+00:00) Casablanca" />
+              <option value="(UTC+00:00) Dublin, Edinburgh, Lisbon, London" />
+              <option value="(UTC+00:00) Monrovia, Reykjavik" />
+              <option value="(UTC+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna" />
+              <option value="(UTC+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague" />
+              <option value="(UTC+01:00) Brussels, Copenhagen, Madrid, Paris" />
+              <option value="(UTC+01:00) Sarajevo, Skopje, Warsaw, Zagreb" />
+              <option value="(UTC+01:00) West Central Africa" />
+              <option value="(UTC+01:00) Windhoek" />
+              <option value="(UTC+02:00) Amman" />
+              <option value="(UTC+02:00) Athens, Bucharest" />
+              <option value="(UTC+02:00) Beirut" />
+              <option value="(UTC+02:00) Cairo" />
+              <option value="(UTC+02:00) Chisinau" />
+              <option value="(UTC+02:00) Damascus" />
+              <option value="(UTC+02:00) Gaza, Hebron" />
+              <option value="(UTC+02:00) Harare, Pretoria" />
+              <option value="(UTC+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius" />
+              <option value="(UTC+02:00) Jerusalem" />
+              <option value="(UTC+02:00) Kaliningrad" />
+              <option value="(UTC+02:00) Tripoli" />
+              <option value="(UTC+03:00) Baghdad" />
+              <option value="(UTC+03:00) Istanbul" />
+              <option value="(UTC+03:00) Kuwait, Riyadh" />
+              <option value="(UTC+03:00) Minsk" />
+              <option value="(UTC+03:00) Moscow, St. Petersburg, Volgograd" />
+              <option value="(UTC+03:00) Nairobi" />
+              <option value="(UTC+03:30) Tehran" />
+              <option value="(UTC+04:00) Abu Dhabi, Muscat" />
+              <option value="(UTC+04:00) Astrakhan, Ulyanovsk" />
+              <option value="(UTC+04:00) Baku" />
+              <option value="(UTC+04:00) Izhevsk, Samara" />
+              <option value="(UTC+04:00) Port Louis" />
+              <option value="(UTC+04:00) Saratov" />
+              <option value="(UTC+04:00) Tbilisi" />
+              <option value="(UTC+04:00) Yerevan" />
+              <option value="(UTC+04:30) Kabul" />
+              <option value="(UTC+05:00) Ashgabat, Tashkent" />
+              <option value="(UTC+05:00) Ekaterinburg" />
+              <option value="(UTC+05:00) Islamabad, Karachi" />
+              <option value="(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi" />
+              <option value="(UTC+05:30) Sri Jayawardenepura" />
+              <option value="(UTC+05:45) Kathmandu" />
+              <option value="(UTC+06:00) Astana" />
+              <option value="(UTC+06:00) Dhaka" />
+              <option value="(UTC+06:00) Omsk" />
+              <option value="(UTC+06:30) Yangon (Rangoon)" />
+              <option value="(UTC+07:00) Bangkok, Hanoi, Jakarta" />
+              <option value="(UTC+07:00) Barnaul, Gorno-Altaysk" />
+              <option value="(UTC+07:00) Hovd" />
+              <option value="(UTC+07:00) Krasnoyarsk" />
+              <option value="(UTC+07:00) Novosibirsk" />
+              <option value="(UTC+07:00) Tomsk" />
+              <option value="(UTC+08:00) Beijing, Chongqing, Hong Kong, Urumqi" />
+              <option value="(UTC+08:00) Irkutsk" />
+              <option value="(UTC+08:00) Kuala Lumpur, Singapore" />
+              <option value="(UTC+08:00) Perth" />
+              <option value="(UTC+08:00) Taipei" />
+              <option value="(UTC+08:00) Ulaanbaatar" />
+              <option value="(UTC+08:30) Pyongyang" />
+              <option value="(UTC+08:45) Eucla" />
+              <option value="(UTC+09:00) Chita" />
+              <option value="(UTC+09:00) Osaka, Sapporo, Tokyo" />
+              <option value="(UTC+09:00) Seoul" />
+              <option value="(UTC+09:00) Yakutsk" />
+              <option value="(UTC+09:30) Adelaide" />
+              <option value="(UTC+09:30) Darwin" />
+              <option value="(UTC+10:00) Brisbane" />
+              <option value="(UTC+10:00) Canberra, Melbourne, Sydney" />
+              <option value="(UTC+10:00) Guam, Port Moresby" />
+              <option value="(UTC+10:00) Hobart" />
+              <option value="(UTC+10:00) Vladivostok" />
+              <option value="(UTC+10:30) Lord Howe Island" />
+              <option value="(UTC+11:00) Bougainville Island" />
+              <option value="(UTC+11:00) Chokurdakh" />
+              <option value="(UTC+11:00) Magadan" />
+              <option value="(UTC+11:00) Norfolk Island" />
+              <option value="(UTC+11:00) Sakhalin" />
+              <option value="(UTC+11:00) Solomon Is., New Caledonia" />
+              <option value="(UTC+12:00) Anadyr, Petropavlovsk-Kamchatsky" />
+              <option value="(UTC+12:00) Auckland, Wellington" />
+              <option value="(UTC+12:00) Coordinated Universal Time+12" />
+              <option value="(UTC+12:00) Fiji" />
+              <option value="(UTC+12:00) Petropavlovsk-Kamchatsky - Old" />
+              <option value="(UTC+12:45) Chatham Islands" />
+              <option value="(UTC+13:00) Coordinated Universal Time+13" />
+              <option value="(UTC+13:00) Nuku'alofa" />
+              <option value="(UTC+13:00) Samoa" />
+              <option value="(UTC+14:00) Kiritimati Island" />
+            </param>
+            <param style="plain" name="RequiredAttendees" path="/RequiredAttendees" type="xs:string" />
+            <param style="plain" name="OptionalAttendees" path="/OptionalAttendees" type="xs:string" />
+            <param style="plain" name="Body" path="/Body" type="xs:string" />
+            <param style="plain" name="IsHtml" path="/IsHtml" type="xs:boolean" />
+            <param style="plain" name="Location" path="/Location" type="xs:string" />
+            <param style="plain" name="Importance" path="/Importance" type="xs:string">
+              <option value="Low" />
+              <option value="Normal" />
+              <option value="High" />
+            </param>
+            <param style="plain" name="IsAllDay" path="/IsAllDay" type="xs:boolean" />
+            <param style="plain" name="Recurrence" path="/Recurrence" type="xs:string">
+              <option value="None" />
+              <option value="Daily" />
+              <option value="Weekly" />
+              <option value="Monthly" />
+              <option value="Yearly" />
+            </param>
+            <param style="plain" name="RecurrenceEnd" path="/RecurrenceEnd" type="service:CalendarEventClient_RecurrenceEnd_def" />
+            <param style="plain" name="NumberOfOccurrences" path="/NumberOfOccurrences" type="xs:int" />
+            <param style="plain" name="Reminder" path="/Reminder" type="xs:int" />
+            <param style="plain" name="ShowAs" path="/ShowAs" type="xs:string">
+              <option value="Free" />
+              <option value="Tentative" />
+              <option value="Busy" />
+              <option value="Oof" />
+              <option value="WorkingElsewhere" />
+              <option value="Unknown" />
+            </param>
+            <param style="plain" name="ResponseRequested" path="/ResponseRequested" type="xs:boolean" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:CalendarEventClientReceive" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/contacts/tables">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="ContactGetTables">
+        <doc title="Get contact folders&#xA;This operation lists available contacts folders." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_Table_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/contacts/tables/{table}/items">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Unique identifier of the contacts folder to retrieve" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="ContactGetItems">
+        <doc title="Get contacts&#xA;This operation gets contacts from a contacts folder." />
+        <request>
+          <param style="query" name="$filter" type="xs:string">
+            <doc title="An ODATA filter query to restrict the entries returned." />
+          </param>
+          <param style="query" name="$orderby" type="xs:string">
+            <doc title="An ODATA orderBy query for specifying the order of entries." />
+          </param>
+          <param style="query" name="$top" type="xs:int">
+            <doc title="Total number of entries to retrieve (default = all)." />
+          </param>
+          <param style="query" name="$skip" type="xs:int">
+            <doc title="The number of entries to skip (default = 0)." />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:EntityListResponse_Contact_" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/contacts/tables/{table}/items">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a contacts folder" />
+      </param>
+      <method siena:requiresAuthentication="true" name="POST" id="ContactPostItem">
+        <doc title="Create contact&#xA;This operation creates a new contact in a contacts folder." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Id" path="/Id" type="xs:string" />
+            <param style="plain" name="ParentFolderId" path="/ParentFolderId" type="xs:string" />
+            <param style="plain" name="Birthday" path="/Birthday" type="service:Contact_Birthday_def" />
+            <param style="plain" name="FileAs" path="/FileAs" type="xs:string" />
+            <param style="plain" name="DisplayName" path="/DisplayName" type="xs:string" />
+            <param style="plain" name="GivenName" path="/GivenName" type="xs:string" required="true" />
+            <param style="plain" name="Initials" path="/Initials" type="xs:string" />
+            <param style="plain" name="MiddleName" path="/MiddleName" type="xs:string" />
+            <param style="plain" name="NickName" path="/NickName" type="xs:string" />
+            <param style="plain" name="Surname" path="/Surname" type="xs:string" />
+            <param style="plain" name="Title" path="/Title" type="xs:string" />
+            <param style="plain" name="Generation" path="/Generation" type="xs:string" />
+            <param style="plain" name="EmailAddresses" path="/EmailAddresses" type="service:Contact_EmailAddresses_def" />
+            <param style="plain" name="ImAddresses" path="/ImAddresses" type="service:Contact_ImAddresses_def" />
+            <param style="plain" name="JobTitle" path="/JobTitle" type="xs:string" />
+            <param style="plain" name="CompanyName" path="/CompanyName" type="xs:string" />
+            <param style="plain" name="Department" path="/Department" type="xs:string" />
+            <param style="plain" name="OfficeLocation" path="/OfficeLocation" type="xs:string" />
+            <param style="plain" name="Profession" path="/Profession" type="xs:string" />
+            <param style="plain" name="BusinessHomePage" path="/BusinessHomePage" type="xs:string" />
+            <param style="plain" name="AssistantName" path="/AssistantName" type="xs:string" />
+            <param style="plain" name="Manager" path="/Manager" type="xs:string" />
+            <param style="plain" name="HomePhones" path="/HomePhones" type="service:Contact_HomePhones_def" required="true" />
+            <param style="plain" name="BusinessPhones" path="/BusinessPhones" type="service:Contact_BusinessPhones_def" />
+            <param style="plain" name="MobilePhone1" path="/MobilePhone1" type="xs:string" />
+            <param style="plain" name="HomeAddress" path="/HomeAddress" type="service:PhysicalAddress" />
+            <param style="plain" name="BusinessAddress" path="/BusinessAddress" type="service:PhysicalAddress" />
+            <param style="plain" name="OtherAddress" path="/OtherAddress" type="service:PhysicalAddress" />
+            <param style="plain" name="YomiCompanyName" path="/YomiCompanyName" type="xs:string" />
+            <param style="plain" name="YomiGivenName" path="/YomiGivenName" type="xs:string" />
+            <param style="plain" name="YomiSurname" path="/YomiSurname" type="xs:string" />
+            <param style="plain" name="Categories" path="/Categories" type="service:Contact_Categories_def" />
+            <param style="plain" name="ChangeKey" path="/ChangeKey" type="xs:string" />
+            <param style="plain" name="DateTimeCreated" path="/DateTimeCreated" type="service:Contact_DateTimeCreated_def" />
+            <param style="plain" name="DateTimeLastModified" path="/DateTimeLastModified" type="service:Contact_DateTimeLastModified_def" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:Contact" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/contacts/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a contacts folder" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Unique identifier of a contact to retrieve" />
+      </param>
+      <method siena:requiresAuthentication="true" name="GET" id="ContactGetItem">
+        <doc title="Get contact&#xA;This operation gets a specific contact from a contacts folder." />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:Contact" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/contacts/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a contacts folder" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Unique identifier of contact to delete" />
+      </param>
+      <method siena:requiresAuthentication="true" name="DELETE" id="ContactDeleteItem">
+        <doc title="Delete contact&#xA;This operation deletes a contact from a contacts folder." />
+        <request />
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets/contacts/tables/{table}/items/{id}">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <param style="template" name="table" type="xs:string" required="true">
+        <doc title="Select a contacts folder" />
+      </param>
+      <param style="template" name="id" type="xs:string" required="true">
+        <doc title="Unique identifier of contact to update" />
+      </param>
+      <method siena:requiresAuthentication="true" name="PATCH" id="ContactPatchItem">
+        <doc title="Update contact&#xA;This operation updates a contact in a contacts folder." />
+        <request>
+          <representation mediaType="application/json">
+            <param style="plain" name="Id" path="/Id" type="xs:string" />
+            <param style="plain" name="ParentFolderId" path="/ParentFolderId" type="xs:string" />
+            <param style="plain" name="Birthday" path="/Birthday" type="service:Contact_Birthday_def" />
+            <param style="plain" name="FileAs" path="/FileAs" type="xs:string" />
+            <param style="plain" name="DisplayName" path="/DisplayName" type="xs:string" />
+            <param style="plain" name="GivenName" path="/GivenName" type="xs:string" required="true" />
+            <param style="plain" name="Initials" path="/Initials" type="xs:string" />
+            <param style="plain" name="MiddleName" path="/MiddleName" type="xs:string" />
+            <param style="plain" name="NickName" path="/NickName" type="xs:string" />
+            <param style="plain" name="Surname" path="/Surname" type="xs:string" />
+            <param style="plain" name="Title" path="/Title" type="xs:string" />
+            <param style="plain" name="Generation" path="/Generation" type="xs:string" />
+            <param style="plain" name="EmailAddresses" path="/EmailAddresses" type="service:Contact_EmailAddresses_def" />
+            <param style="plain" name="ImAddresses" path="/ImAddresses" type="service:Contact_ImAddresses_def" />
+            <param style="plain" name="JobTitle" path="/JobTitle" type="xs:string" />
+            <param style="plain" name="CompanyName" path="/CompanyName" type="xs:string" />
+            <param style="plain" name="Department" path="/Department" type="xs:string" />
+            <param style="plain" name="OfficeLocation" path="/OfficeLocation" type="xs:string" />
+            <param style="plain" name="Profession" path="/Profession" type="xs:string" />
+            <param style="plain" name="BusinessHomePage" path="/BusinessHomePage" type="xs:string" />
+            <param style="plain" name="AssistantName" path="/AssistantName" type="xs:string" />
+            <param style="plain" name="Manager" path="/Manager" type="xs:string" />
+            <param style="plain" name="HomePhones" path="/HomePhones" type="service:Contact_HomePhones_def" required="true" />
+            <param style="plain" name="BusinessPhones" path="/BusinessPhones" type="service:Contact_BusinessPhones_def" />
+            <param style="plain" name="MobilePhone1" path="/MobilePhone1" type="xs:string" />
+            <param style="plain" name="HomeAddress" path="/HomeAddress" type="service:PhysicalAddress" />
+            <param style="plain" name="BusinessAddress" path="/BusinessAddress" type="service:PhysicalAddress" />
+            <param style="plain" name="OtherAddress" path="/OtherAddress" type="service:PhysicalAddress" />
+            <param style="plain" name="YomiCompanyName" path="/YomiCompanyName" type="xs:string" />
+            <param style="plain" name="YomiGivenName" path="/YomiGivenName" type="xs:string" />
+            <param style="plain" name="YomiSurname" path="/YomiSurname" type="xs:string" />
+            <param style="plain" name="Categories" path="/Categories" type="service:Contact_Categories_def" />
+            <param style="plain" name="ChangeKey" path="/ChangeKey" type="xs:string" />
+            <param style="plain" name="DateTimeCreated" path="/DateTimeCreated" type="service:Contact_DateTimeCreated_def" />
+            <param style="plain" name="DateTimeLastModified" path="/DateTimeLastModified" type="service:Contact_DateTimeLastModified_def" />
+          </representation>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="service:Contact" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/{connectionId}/datasets">
+      <param style="template" name="connectionId" type="xs:string" required="true" />
+      <method siena:requiresAuthentication="true" name="GET" id="GetDataSets">
+        <doc title="Get datasets&#xA;This operation gets Contacts or Calendars" />
+        <request />
+        <response>
+          <representation mediaType="application/json" element="service:DataSetsList" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/RecordResponse">
+      <method siena:requiresAuthentication="true" name="GET" id="ReceiveResponseGet">
+        <doc title="Receives response from user&#xA;This operation gets a response from the user." />
+        <request>
+          <param style="query" name="state" type="xs:string" required="true">
+            <doc title="callback state" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="xs:string" />
+        </response>
+      </method>
+    </resource>
+    <resource path="/RecordResponse">
+      <method siena:requiresAuthentication="true" name="POST" id="ReceiveResponsePost">
+        <doc title="Receives response from user&#xA;This operation gets a response from the user." />
+        <request>
+          <param style="query" name="state" type="xs:string" required="true">
+            <doc title="callback state" />
+          </param>
+        </request>
+        <response>
+          <representation mediaType="application/json" element="xs:string" />
+        </response>
+      </method>
+    </resource>
+  </resources>
+  <authenticationProviders xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+    <connectionProvider id="PowerAppAuth" siena:connectionProviderId="office365" />
+  </authenticationProviders>
+  <template xmlns="http://schemas.microsoft.com/MicrosoftProjectSiena/WADL/2014/11">
+    <variable name="connectionId">
+      <modifyParams style="template" name="connectionId" attribute="fixed" />
+    </variable>
+  </template>
+</application>

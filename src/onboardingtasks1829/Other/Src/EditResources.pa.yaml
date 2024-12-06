@@ -1,0 +1,453 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  EditResources:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: =Set(EditMode,false)
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - EditResourcesUrlErrorMessage:
+          Control: Label@2.5.1
+          Properties:
+            Color: =RGBA(208, 2, 27, 0.95)
+            FocusedBorderColor: =EditResourcesUrlErrorMessage.BorderColor
+            Height: =20
+            HoverBorderColor: =EditResourcesUrlErrorMessage.BorderColor
+            HoverColor: =EditResourcesUrlErrorMessage.Color
+            HoverFill: =EditResourcesUrlErrorMessage.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesUrlErrorMessage.BorderColor
+            PressedColor: =EditResourcesUrlErrorMessage.Color
+            PressedFill: =EditResourcesUrlErrorMessage.Fill
+            Size: |+
+              =10.5
+
+            Text: ="(Resource url must be a valid URL with the http:// or https:// prefix.)"
+            Visible: =Not(IsBlank(EditResourcesUrlInput.Text) || IsMatch(EditResourcesUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))
+            Width: =900
+            X: =325
+            Y: =380
+      - EditResourcesClose:
+          Control: Classic/Icon@2.5.0
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            DisabledFill: =EditResourcesClose.Fill
+            FocusedBorderColor: =EditResourcesClose.BorderColor
+            FocusedBorderThickness: =0
+            Height: =34
+            HoverBorderColor: =ColorFade(EditResourcesClose.BorderColor, 20%)
+            HoverColor: =ColorFade(EditResourcesClose.Color, 20%)
+            HoverFill: =EditResourcesClose.Fill
+            Icon: =Icon.Cancel
+            OnSelect: =Navigate(MyProfileScreen,BorderStyle.None)
+            PressedBorderColor: =ColorFade(EditResourcesClose.BorderColor, -20%)
+            PressedColor: =ColorFade(EditResourcesClose.Color, -20%)
+            PressedFill: =EditResourcesClose.Fill
+            Width: =34
+            X: =1291
+            Y: =37
+      - EditResourcesSave:
+          Control: Classic/Button@2.2.0
+          Properties:
+            BorderColor: =ColorFade(EditResourcesSave.Fill, -15%)
+            BorderThickness: =1
+            DisabledBorderColor: =ColorFade(EditResourcesSave.BorderColor, 70%)
+            DisplayMode: =EditResourcesAddButton.DisplayMode
+            Fill: =RGBA(26, 26, 84, 1)
+            FocusedBorderColor: =EditResourcesSave.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            HoverBorderColor: =ColorFade(EditResourcesSave.BorderColor, 20%)
+            HoverColor: =EditResourcesSave.Color
+            HoverFill: =ColorFade(EditResourcesSave.Fill, 20%)
+            OnSelect: |-
+              =Patch(Resources,EditResourcesGallery.Selected, { Name: EditResourcesNameInput.Text, URL: EditResourcesUrlInput.Text})
+            PressedBorderColor: =EditResourcesSave.Fill
+            PressedColor: =EditResourcesSave.Fill
+            PressedFill: =EditResourcesSave.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =12
+            Text: ="Save resource"
+            Visible: =EditMode
+            Width: =159
+            X: =450
+            Y: =486
+      - EditResourcesTitle:
+          Control: Label@2.5.1
+          Group: EditResourcesTitleBar
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditResourcesTitle.BorderColor
+            HoverBorderColor: =EditResourcesTitle.BorderColor
+            HoverColor: =EditResourcesTitle.Color
+            HoverFill: =EditResourcesTitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesTitle.BorderColor
+            PressedColor: =EditResourcesTitle.Color
+            PressedFill: =EditResourcesTitle.Fill
+            Size: |+
+              =27
+            Text: ="Edit resources"
+            Width: =900
+            X: =237
+            Y: =163
+      - EditResourcesSubtitle:
+          Control: Label@2.5.1
+          Group: EditResourcesTitleBar
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditResourcesSubtitle.BorderColor
+            FontWeight: =FontWeight.Semibold
+            HoverBorderColor: =EditResourcesSubtitle.BorderColor
+            HoverColor: =EditResourcesSubtitle.Color
+            HoverFill: =EditResourcesSubtitle.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesSubtitle.BorderColor
+            PressedColor: =EditResourcesSubtitle.Color
+            PressedFill: =EditResourcesSubtitle.Fill
+            Size: =13.5
+            Text: ="Add important onboarding resources for your new employees."
+            Width: =900
+            X: =237
+            Y: =203
+      - EditResourcesNameLabel:
+          Control: Label@2.5.1
+          Group: EditResourcesDetailsGroup
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditResourcesNameLabel.BorderColor
+            Height: =19
+            HoverBorderColor: =EditResourcesNameLabel.BorderColor
+            HoverColor: =EditResourcesNameLabel.Color
+            HoverFill: =EditResourcesNameLabel.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesNameLabel.BorderColor
+            PressedColor: =EditResourcesNameLabel.Color
+            PressedFill: =EditResourcesNameLabel.Fill
+            Size: |+
+              =10.5
+
+            Text: ="Resource name"
+            Width: =600
+            X: =237
+            Y: =288
+      - EditResourcesNameInput:
+          Control: Classic/TextInput@2.3.2
+          Group: EditResourcesDetailsGroup
+          Properties:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =If(And(Not(IsBlank(EditResourcesGallery.Selected)),EditMode),EditResourcesGallery.Selected.Name,Blank())
+            FocusedBorderColor: =EditResourcesNameInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            PaddingBottom: =0
+            PaddingLeft: =15
+            PaddingRight: =15
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesNameInput.HoverBorderColor
+            PressedColor: =EditResourcesNameInput.Color
+            PressedFill: =EditResourcesNameInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =1
+            Width: =550
+            X: =237
+            Y: =316
+      - EditResourcesUrlLabel:
+          Control: Label@2.5.1
+          Group: EditResourcesDetailsGroup
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditResourcesUrlLabel.BorderColor
+            Height: =19
+            HoverBorderColor: =EditResourcesUrlLabel.BorderColor
+            HoverColor: =EditResourcesUrlLabel.Color
+            HoverFill: =EditResourcesUrlLabel.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesUrlLabel.BorderColor
+            PressedColor: =EditResourcesUrlLabel.Color
+            PressedFill: =EditResourcesUrlLabel.Fill
+            Size: |+
+              =10.5
+
+            Text: ="Resource url"
+            Width: =600
+            X: =237
+            Y: =380
+      - EditResourcesUrlInput:
+          Control: Classic/TextInput@2.3.2
+          Group: EditResourcesDetailsGroup
+          Properties:
+            BorderColor: =RGBA(202, 202, 202, 1)
+            BorderThickness: =1
+            Default: =If(And(Not(IsBlank(EditResourcesGallery.Selected)),EditMode),EditResourcesGallery.Selected.URL)
+            FocusedBorderColor: =EditResourcesUrlInput.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            PaddingBottom: =0
+            PaddingLeft: =15
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesUrlInput.HoverBorderColor
+            PressedColor: =EditResourcesUrlInput.Color
+            PressedFill: =EditResourcesUrlInput.Fill
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =13.5
+            TabIndex: =2
+            Width: =550
+            X: =237
+            Y: =408
+      - EditResourcesAddButton:
+          Control: Classic/Button@2.2.0
+          Group: EditResourcesAddGroup
+          Properties:
+            Align: =LayoutAlignItems.Center
+            BorderColor: =ColorFade(EditResourcesAddButton.Fill, -15%)
+            BorderThickness: =1
+            DisabledBorderColor: =ColorFade(EditResourcesAddButton.BorderColor, 70%)
+            DisplayMode: =If(Or(IsBlank(EditResourcesNameInput.Text),IsBlank(EditResourcesUrlInput.Text),EditResourcesUrlErrorMessage.Visible),DisplayMode.Disabled,DisplayMode.Edit)
+            Fill: =RGBA(26, 26, 84, 1)
+            FocusedBorderColor: =EditResourcesAddButton.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            HoverBorderColor: =ColorFade(EditResourcesAddButton.BorderColor, 20%)
+            HoverColor: =EditResourcesAddButton.Color
+            HoverFill: =ColorFade(EditResourcesAddButton.Fill, 20%)
+            OnSelect: =Patch(Resources,Defaults(Resources), {Name:EditResourcesNameInput.Text,URL:EditResourcesUrlInput.Text})
+            PaddingBottom: =0
+            PaddingLeft: =33
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesAddButton.Fill
+            PressedColor: =EditResourcesAddButton.Fill
+            PressedFill: =EditResourcesAddButton.Color
+            RadiusBottomLeft: =5
+            RadiusBottomRight: =5
+            RadiusTopLeft: =5
+            RadiusTopRight: =5
+            Size: =12
+            Text: ="Add resource"
+            Visible: =Not(EditMode)
+            Width: =182
+            X: =238
+            Y: =486
+      - EditResourcesAddLogo:
+          Control: Classic/Icon@2.5.0
+          Group: EditResourcesAddGroup
+          Properties:
+            Color: =RGBA(255, 255, 255, 1)
+            DisabledFill: =EditResourcesAddLogo.Fill
+            DisplayMode: =EditResourcesAddButton.DisplayMode
+            FocusedBorderColor: =EditResourcesAddLogo.BorderColor
+            FocusedBorderThickness: =0
+            Height: =24
+            HoverBorderColor: =ColorFade(EditResourcesAddLogo.BorderColor, 20%)
+            HoverColor: =ColorFade(EditResourcesAddLogo.Color, 20%)
+            HoverFill: =EditResourcesAddLogo.Fill
+            Icon: =Icon.Add
+            OnSelect: =Select(EditResourcesAddButton)
+            PressedBorderColor: =ColorFade(EditResourcesAddLogo.BorderColor, -20%)
+            PressedColor: =ColorFade(EditResourcesAddLogo.Color, -20%)
+            PressedFill: =EditResourcesAddLogo.Fill
+            Visible: =Not(EditMode)
+            Width: =24
+            X: =251
+            Y: =496
+      - EditResourcesListLabel:
+          Control: Label@2.5.1
+          Group: EditResourcesList
+          Properties:
+            Color: =RGBA(41, 40, 55, 1)
+            FocusedBorderColor: =EditResourcesListLabel.BorderColor
+            FontWeight: =FontWeight.Semibold
+            Height: =24
+            HoverBorderColor: =EditResourcesListLabel.BorderColor
+            HoverColor: =EditResourcesListLabel.Color
+            HoverFill: =EditResourcesListLabel.Fill
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            PressedBorderColor: =EditResourcesListLabel.BorderColor
+            PressedColor: =EditResourcesListLabel.Color
+            PressedFill: =EditResourcesListLabel.Fill
+            Size: =13.5
+            Text: ="Saved resources"
+            Width: =400
+            X: =880
+            Y: =288
+      - EditResourcesDeleteButton:
+          Control: Classic/Button@2.2.0
+          Group: EditResourcesDeleteGroup
+          Properties:
+            BorderColor: =RGBA(26,26,84,1)
+            BorderThickness: =1
+            Color: =RGBA(26, 26, 84, 1)
+            DisabledBorderColor: =ColorFade(EditResourcesDeleteButton.BorderColor, 70%)
+            Fill: =RGBA(255, 255, 255, 1)
+            FocusedBorderColor: =EditResourcesDeleteButton.BorderColor
+            FocusedBorderThickness: =1
+            Height: =44
+            HoverBorderColor: =ColorFade(EditResourcesDeleteButton.BorderColor, 20%)
+            HoverColor: =EditResourcesDeleteButton.Color
+            HoverFill: =ColorFade(EditResourcesDeleteButton.Fill, 20%)
+            OnSelect: |-
+              =Remove(Resources, {Name: EditResourcesGallery.Selected.Name, URL:EditResourcesGallery.Selected.URL});
+              Set(EditMode,CountRows(Resources) > 0)
+            PaddingLeft: =28
+            PaddingRight: =0
+            PressedBorderColor: =EditResourcesDeleteButton.Fill
+            PressedColor: =EditResourcesDeleteButton.Fill
+            PressedFill: =EditResourcesDeleteButton.Color
+            RadiusBottomLeft: =4
+            RadiusBottomRight: =4
+            RadiusTopLeft: =4
+            RadiusTopRight: =4
+            Size: =12
+            Text: ="Delete resource"
+            Visible: =EditMode
+            Width: =193
+            X: =237
+            Y: =486
+      - EditResourcesDeleteLogo:
+          Control: Classic/Icon@2.5.0
+          Group: EditResourcesDeleteGroup
+          Properties:
+            Color: =RGBA(26, 26, 84, 1)
+            DisabledFill: =EditResourcesDeleteLogo.Fill
+            DisplayMode: =EditResourcesDeleteButton.DisplayMode
+            FocusedBorderColor: =EditResourcesDeleteLogo.BorderColor
+            FocusedBorderThickness: =0
+            Height: =20
+            HoverBorderColor: =ColorFade(EditResourcesDeleteLogo.BorderColor, 20%)
+            HoverColor: =ColorFade(EditResourcesDeleteLogo.Color, 20%)
+            HoverFill: =EditResourcesDeleteLogo.Fill
+            Icon: =Icon.Trash
+            OnSelect: =Select(EditResourcesDeleteButton)
+            PressedBorderColor: =ColorFade(EditResourcesDeleteLogo.BorderColor, -20%)
+            PressedColor: =ColorFade(EditResourcesDeleteLogo.Color, -20%)
+            PressedFill: =EditResourcesDeleteLogo.Fill
+            Visible: =EditMode
+            Width: =20
+            X: =258
+            Y: =497
+      - EditResourcesGallery:
+          Control: Gallery@2.15.0
+          Variant: VariableHeight
+          Group: EditResourcesList
+          Properties:
+            DelayItemLoading: =false
+            Height: =206
+            Items: =Resources
+            LoadingSpinner: =LoadingSpinner.None
+            LoadingSpinnerColor: =EditResourcesGallery.BorderColor
+            OnSelect: =Set(EditMode,true)
+            TemplatePadding: =0
+            TemplateSize: =39
+            Width: =272
+            X: =880
+            Y: =324
+          Children:
+            - EditResourcesGalleryName:
+                Control: Label@2.5.1
+                Properties:
+                  Color: =If(And(ThisItem.IsSelected,EditMode),RGBA(41, 40, 55, 1),RGBA(26, 26, 84, 1))
+                  FocusedBorderColor: =EditResourcesGalleryName.BorderColor
+                  FontWeight: =If(And(ThisItem.IsSelected,EditMode),FontWeight.Bold,FontWeight.Semibold)
+                  Height: =35
+                  HoverBorderColor: =EditResourcesGalleryName.BorderColor
+                  HoverColor: =EditResourcesGalleryName.Color
+                  HoverFill: =EditResourcesGalleryName.Fill
+                  OnSelect: =Select(Parent)
+                  PaddingBottom: =9
+                  PaddingLeft: =1
+                  PaddingTop: =9
+                  PressedBorderColor: =EditResourcesGalleryName.BorderColor
+                  PressedColor: =EditResourcesGalleryName.Color
+                  PressedFill: =EditResourcesGalleryName.Fill
+                  Size: =9
+                  Text: =ThisItem.Name
+                  Width: |+
+                    =Parent.Width - 50
+            - EditResourcesSeparator:
+                Control: Rectangle@2.3.0
+                Properties:
+                  BorderColor: =RGBA(221, 224, 227, 1)
+                  DisabledFill: =EditResourcesSeparator.Fill
+                  DisplayMode: =DisplayMode.View
+                  Fill: =RGBA(221, 224, 227, 1)
+                  FocusedBorderColor: =EditResourcesSeparator.BorderColor
+                  FocusedBorderThickness: =0
+                  Height: =2
+                  HoverFill: =EditResourcesSeparator.Fill
+                  PressedFill: =EditResourcesSeparator.Fill
+                  Width: =253
+                  Y: =EditResourcesGalleryName.Y + EditResourcesGalleryName.Height + 1
+            - EditResourcesEditButton:
+                Control: Classic/Icon@2.5.0
+                Properties:
+                  Color: =RGBA(26, 26, 84, 1)
+                  DisabledFill: =EditResourcesEditButton.Fill
+                  FocusedBorderColor: =EditResourcesEditButton.BorderColor
+                  FocusedBorderThickness: =0
+                  Height: =20
+                  HoverBorderColor: =ColorFade(EditResourcesEditButton.BorderColor, 20%)
+                  HoverColor: =ColorFade(EditResourcesEditButton.Color, 20%)
+                  HoverFill: =EditResourcesEditButton.Fill
+                  Icon: =Icon.Edit
+                  OnSelect: =Select(Parent)
+                  PressedBorderColor: =ColorFade(EditResourcesEditButton.BorderColor, -20%)
+                  PressedColor: =ColorFade(EditResourcesEditButton.Color, -20%)
+                  PressedFill: =EditResourcesEditButton.Fill
+                  Visible: =Not(And(ThisItem.IsSelected,EditMode))
+                  Width: =20
+                  X: =231
+                  Y: =6
+      - EditResourcesBorderTop:
+          Control: Rectangle@2.3.0
+          Group: EditResourcesList
+          Properties:
+            DisabledFill: =EditResourcesBorderTop.Fill
+            Fill: =RGBA(221, 224, 227, 1)
+            FocusedBorderColor: =EditResourcesBorderTop.BorderColor
+            FocusedBorderThickness: =0
+            Height: =2
+            HoverFill: =EditResourcesBorderTop.Fill
+            OnSelect: =250
+            PressedFill: =EditResourcesBorderTop.Fill
+            Width: =250
+            X: =EditResourcesGallery.X
+            Y: =EditResourcesGallery.Y - EditResourcesBorderTop.Height

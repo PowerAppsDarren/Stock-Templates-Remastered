@@ -1,0 +1,38 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+App:
+  Properties:
+    OnStart: |-
+      =Collect(CalendarLocalizedLabel,      {Value:"Calendar"},{Value:"Kalender"},
+      {Value:"Təqvim"},{Value:"Kalendar"},{Value:"Calendari"},{Value:"Kalendář"},{Value:"Calendr"},{Value:"Calendario"},
+      {Value:"Egutegia"},{Value:"Kalendaryo"},{Value:"Calendrier"},{Value:"Féilire"},{Value:"Am mìosachan"},{Value:"Kalanda"},
+      {Value:"Dagbók"},{Value:"Kalenda"},{Value:"Kalendārs"},{Value:"Kalenner"},{Value:"Kalendorius"},{Value:"Naptár"},
+      {Value:"Kalendarju"},{Value:"Agenda"},{Value:"Taqvim"},{Value:"Kalendarz"},{Value:"Calendário"},{Value:"Intiwatana"},
+      {Value:"Kalendari"},{Value:"Kalendár"},{Value:"Koledar"},{Value:"Kalenteri"},{Value:"Maramataka"},{Value:"Lịch"},
+      {Value:"Takvim"},{Value:"Senenama"},{Value:"Ημερολόγιο"},{Value:"კალენდარი"},{Value:"לוח שנה"},{Value:"کیلنڈر"},
+      {Value:"التقويم"},{Value:"कैलेंडर"},{Value:"दिनदर्शिका"},{Value:"ক্যালেন্ডার"},{Value:"કૅલેન્ડર"},{Value:"予定表"},
+      {Value:"行事曆"},{Value:"日历"},{Value:"క్యాలెండర్"});
+      Concurrent(    
+          ClearCollect(RoomsLists, Office365.GetRoomLists().value);
+          If(CountRows(RoomsLists) <= 1,
+              Set(NoRoomsList, true); 
+              ClearCollect(AllRooms, Office365.GetRooms().value);
+              Set(AllRoomsConnector, Concat(AllRooms, Address & ";")),
+              Set(NoRoomsList, false)
+          ),
+          ClearCollect(Durations, {Time: "30 min", Minutes: 30}, {Time: "1 hr", Minutes: 60}, {Time: "1.5 hrs", Minutes: 90}, {Time: "2 hrs", Minutes: 120}, {Time: "3 hrs", Minutes: 180}, {Time: "4 hrs", Minutes: 240}),
+
+          ClearCollect(Times, {Text: "12:00 am", Minutes: 0}, {Text: "12:30 am", Minutes: 30}, {Text: "1:00 am", Minutes: 60}, {Text: "1:30 am", Minutes: 90}, {Text: "2:00 am", Minutes: 120}, {Text: "2:30 am", Minutes: 150}, {Text: "3:00 am", Minutes: 180}, {Text: "3:30 am", Minutes: 210}, {Text: "4:00 am", Minutes: 240}, {Text: "4:30 am", Minutes: 270}, {Text: "5:00 am", Minutes: 300}, {Text: "5:30 am", Minutes: 330}, {Text: "6:00 am", Minutes: 360}, {Text: "6:30 am", Minutes: 390}, {Text: "7:00 am", Minutes: 420}, {Text: "7:30 am", Minutes: 450}, {Text: "8:00 am", Minutes: 480}, {Text: "8:30 am", Minutes: 510}, {Text: "9:00 am", Minutes: 540}, {Text: "9:30 am", Minutes: 570}, {Text: "10:00 am", Minutes: 600}, {Text: "10:30 am", Minutes: 630}, {Text: "11:00 am", Minutes: 660}, {Text: "11:30 am", Minutes: 690}, {Text: "12:00 pm", Minutes: 720}, {Text: "12:30 pm", Minutes: 750}, {Text: "1:00 pm", Minutes: 780}, {Text: "1:30 pm", Minutes: 810}, {Text: "2:00 pm", Minutes: 840}, {Text: "2:30 pm", Minutes: 870}, {Text: "3:00 pm", Minutes: 900}, {Text: "3:30 pm", Minutes: 930}, {Text: "4:00 pm", Minutes: 960}, {Text: "4:30 pm", Minutes: 990}, {Text: "5:00 pm", Minutes: 1020}, {Text: "5:30 pm", Minutes: 1050}, {Text: "6:00 pm", Minutes: 1080}, {Text: "6:30 pm", Minutes: 1110}, {Text: "7:00 pm", Minutes: 1140}, {Text: "7:30 pm", Minutes:1170}, {Text: "8:00 pm", Minutes: 1200}, {Text: "8:30 pm", Minutes: 1230}, {Text: "9:00 pm", Minutes: 1260}, {Text: "9:30 pm", Minutes: 1290}, {Text: "10:00 pm", Minutes: 1320}, {Text: "10:30 pm", Minutes: 1350}, {Text: "11:00 pm", Minutes: 1380}, {Text: "11:30 pm", Minutes: 1410}),
+
+         Set(MyCalendar, LookUp(Office365.CalendarGetTables().value, DisplayName = LookUp(CalendarLocalizedLabel,Value=DisplayName).Value).Name);
+          Set(MyName, Office365Users.MyProfile());
+          Set(MyOrg, Proper(Left(Right(User().Email, Len(User().Email) - Find("@", User().Email)), Find(".", Right(User().Email, Len(User().Email) - Find("@", User().Email)))-1)))
+      )
+    Theme: =PowerAppsTheme

@@ -1,0 +1,473 @@
+# ************************************************************************************************
+# Warning: YAML source code for Canvas Apps is in preview. The schema is being actively developed.
+# Content may be incomplete and subject to change.
+# This file is read-only and should only be used to review changes made within Power Apps Studio.
+# This file isn't used when loading the app. External editing, merging and conflict resolution are
+# not supported.
+# 
+# For more information, visit https://go.microsoft.com/fwlink/?linkid=2292623
+# ************************************************************************************************
+Screens:
+  EditTeamInfo:
+    Properties:
+      Height: =Max(App.Height, App.DesignHeight)
+      OnVisible: |-
+        =Clear(Indexes);
+        Clear(DataToTeamLink);
+        ForAll(TeamLinks,
+            Collect(Indexes, { Value: If(And(CountRows(Indexes) > 0, Not(IsBlank(Indexes))), Last(Indexes).Value + 1, 1) });
+            Collect(DataToTeamLink, { Index: Last(Indexes).Value, Text: Text, URL: URL, Valid: And(Not(Or(IsBlank(Text),IsBlank(URL))),IsMatch(URL,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))})
+        )
+      Width: =Max(App.Width, App.DesignWidth)
+    Children:
+      - EditTeamInfoLayer:
+          Control: FluidGrid@2.3.0
+          Properties:
+            BorderThickness: =0
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =Parent.Height
+            Width: =Parent.Width
+          Children:
+            - EditTeamInfoSection:
+                Control: DataCard@1.0.2
+                Properties:
+                  Height: =EditTeamInfoAddLinkButton.Y + EditTeamInfoAddLinkButton.Height + 70
+                  Width: =Parent.Width
+                Children:
+                  - EditTeamInfoNameLabel:
+                      Control: Label@2.5.1
+                      Group: EditTeamInfoName
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditTeamInfoNameLabel.BorderColor
+                        Height: =19
+                        HoverBorderColor: =EditTeamInfoNameLabel.BorderColor
+                        HoverColor: =EditTeamInfoNameLabel.Color
+                        HoverFill: =EditTeamInfoNameLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditTeamInfoNameLabel.BorderColor
+                        PressedColor: =EditTeamInfoNameLabel.Color
+                        PressedFill: =EditTeamInfoNameLabel.Fill
+                        Size: |+
+                          =10.5
+
+                        Text: ="Team name"
+                        Width: =900
+                        X: =236
+                        Y: =245
+                  - EditTeamInfoNameInput:
+                      Control: Classic/TextInput@2.3.2
+                      Group: EditTeamInfoName
+                      Properties:
+                        BorderColor: =RGBA(202, 202, 202, 1)
+                        BorderThickness: =1
+                        Default: =First(Team).Name
+                        FocusedBorderColor: =EditTeamInfoNameInput.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        PaddingBottom: =0
+                        PaddingLeft: =15
+                        PaddingRight: =15
+                        PaddingTop: =0
+                        PressedBorderColor: =EditTeamInfoNameInput.HoverBorderColor
+                        PressedColor: =EditTeamInfoNameInput.Color
+                        PressedFill: =EditTeamInfoNameInput.Fill
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =13.5
+                        TabIndex: =1
+                        Width: =893
+                        X: =236
+                        Y: =273
+                  - EditTeamInfoTitle:
+                      Control: Label@2.5.1
+                      Group: EditTeamInfoHeader
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditTeamInfoTitle.BorderColor
+                        Height: =50
+                        HoverBorderColor: =EditTeamInfoTitle.BorderColor
+                        HoverColor: =EditTeamInfoTitle.Color
+                        HoverFill: =EditTeamInfoTitle.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditTeamInfoTitle.BorderColor
+                        PressedColor: =EditTeamInfoTitle.Color
+                        PressedFill: =EditTeamInfoTitle.Fill
+                        Size: |+
+                          =27
+                        Text: ="Edit Team header"
+                        Width: =900
+                        X: =236
+                        Y: =120
+                  - EditTeamInfoSubtitle:
+                      Control: Label@2.5.1
+                      Group: EditTeamInfoHeader
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditTeamInfoSubtitle.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =30
+                        HoverBorderColor: =EditTeamInfoSubtitle.BorderColor
+                        HoverColor: =EditTeamInfoSubtitle.Color
+                        HoverFill: =EditTeamInfoSubtitle.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditTeamInfoSubtitle.BorderColor
+                        PressedColor: =EditTeamInfoSubtitle.Color
+                        PressedFill: =EditTeamInfoSubtitle.Fill
+                        Size: =13.5
+                        Text: ="Add team name and important team links."
+                        Width: =900
+                        X: =236
+                        Y: =170
+                  - EditTeamInfoClose:
+                      Control: Classic/Icon@2.5.0
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        DisabledFill: =EditTeamInfoClose.Fill
+                        FocusedBorderColor: =EditTeamInfoClose.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =34
+                        HoverBorderColor: =ColorFade(EditTeamInfoClose.BorderColor, 20%)
+                        HoverColor: =ColorFade(EditTeamInfoClose.Color, 20%)
+                        HoverFill: =EditTeamInfoClose.Fill
+                        Icon: =Icon.Cancel
+                        OnSelect: =Back(BorderStyle.None)
+                        PressedBorderColor: =ColorFade(EditTeamInfoClose.BorderColor, -20%)
+                        PressedColor: =ColorFade(EditTeamInfoClose.Color, -20%)
+                        PressedFill: =EditTeamInfoClose.Fill
+                        Width: =34
+                        X: =1302
+                        Y: =30
+                  - EditTeamInfoHeaderSeperator:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =EditTeamInfoHeaderSeperator.Fill
+                        Fill: =RGBA(221, 224, 227, 1)
+                        FocusedBorderColor: =EditTeamInfoHeaderSeperator.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =3
+                        HoverFill: =EditTeamInfoHeaderSeperator.Fill
+                        PressedFill: =EditTeamInfoHeaderSeperator.Fill
+                        Width: =1059
+                        X: =154
+                        Y: =340
+                  - EditTeamInfoLinkLabel:
+                      Control: Label@2.5.1
+                      Properties:
+                        Color: =RGBA(41, 40, 55, 1)
+                        FocusedBorderColor: =EditTeamInfoLinkLabel.BorderColor
+                        FontWeight: =FontWeight.Semibold
+                        Height: =22
+                        HoverBorderColor: =EditTeamInfoLinkLabel.BorderColor
+                        HoverColor: =EditTeamInfoLinkLabel.Color
+                        HoverFill: =EditTeamInfoLinkLabel.Fill
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditTeamInfoLinkLabel.BorderColor
+                        PressedColor: =EditTeamInfoLinkLabel.Color
+                        PressedFill: =EditTeamInfoLinkLabel.Fill
+                        Size: =13.5
+                        Text: ="Team links"
+                        Width: =643
+                        X: =236
+                        Y: =363
+                  - EditTeamInfoLinkGallery:
+                      Control: Gallery@2.15.0
+                      Variant: BrowseLayout_Vertical_TwoTextOneImageVariant_ver4.0
+                      Properties:
+                        BorderColor: =RGBA(0,0,0,0)
+                        DelayItemLoading: =false
+                        Height: =CountRows(DataToTeamLink) * EditTeamInfoLinkGallery.TemplateHeight
+                        Items: =Indexes
+                        LoadingSpinner: =LoadingSpinner.None
+                        LoadingSpinnerColor: =EditTeamInfoLinkGallery.BorderColor
+                        TemplateSize: =109
+                        Width: =1000
+                        X: =236
+                        Y: =390
+                      Children:
+                        - EditTeamInfoLinkSeperator:
+                            Control: Rectangle@2.3.0
+                            Properties:
+                              DisabledFill: =EditTeamInfoLinkSeperator.Fill
+                              Fill: =RGBA(221, 224, 227, 1)
+                              FocusedBorderColor: =EditTeamInfoLinkSeperator.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =2
+                              HoverFill: =EditTeamInfoLinkSeperator.Fill
+                              OnSelect: =Select(Parent)
+                              PressedFill: =EditTeamInfoLinkSeperator.Fill
+                              Width: =893
+                              Y: =Parent.TemplateHeight - EditTeamInfoLinkSeperator.Height
+                        - EditTeamInfoLinkNameLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =EditTeamInfoLinkNameLabel.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EditTeamInfoLinkNameLabel.BorderColor
+                              HoverColor: =EditTeamInfoLinkNameLabel.Color
+                              HoverFill: =EditTeamInfoLinkNameLabel.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditTeamInfoLinkNameLabel.BorderColor
+                              PressedColor: =EditTeamInfoLinkNameLabel.Color
+                              PressedFill: =EditTeamInfoLinkNameLabel.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="Team link name"
+                              Width: =400
+                              X: =1
+                              Y: =15
+                        - EditTeamInfoLinkUrlLabel:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              FocusedBorderColor: =EditTeamInfoLinkUrlLabel.BorderColor
+                              Height: =19
+                              HoverBorderColor: =EditTeamInfoLinkUrlLabel.BorderColor
+                              HoverColor: =EditTeamInfoLinkUrlLabel.Color
+                              HoverFill: =EditTeamInfoLinkUrlLabel.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditTeamInfoLinkUrlLabel.BorderColor
+                              PressedColor: =EditTeamInfoLinkUrlLabel.Color
+                              PressedFill: =EditTeamInfoLinkUrlLabel.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="Link url"
+                              Width: =400
+                              X: =436
+                              Y: =15
+                        - EditTeamInfoLinkNameInput:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =If(IsBlank(EditTeamInfoLinkNameInput.Text),RGBA(255, 0, 0, 1),RGBA(202, 202, 202, 1))
+                              BorderThickness: =1
+                              Default: =LookUp(DataToTeamLink,Index = ThisItem.Value).Text
+                              FocusedBorderColor: =EditTeamInfoLinkNameInput.BorderColor
+                              FocusedBorderThickness: =1
+                              Height: =44
+                              OnChange: =Patch(DataToTeamLink,LookUp(DataToTeamLink,Index = ThisItem.Value),{Text:EditTeamInfoLinkNameInput.Text,Valid:And(Not(IsBlank(EditTeamInfoLinkNameInput.Text)) && Not(IsBlank(EditTeamInfoLinkUrlInput.Text)),IsMatch(EditTeamInfoLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))})
+                              PaddingBottom: =0
+                              PaddingLeft: =15
+                              PaddingRight: =15
+                              PaddingTop: =0
+                              PressedBorderColor: =EditTeamInfoLinkNameInput.HoverBorderColor
+                              PressedColor: =EditTeamInfoLinkNameInput.Color
+                              PressedFill: =EditTeamInfoLinkNameInput.Fill
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =13.5
+                              TabIndex: =ThisItem.Value * 2
+                              Width: =415
+                              X: =1
+                              Y: =43
+                        - EditTeamInfoLinkUrlInput:
+                            Control: Classic/TextInput@2.3.2
+                            Properties:
+                              BorderColor: =If(IsBlank(EditTeamInfoLinkUrlInput.Text),RGBA(255, 0, 0, 1),RGBA(202, 202, 202, 1))
+                              BorderThickness: =1
+                              Default: =LookUp(DataToTeamLink,Index = ThisItem.Value).URL
+                              FocusedBorderColor: =EditTeamInfoLinkUrlInput.BorderColor
+                              FocusedBorderThickness: =1
+                              Height: =44
+                              OnChange: =Patch(DataToTeamLink,LookUp(DataToTeamLink,Index = ThisItem.Value),{URL:EditTeamInfoLinkUrlInput.Text,Valid:And(Not(IsBlank(EditTeamInfoLinkNameInput.Text)) && Not(IsBlank(EditTeamInfoLinkUrlInput.Text)),IsMatch(EditTeamInfoLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))})
+                              PaddingBottom: =0
+                              PaddingLeft: =15
+                              PaddingRight: =15
+                              PaddingTop: =0
+                              PressedBorderColor: =EditTeamInfoLinkUrlInput.HoverBorderColor
+                              PressedColor: =EditTeamInfoLinkUrlInput.Color
+                              PressedFill: =EditTeamInfoLinkUrlInput.Fill
+                              RadiusBottomLeft: =4
+                              RadiusBottomRight: =4
+                              RadiusTopLeft: =4
+                              RadiusTopRight: =4
+                              Size: =13.5
+                              TabIndex: =ThisItem.Value * 2 + 1
+                              Width: =415
+                              X: =434
+                              Y: =43
+                        - EditTeamInfoLinkClose:
+                            Control: Circle@2.3.0
+                            Properties:
+                              BorderColor: =RGBA(26, 26, 84, 1)
+                              BorderThickness: =2
+                              DisabledFill: =EditTeamInfoLinkClose.Fill
+                              Fill: =RGBA(0, 0, 0, 0)
+                              FocusedBorderColor: =EditTeamInfoLinkClose.BorderColor
+                              Height: =24
+                              HoverFill: =EditTeamInfoLinkClose.Fill
+                              PressedFill: =EditTeamInfoLinkClose.Fill
+                              Width: =24
+                              X: =870
+                              Y: =53
+                        - EditTeamInfoLinkLogo:
+                            Control: Classic/Icon@2.5.0
+                            Properties:
+                              Color: =RGBA(41, 40, 55, 1)
+                              DisabledFill: =EditTeamInfoLinkLogo.Fill
+                              FocusedBorderColor: =EditTeamInfoLinkLogo.BorderColor
+                              FocusedBorderThickness: =0
+                              Height: =48
+                              HoverBorderColor: =ColorFade(EditTeamInfoLinkLogo.BorderColor, 20%)
+                              HoverColor: =ColorFade(EditTeamInfoLinkLogo.Color, 20%)
+                              HoverFill: =EditTeamInfoLinkLogo.Fill
+                              Icon: =Icon.Cancel
+                              OnSelect: |-
+                                =RemoveIf(DataToTeamLink,Index = ThisItem.Value);
+                                Remove(Indexes,ThisItem)
+                              PaddingLeft: =16
+                              PaddingRight: =16
+                              PressedBorderColor: =ColorFade(EditTeamInfoLinkLogo.BorderColor, -20%)
+                              PressedColor: =ColorFade(EditTeamInfoLinkLogo.Color, -20%)
+                              PressedFill: =EditTeamInfoLinkLogo.Fill
+                              Width: =48
+                              X: =EditTeamInfoLinkClose.X - 12
+                              Y: =EditTeamInfoLinkClose.Y - 12
+                        - EditTeamInfoErrorMessage:
+                            Control: Label@2.5.1
+                            Properties:
+                              Color: =RGBA(208, 2, 27, 0.95)
+                              FocusedBorderColor: =EditTeamInfoErrorMessage.BorderColor
+                              Height: =46
+                              HoverBorderColor: =EditTeamInfoErrorMessage.BorderColor
+                              HoverColor: =EditTeamInfoErrorMessage.Color
+                              HoverFill: =EditTeamInfoErrorMessage.Fill
+                              PaddingBottom: =0
+                              PaddingLeft: =0
+                              PaddingRight: =0
+                              PaddingTop: =0
+                              PressedBorderColor: =EditTeamInfoErrorMessage.BorderColor
+                              PressedColor: =EditTeamInfoErrorMessage.Color
+                              PressedFill: =EditTeamInfoErrorMessage.Fill
+                              Size: |+
+                                =10.5
+
+                              Text: ="(Team link url must be a valid URL with the http:// or https:// prefix.)"
+                              Visible: =Not(IsBlank(EditTeamInfoLinkUrlInput.Text) || IsMatch(EditTeamInfoLinkUrlInput.Text,"(ht|f)tp(s?):\/\/[0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*(:(0-9)*)*(\/?)([a-zA-Z0-9-.\?\,\'\/\+&%\$#_]*)?"))
+                              Width: =500
+                              X: =489
+                  - EditTeamInfoAddLinkButton:
+                      Control: Classic/Button@2.2.0
+                      Group: EditTeamInfoAddLink
+                      Properties:
+                        Align: =LayoutAlignItems.Center
+                        BorderColor: =RGBA(26, 26, 84, 1)
+                        BorderThickness: =1
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledBorderColor: =ColorFade(EditTeamInfoAddLinkButton.BorderColor, 70%)
+                        DisplayMode: =If(false in DataToTeamLink.Valid,DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =EditTeamInfoAddLinkButton.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        HoverBorderColor: =ColorFade(EditTeamInfoAddLinkButton.BorderColor, 20%)
+                        HoverColor: =EditTeamInfoAddLinkButton.Color
+                        HoverFill: =ColorFade(EditTeamInfoAddLinkButton.Fill, 20%)
+                        OnSelect: |-
+                          =Collect(Indexes, { Value: Max(Indexes, Value) + 1 });
+                          Collect(DataToTeamLink,{Index: Last(Indexes).Value,Text:Blank(),URL:Blank(),Valid:false})
+                        PaddingBottom: =0
+                        PaddingLeft: =32
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        PressedBorderColor: =EditTeamInfoAddLinkButton.Fill
+                        PressedColor: =EditTeamInfoAddLinkButton.Fill
+                        PressedFill: =EditTeamInfoAddLinkButton.Color
+                        RadiusBottomLeft: =5
+                        RadiusBottomRight: =5
+                        RadiusTopLeft: =5
+                        RadiusTopRight: =5
+                        Size: =12
+                        Text: ="Add link"
+                        Width: =131
+                        X: =236
+                        Y: =EditTeamInfoLinkGallery.Y + EditTeamInfoLinkGallery.Height + 8
+                  - EditTeamInfoAddLinkLogo:
+                      Control: Classic/Icon@2.5.0
+                      Group: EditTeamInfoAddLink
+                      Properties:
+                        Color: =RGBA(26, 26, 84, 1)
+                        DisabledFill: =EditTeamInfoAddLinkLogo.Fill
+                        DisplayMode: =EditTeamInfoAddLinkButton.DisplayMode
+                        FocusedBorderColor: =EditTeamInfoAddLinkLogo.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =24
+                        HoverBorderColor: =ColorFade(EditTeamInfoAddLinkLogo.BorderColor, 20%)
+                        HoverColor: =ColorFade(EditTeamInfoAddLinkLogo.Color, 20%)
+                        HoverFill: =EditTeamInfoAddLinkLogo.Fill
+                        Icon: =Icon.Add
+                        OnSelect: =Select(EditTeamInfoAddLinkButton)
+                        PressedBorderColor: =ColorFade(EditTeamInfoAddLinkLogo.BorderColor, -20%)
+                        PressedColor: =ColorFade(EditTeamInfoAddLinkLogo.Color, -20%)
+                        PressedFill: =EditTeamInfoAddLinkLogo.Fill
+                        Width: =24
+                        X: =249
+                        Y: =EditTeamInfoAddLinkButton.Y + 10
+                  - EditTeamInfoMask:
+                      Control: Rectangle@2.3.0
+                      Properties:
+                        DisabledFill: =EditTeamInfoMask.Fill
+                        Fill: =RGBA(255, 255, 255, 1)
+                        FocusedBorderColor: =EditTeamInfoMask.BorderColor
+                        FocusedBorderThickness: =0
+                        Height: =10
+                        HoverFill: =EditTeamInfoMask.Fill
+                        PressedFill: =EditTeamInfoMask.Fill
+                        Width: =900
+                        X: =230
+                        Y: =EditTeamInfoLinkGallery.Y + EditTeamInfoLinkGallery.Height - 5
+                  - EditTeamInfoSave:
+                      Control: Classic/Button@2.2.0
+                      Properties:
+                        BorderColor: =ColorFade(EditTeamInfoSave.Fill, -15%)
+                        BorderThickness: =1
+                        DisabledBorderColor: =ColorFade(EditTeamInfoSave.BorderColor, 70%)
+                        DisplayMode: =If(Or(false in DataToTeamLink.Valid,IsBlank(EditTeamInfoNameInput.Text)),DisplayMode.Disabled,DisplayMode.Edit)
+                        Fill: =RGBA(26, 26, 84, 1)
+                        FocusedBorderColor: =EditTeamInfoSave.BorderColor
+                        FocusedBorderThickness: =1
+                        Height: =44
+                        HoverBorderColor: =ColorFade(EditTeamInfoSave.BorderColor, 20%)
+                        HoverColor: =EditTeamInfoSave.Color
+                        HoverFill: =ColorFade(EditTeamInfoSave.Fill, 20%)
+                        OnSelect: |-
+                          =Patch(Team,First(Team),{Name:EditTeamInfoNameInput.Text});
+                          RemoveIf(TeamLinks,true);
+                          ForAll(DataToTeamLink, Patch(TeamLinks, Defaults(TeamLinks), {Text: Text, URL: URL}));
+                          Navigate(TeamScreen,BorderStyle.None)
+                        PressedBorderColor: =EditTeamInfoSave.Fill
+                        PressedColor: =EditTeamInfoSave.Fill
+                        PressedFill: =EditTeamInfoSave.Color
+                        RadiusBottomLeft: =4
+                        RadiusBottomRight: =4
+                        RadiusTopLeft: =4
+                        RadiusTopRight: =4
+                        Size: =12
+                        Text: ="Save"
+                        Width: =85
+                        X: =387
+                        Y: =EditTeamInfoAddLinkButton.Y

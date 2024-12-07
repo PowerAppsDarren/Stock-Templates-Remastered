@@ -2,10 +2,8 @@
 
 Microsoft Power Apps has several stock templates. We'll dust them off and make sure each of them function properly.
 
-===================================
-4 - Book A Room 
-1 - Onboarding Tasks
-===================================
+https://github.com/microsoft/Power-Fx
+
 
 Book A Room 
     - 203

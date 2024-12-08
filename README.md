@@ -2,8 +2,6 @@
 
 Microsoft Power Apps has several stock templates. We'll dust them off and make sure each of them function properly.
 
-
-
 | Preview | Application ⬇️ | Power App Type | Location |
 |----------|----------|----------|----------|
 | ![Alt text](/assets)   | [Book A Room](/App%20Templates/Book%20A%20Room/Book%20A%20Room.md)     | Canvas   | make.powerapps.com   |
@@ -11,9 +9,9 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 | ![Alt text](/assets)   | [Help Desk](/App%20Templates)                                          | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [Leave Request](/App%20Templates)                                      | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [My Expenses](/App%20Templates)                                        | Canvas   | make.powerapps.com   |
-| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
-| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
-| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Onboarding Tasks](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Shoutouts](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Training for Office](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
@@ -21,10 +19,6 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 
-- 
-- Onboarding Tasks
-- Shoutouts
-- Training for Office
 
 ## Other Templates (App Source)
 
@@ -45,6 +39,7 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 ## Related Links
 
 - https://github.com/microsoft/Templates-for-Power-Platform
+- https://learn.microsoft.com/en-us/power-platform/enterprise-templates/overview
 - https://github.com/microsoft/Power-Fx
 
 

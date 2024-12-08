@@ -18,4 +18,8 @@
 |:---------|:--------:|----------:|
 | Left     | Center   | Right    |
 | aligned  | aligned  | aligned  |
+
+| Preview | Application ⬇️ | Power App Type | Location |
+|----------|----------|----------|----------|
+| ![Alt text](assets/)   | []()  | Canvas   | make.powerapps.com   |
 ```

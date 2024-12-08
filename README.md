@@ -6,9 +6,14 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 
 | Preview | Application ⬇️ | Power App Type | Location |
 |----------|----------|----------|----------|
-| ![Alt text](assets/)   | []()  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Book A Room](/App%20Templates/Book%20A%20Room/Book%20A%20Room.md)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 
-- Book A Room 
+-  
 - Customer Lookup
 - Help Desk
 - Leave Request

@@ -6,6 +6,11 @@ https://github.com/microsoft/Power-Fx
 https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 
 
+| Header 1 | Header 2 | Header 3 |
+|----------|----------|----------|
+| Cell 1   | Cell 2   | Cell 3   |
+| Row 2    | Data     | Data     |
+
 - Book A Room 
 - Customer Lookup
 - Help Desk
@@ -17,7 +22,12 @@ https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 
 ## Other Templates (App Source)
 
-- [SAP Procurement](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-sapprocurement)
+
+| Preview | Application | Power App Type |
+|----------|----------|
+| ![Alt text](assets/SAPProcurement.png)  | [SAP Procurement](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-sapprocurement) | Canvas |
+
+- 
 
 
 
@@ -26,7 +36,3 @@ https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 
 ![SAPProcurement](Assets/SAPProcurement.png)
 
-| Header 1 | Header 2 | Header 3 |
-|----------|----------|----------|
-| Cell 1   | Cell 2   | Cell 3   |
-| Row 2    | Data     | Data     |

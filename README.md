@@ -15,8 +15,9 @@ https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 - Shoutouts
 - Training for Office
 
+## Other Templates (App Source)
 
+- [SAP Procurement](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-sapprocurement)
+- 
 
-
-
-
+![SAPProcurement](Assets/SAPProcurement.png)

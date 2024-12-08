@@ -6,18 +6,22 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 
 | Preview | Application ⬇️ | Power App Type | Location |
 |----------|----------|----------|----------|
-| ![Alt text](/assets)   | [Book A Room](/App%20Templates/Book%20A%20Room/Book%20A%20Room.md)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Book A Room](/App%20Templates/Book%20A%20Room/Book%20A%20Room.md)     | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Customer Lookup](/App%20Templates)                                    | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Help Desk](/App%20Templates)                                          | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Leave Request](/App%20Templates)                                      | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [My Expenses](/App%20Templates)                                        | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 
--  
-- Customer Lookup
-- Help Desk
-- Leave Request
-- My Expenses
+- 
 - Onboarding Tasks
 - Shoutouts
 - Training for Office

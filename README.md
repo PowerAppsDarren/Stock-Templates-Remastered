@@ -18,7 +18,11 @@ https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 ## Other Templates (App Source)
 
 - [SAP Procurement](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-sapprocurement)
-- 
+
+
+
+- [Awards and Recognitions](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-awardsandrecognitionapp?tab=Overview)
+  - [Related](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-awardsandrecognitioncopilot?tab=Overview)
 
 ![SAPProcurement](Assets/SAPProcurement.png)
 

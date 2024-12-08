@@ -2,14 +2,11 @@
 
 Microsoft Power Apps has several stock templates. We'll dust them off and make sure each of them function properly.
 
-https://github.com/microsoft/Power-Fx
-https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 
 
-| Header 1 | Header 2 | Header 3 |
-|----------|----------|----------|
-| Cell 1   | Cell 2   | Cell 3   |
-| Row 2    | Data     | Data     |
+| Preview | Application ⬇️ | Power App Type | Location |
+|----------|----------|----------|----------|
+| ![Alt text](assets/)   | []()  | Canvas   | make.powerapps.com   |
 
 - Book A Room 
 - Customer Lookup
@@ -24,7 +21,7 @@ https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 
 
 | Preview | Application | Power App Type |
-|----------|----------|
+|----------|----------|----------|
 | ![Alt text](assets/SAPProcurement.png)  | [SAP Procurement](https://appsource.microsoft.com/en-us/product/dynamics-365/powerplatformtemplates.mpa-sapprocurement) | Canvas |
 
 - 
@@ -36,3 +33,13 @@ https://drawsql.app/teams/neeseus/diagrams/onboarding-tasks-remastered
 
 ![SAPProcurement](Assets/SAPProcurement.png)
 
+## Related Links
+
+- https://github.com/microsoft/Templates-for-Power-Platform
+- https://github.com/microsoft/Power-Fx
+
+
+
+| Preview | Application ⬇️ | Power App Type | Location |
+|----------|----------|----------|----------|
+| ![Alt text](assets/)   | []()  | Canvas   | make.powerapps.com   |

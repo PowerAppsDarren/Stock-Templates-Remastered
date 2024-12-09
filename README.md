@@ -10,6 +10,7 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 | ![Alt text](/assets)   | [Leave Request](/App%20Templates)                                      | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [My Expenses](/App%20Templates)                                        | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [Onboarding Tasks](/App%20Templates)  | Canvas   | make.powerapps.com   |
+| ![Alt text](/assets)   | [Service Desk](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [Shoutouts](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [Training for Office](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
@@ -18,6 +19,11 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
 | ![Alt text](/assets)   | [](/App%20Templates)  | Canvas   | make.powerapps.com   |
+
+- SAP Procurement
+- Employee Kudos
+- Awards and Recognitions
+- 
 
 
 ## Other Templates (App Source)
@@ -47,3 +53,6 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 | Preview | Application ⬇️ | Power App Type | Location |
 |----------|----------|----------|----------|
 | ![Alt text](assets/)   | []()  | Canvas   | make.powerapps.com   |
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sKtLK3gqd4c?si=yvPZRz9V0j7emgSr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

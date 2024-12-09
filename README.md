@@ -47,7 +47,20 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 - Contacts
 - Product Showcase
 - Interview Tool
-
+- Estimator Pro
+- Employee Engagement Survey
+- Inventory Management
+- Alumni Association
+- Cost Estimator
+- Asset Checkout
+- Property Management
+- Company Pulse
+- Out of Office
+- QuickTask
+- Opportunity Tracking
+- To Do List
+- Case Management
+- Suggestion Box
 
 
 ## Other Templates (App Source)

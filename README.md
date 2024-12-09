@@ -23,6 +23,24 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 - SAP Procurement
 - Employee Kudos
 - Awards and Recognitions
+- Hardware Request and Management
+- Onboarding Buddy
+- Appointment Booking
+- Power Apps Training for Office
+- Shoutouts
+- Onboarding Tasks
+- Book a Room
+- My Expenses
+- Leave Request
+- Help Desk
+- Customer lookup with Customer Insights
+- Service Desk
+- Meeting Capture
+- Site Inspection
+- Customer Success
+- Invoice Management
+- PDF Reader
+- Budget Tracker
 - 
 
 

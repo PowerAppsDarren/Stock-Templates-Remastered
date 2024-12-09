@@ -41,7 +41,13 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 - Invoice Management
 - PDF Reader
 - Budget Tracker
-- 
+- Org Browser
+- Power Apps Training
+- Contest Registration
+- Contacts
+- Product Showcase
+- Interview Tool
+
 
 
 ## Other Templates (App Source)

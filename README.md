@@ -62,6 +62,10 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 - Case Management
 - Suggestion Box
 
+## Microsoft Repository
+
+- https://github.com/microsoft/Templates-for-Power-Platform
+
 
 ## Other Templates (App Source)
 

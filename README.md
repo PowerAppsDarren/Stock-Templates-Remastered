@@ -65,6 +65,7 @@ Microsoft Power Apps has several stock templates. We'll dust them off and make s
 ## Microsoft Repository
 
 - https://github.com/microsoft/Templates-for-Power-Platform
+- https://learn.microsoft.com/en-us/power-platform/enterprise-templates/overview#available-enterprise-templates 
 
 
 ## Other Templates (App Source)

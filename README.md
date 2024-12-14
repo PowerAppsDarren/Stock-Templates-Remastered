@@ -2,7 +2,7 @@
 
 - https://github.com/PowerAppsDarren/Stock-Templates-Remastered
 
-Microsoft Power Apps has several stock templates. We'll dust them off and make sure each of them function properly.
+Microsoft Power Apps has several stock templates. We'll dust them off and make sure each of them function properly....
 
 | Preview | Application ⬇️ | Power App Type | Location |
 |----------|----------|----------|----------|
